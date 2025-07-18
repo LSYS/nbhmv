@@ -65,6 +65,7 @@ global coeff_labels
 	mismatch_p25 "Income \pxor{}"
 	1.mismatch_p25_p2r "P $\rightarrow$ NP"
 	1.mismatch_p25_r2p "NP $\rightarrow$ P"
+	1.mismatch_p25#1.ncentral_d	"Income \pxor{} $\times$ Non-central destination"
 	"
 ;
 #delimit cr
