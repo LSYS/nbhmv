@@ -7,7 +7,8 @@ data: ## Run all notebooks in sequence with output versions (-o)
 	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
 	. $(ACTIVATE_PATH) && \
 	runpynb -s -o \
-	  0a-get-devicecount-subzone-day.ipynb
+	  0a-get-devicecount-subzone-day.ipynb \
+	  0b-get-subzones-from-records.ipynb
 
 # .PHONY: data
 # data: ## Run all notebooks in sequence with output versions (-o)
