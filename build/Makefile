@@ -7,7 +7,7 @@ data: ## Run all notebooks in sequence with output versions (-o)
 	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
 	. $(ACTIVATE_PATH) && \
 	runpynb -s -o \
-	  1-get-device-appearances-count.ipynb
+	  3-get-devicehome.ipynb
 
 # .PHONY: data
 # data: ## Run all notebooks in sequence with output versions (-o)
