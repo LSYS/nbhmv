@@ -1,5 +1,7 @@
 pandas
 numpy
+dask[distributed]
+pyarrow
 matplotlib
 seaborn
 jupyter
