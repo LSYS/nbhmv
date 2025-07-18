@@ -1,3 +1,4 @@
+set more off
 local x mismatch_p25
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,10 +68,10 @@ coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 		;
 savefig, path($graphsavedir/pxor-wpsm) format(png pdf eps);
 
-
 *~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Make LaTex Table Fragment
 *~~~~~~~~~~~~~~~~~~~~~~~~~~
+#delimit;
 esttab using $tabsavedir/pxor-wpsm-frag.tex, 
 	b(%9.4fc)
 	se(%9.4fc)

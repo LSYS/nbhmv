@@ -1,14 +1,14 @@
-import delimited cd-panel.csv
+// import delimited cd-panel.csv, rowr(1:5000)
+if $SCRATCH == 1 {
+	import delimited cd-panel.csv, rowr(1:5000)
+}
+else {
+	import delimited cd-panel.csv
+}
 
-*==============
-* Outcome Variable
-*==============
-gen y = ln(inflow)
-label var y "Log OD inflow"
-
-*==============
+*===============
 * Time Variables  
-*==============
+*===============
 rename date date_str
 gen date = date(date_str, "YMD")
 format date %td
@@ -174,6 +174,9 @@ foreach var of varlist wpsm_home wpsm_dest {
 label var p25_wpsm_home "==1 if origin income below 25th percentile"
 label var p25_wpsm_dest "==1 if destination income below 25th percentile"
 
+gen y = ln(inflow)
+label var y "Log OD inflow"
+
 *===================================
 * MAIN SEGREGATION/MISMATCH MEASURES
 *===================================
@@ -225,15 +228,3 @@ label var mismatch_p25_r2p "Rich→Poor income mismatch (25th percentile)"
 
 gen mismatch_p25 = mismatch_p25_p2r + mismatch_p25_r2p
 label var mismatch_p25 "Income mismatch b/w origin and destination (25th percentile)"
-
-*============================================
-* Global Variable Definitions for Regressions
-*============================================
-global dist centroid_distance contiguous
-global demo age_20_o age20_40_o age_20_d age20_40_d
-global popden lnpop_origin lnpop_dest lndevice_origin lndevice_dest
-global rain rain_dest rain_origin 
-global landarea area_o area_d
-global poi libraries supermarkets parks preschools schzones silverzones sport_facilities transit tour schools
-global business manufacturing construction services
-global race chinese_o malays_o indians_o chinese_d malays_d indians_d

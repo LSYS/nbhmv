@@ -1,9 +1,6 @@
 global graphsavedir ../results/figures/
 global tabsavedir ../results/tables/
 
-global coeff_labels `"mismatch_p25 "Income \pxor{}""'
-
-
 global dist ///
     centroid_distance ///
     contiguous
@@ -57,6 +54,21 @@ global s2 $s1 i.date##c.($demo) 	/* + Demo */
 global s3 $s2 i.date##c.($business) /* + business */
 global s4 $s3 i.date##c.($rain) 	/* + rainfall */
 global s5 $s4 i.date##c.($poi)		/* + POIs */
+
+
+*================
+* Variable labels
+*================
+#delimit;
+global coeff_labels
+	"
+	mismatch_p25 "Income \pxor{}"
+	1.mismatch_p25_p2r "P $\rightarrow$ NP"
+	1.mismatch_p25_r2p "NP $\rightarrow$ P"
+	"
+;
+#delimit cr
+
 
 *========================
 * Coefplot Graph settings

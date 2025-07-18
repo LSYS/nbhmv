@@ -2,10 +2,11 @@
 
 ## Figure 4a
 ![Figure 4a](./figures/pxor-wpsm.png)
-<!-- 
-## Figure 4b
-![Figure 4b](./figures/pxor-wpsm.png)
 
+## Figure 4b
+![Figure 4b](./figures/pxor-wpsm-r2p-p2r.png)
+
+<!-- 
 ## Figure 4b
 ![Figure 4b](./figures/pxor-wpsm.png)
 
