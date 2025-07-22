@@ -2,6 +2,7 @@ pandas
 numpy
 dask[distributed]
 pyarrow
+pyjanitor
 matplotlib
 seaborn
 jupyter
@@ -12,8 +13,12 @@ jupyterthemes
 traitlets==5.9.0
 tqdm
 shapely
+geopandas
+fiona
+osmnx
 nbqa
 black
 pyflakes
 mypy
 runpynb
+jupytext
