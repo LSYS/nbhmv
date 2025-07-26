@@ -351,3 +351,91 @@ def auto_reduce_mem(pandas_df, log=True, errors='coerce', downcast_int='integer'
         change_ratio_deep = 100*end_mem[1]/start_mem[1]
         print(f'This is {change_ratio:.2f}% ({change_ratio_deep:.2f}%) of initial size.')
     else: pass        
+
+
+def get_html_table_metadata(
+    dataframe: pd.DataFrame, table_col: str = "Description"
+) -> pd.DataFrame:
+    r"""Parse metadata stored in a column of HTML into columns.
+
+    Used to handle the official KML/SHP files with missing labels. Labels are encoded
+    in the "Description" column which is formatted as HTML.
+
+    For example, for a dataframe with a 'Description' column of HTML,
+    where a row could have an entry like
+    <center><table><tr><th colspan=\'2\' align=\'center\'><em>Attributes</em></th></tr><tr bgcolor="#E3E3F3"> <th>LU_DESC</th> <td>OPEN SPACE</td> </tr><tr bgcolor=""> <th>LU_TEXT</th> <td> </td> </tr><tr bgcolor="#E3E3F3"> <th>GPR</th> <td>EVA</td> </tr><tr bgcolor=""> <th>WHI_Q_MX</th> <td></td> </tr><tr bgcolor="#E3E3F3"> <th>GPR_B_MN</th> <td></td> </tr><tr bgcolor=""> <th>INC_CRC</th> <td>2481817E4931D054</td> </tr><tr bgcolor="#E3E3F3"> <th>FMEL_UPD_D</th> <td>20191209171707</td> </tr></table></center>
+
+    Prettyprinted: (from https://jsonformatter.org/html-pretty-print)
+    <center>
+        <table>
+            <tr>
+                <th colspan=\'2\' align=\'center\'>
+                    <em>Attributes</em>
+                </th>
+            </tr>
+            <tr bgcolor="#E3E3F3">
+                <th>LU_DESC</th>
+                <td>OPEN SPACE</td>
+            </tr>
+            <tr bgcolor="">
+                <th>LU_TEXT</th>
+                <td></td>
+            </tr>
+            <tr bgcolor="#E3E3F3">
+                <th>GPR</th>
+                <td>EVA</td>
+            </tr>
+            <tr bgcolor="">
+                <th>WHI_Q_MX</th>
+                <td></td>
+            </tr>
+            <tr bgcolor="#E3E3F3">
+                <th>GPR_B_MN</th>
+                <td></td>
+            </tr>
+            <tr bgcolor="">
+                <th>INC_CRC</th>
+                <td>2481817E4931D054</td>
+            </tr>
+            <tr bgcolor="#E3E3F3">
+                <th>FMEL_UPD_D</th>
+                <td>20191209171707</td>
+            </tr>
+        </table>
+    </center>
+
+    This function turns each row in the table containing some metadata for 'LU_DESC'
+    into a column with that header 'LU_DESC' and the corresponding value (e.g., OPEN SPACE)
+    in the column.
+
+    Parameters
+    ----------
+    dataframe : pd.DataFrame
+        The pandas dataframe.
+    table_col : str
+        Name of the column containing the HTML table metadata.
+
+    Returns
+    -------
+    pd.DataFrame
+        Dataframe with additional column from the HTML table data.
+    """
+    payload = []
+    for ix, row in dataframe.iterrows():
+        parsed_output = pd.read_html(row[table_col])
+
+        # each entry has only 1 table
+        assert len(parsed_output) == 1
+        parsed_output = parsed_output[0]
+
+        # Use 1st row to store headers
+        if ix == 0:
+            headers = parsed_output.iloc[:, 0].tolist()
+
+        payload.append(parsed_output.iloc[:, 1].tolist())
+
+    df_payload = pd.DataFrame(payload, columns=headers)
+    df_payload = dataframe.merge(
+        df_payload, how="left", left_index=True, right_index=True, validate="1:1"
+    )
+    return df_payload

@@ -69,14 +69,20 @@ jn: ## Launch jupyter notebook in venv
 		@echo "No venv found"; \
 	fi
 
+# ============================================================================
+# Make dependency graph
+# ============================================================================
+DIAGRAM_BASE = ./assets/build-pipeline
+
+.PHONY: diagram
+diagram: ## Make dependency diagram (mermaid)
+	mmdc -i $(DIAGRAM_BASE).mmd -o $(DIAGRAM_BASE).svg -s 10
+	mmdc -i $(DIAGRAM_BASE).mmd -o $(DIAGRAM_BASE).png -s 10
+
 
 ########################################################################
 # Other utilities
 ########################################################################
-.PHONY: clean
-clean: ## Clean all symlinks aux reports
-clean: clean_sl clean_sl_task
-
 .PHONY: help
 help: ## Show this help message and exit
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-16s\033[0m %s\n", $$1, $$2}'

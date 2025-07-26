@@ -1,13 +1,14 @@
 set more off
 
-local x i.mismatch_p25##i.ncentral_d
+// local x mismatch_p25
+local x mismatch_p75
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y `x', absorb(\$s`i') vce($se)
+	eststo: qui reghdfe y i.`x'##i.ncentral_d, absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
@@ -20,7 +21,7 @@ forvalues i = 1/5 {
 		local nobs: display %9.0fc `e(N)'
 		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
 		* Test mismatch + mismatch*ncentral = 0 [total effect outside central]
-		qui test 1.mismatch_p25 + 1.mismatch_p25#1.ncentral_d = 0
+		qui test 1.`x' + 1.`x'#1.ncentral_d = 0
 		estadd local pval = string(round(`r(p)', 0.001))
 		* Add indicators for additional controls
 		if `i'==2 {
@@ -55,15 +56,15 @@ coefplot (est1, msymbol(O)  msize(`MSIZE') mlwidth($MLWIDTH) )
 		 (est3, msymbol(dh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
 		 (est4, msymbol(th) msize(`MSIZE') mlwidth($MLWIDTH) offset()) 
 		 (est5, msymbol(sh) msize(`MSIZE') mlwidth($MLWIDTH) offset()),
-			keep(*mismatch_p25*)
+			keep(*`x'*)
 		 level(90)
 		 ciopts(recast(rcap) lwidth($CIWIDTH))	
 		 asequation 
 		 xlabel(-.08(.04).08, labsize($XLABSIZE) )
 		 xscale(range(-.1 .1))
 		 ylabel(, angle(horizontal) labsize(`YLABSIZE'))
-		 rename(1.mismatch_p25 = "{bf: Income mismatch}"
-		 		1.mismatch_p25#1.ncentral_d = "x {bf:Non-central dest.}"
+		 rename(1.`x' = "{bf: Income mismatch}"
+		 		1.`x'#1.ncentral_d = "x {bf:Non-central dest.}"
 		 		)
 		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
 				label(6 "{bf:+ Businesses}") 	 label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
@@ -74,7 +75,7 @@ coefplot (est1, msymbol(O)  msize(`MSIZE') mlwidth($MLWIDTH) )
 		graphregion(color(white) margin(0 0 0 0)) 
 		xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
 		;
-savefig, path($graphsavedir/pxor-wpsm-ncentral) format(png pdf eps);
+savefig, path($graphsavedir/pxor-wpsm-ncentral) format($graphformats);
 #delimit cr
 
 

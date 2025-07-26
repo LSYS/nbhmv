@@ -1,11 +1,13 @@
-// import delimited cd-panel.csv, rowr(1:5000)
-if $SCRATCH == 1 {
-	import delimited cd-panel.csv, rowr(1:5000)
-}
-else {
-	import delimited cd-panel.csv
-}
-
+// // import delimited cd-panel.csv, rowr(1:5000)
+// if $SCRATCH == 1 {
+// 	// import delimited ../build/cd-panel.csv, rowr(1:5000)
+// 	import delimited cd-panel.csv, rowr(1:5000)
+// }
+// else {
+// 	import delimited ../build/cd-panel.csv
+// 	// import delimited cd-panel.csv
+// }
+import delimited ../build/cd-panel.csv
 *===============
 * Time Variables  
 *===============
@@ -170,9 +172,12 @@ label var eudist "Euclidean distance in income (PSM) between origin and destinat
 foreach var of varlist wpsm_home wpsm_dest {
 	qui su `var', d
 	gen p25_`var' = (`var' < `r(p25)') if ~missing(`var')
+	gen p75_`var' = (`var' < `r(p75)') if ~missing(`var')
 }
 label var p25_wpsm_home "==1 if origin income below 25th percentile"
 label var p25_wpsm_dest "==1 if destination income below 25th percentile"
+label var p75_wpsm_home "==1 if origin income below 75th percentile"
+label var p75_wpsm_dest "==1 if destination income below 75th percentile"
 
 gen y = ln(inflow)
 label var y "Log OD inflow"
@@ -228,3 +233,12 @@ label var mismatch_p25_r2p "Rich→Poor income mismatch (25th percentile)"
 
 gen mismatch_p25 = mismatch_p25_p2r + mismatch_p25_r2p
 label var mismatch_p25 "Income mismatch b/w origin and destination (25th percentile)"
+
+gen mismatch_p75_r2p = p75_wpsm_home * (1 - p75_wpsm_dest)
+label var mismatch_p75_r2p "Rich→Non-rich income mismatch (75th percentile)"
+
+gen mismatch_p75_p2r = p75_wpsm_dest * (1- p75_wpsm_home)
+label var mismatch_p75_p2r "Non-rich→Rich income mismatch (75th percentile)"
+
+gen mismatch_p75 = mismatch_p75_r2p + mismatch_p75_p2r
+label var mismatch_p75 "Income mismatch b/w origin and destination (75th percentile)"

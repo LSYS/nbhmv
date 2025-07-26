@@ -1,5 +1,6 @@
 set more off
-local x mismatch_p25
+// local x mismatch_p25
+local x mismatch_p75
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications
@@ -48,7 +49,7 @@ coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 		 (est3, msymbol(dh) msize($MSIZE) mlwidth($MLWIDTH) offset())
 		 (est4, msymbol(th) msize($MSIZE) mlwidth($MLWIDTH) offset())
 		 (est5, msymbol(sh) msize($MSIZE) mlwidth($MLWIDTH) offset()),
-			keep(mismatch_p25)
+			keep(`x')
 		 level(90)
 		 ciopts(recast(rcap) lwidth($CIWIDTH))
 		 asequation
@@ -66,7 +67,7 @@ coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 		graphregion(color(white) margin(0 0 0 0))
 		xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
 		;
-savefig, path($graphsavedir/pxor-wpsm) format(png pdf eps);
+savefig, path($graphsavedir/pxor-wpsm) format($graphformats);
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Make LaTex Table Fragment
