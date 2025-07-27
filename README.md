@@ -6,7 +6,7 @@ We find stark asymmetries.
 Income-based segregation is driven by a lack of visits from richer to poorer neighborhoods, while ethnic-based segregation is driven by a lack of visits from majority- to minority-ethnic neighborhoods.
 We take our estimates to a counterfactual analysis of an extant ethnic residential integration policy. The findings show that the policy’s effect on fostering cross-neighborhood flows would have been three times smaller without accounting for directional asymmetries in ethnic mismatch.
 
-## 📂 Notable Files and Structure
+## 📂 Repo Structure and Scripts
 
 ```bash
 .
@@ -58,15 +58,23 @@ We take our estimates to a counterfactual analysis of an extant ethnic residenti
 
 ## 🔧 Build
 
+Set up the `venv` using 
+
+```bash
+make setup
+```
+
+which uses dependencies listed in [`requirements.txt`](https://github.com/LSYS/nbhmv/blob/main/assets/requirements.txt).
+
 To build the complete dataset, use
 
 ```bash
 make data
 ```
-See [https://github.com/LSYS/nbhmv/blob/main/build/Makefile](https://github.com/LSYS/nbhmv/blob/main/build/Makefile), which uses [runpynb](https://pypi.org/project/runpynb/) to execute relevant notebooks in sequence in a `venv` (see dependencies in [requirements.txt](https://github.com/LSYS/nbhmv/blob/main/assets/requirements.txt)):
+See [https://github.com/LSYS/nbhmv/blob/main/build/Makefile](https://github.com/LSYS/nbhmv/blob/main/build/Makefile), which uses [`runpynb`](https://pypi.org/project/runpynb/) to execute relevant notebooks in sequence in the `venv`:
 
 ![Build dependency graph](./assets/build-pipeline.png)
 
 ## 📊 Analysis
 
-`ssc` dependencies are listed in a [requirements-stata.txt](https://github.com/LSYS/nbhmv/blob/main/assets/requirements-stata.txt) and custom dependencies are in [`./analysis/code/ado`](https://github.com/LSYS/nbhmv/tree/main/analysis/code/ado)
+`ssc` dependencies are listed in a [requirements-stata.txt](https://github.com/LSYS/nbhmv/blob/main/assets/requirements-stata.txt) and custom dependencies are in [`./analysis/code/ado`](https://github.com/LSYS/nbhmv/tree/main/analysis/code/ado).

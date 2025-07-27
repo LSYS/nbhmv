@@ -1,6 +1,6 @@
 # Constructing panel of daily neighborhood O-D linkages w/ demogarphics & POIs
 
-![Build dependency graph](./assets/build-pipeline.png)
+![Build dependency graph](../assets/build-pipeline.png)
 
 ## Setup Requirements
 

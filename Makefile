@@ -76,7 +76,7 @@ DIAGRAM_BASE = ./assets/build-pipeline
 
 .PHONY: diagram
 diagram: ## Make dependency diagram (mermaid)
-	mmdc -i $(DIAGRAM_BASE).mmd -o $(DIAGRAM_BASE).svg -s 10
+	mmdc -i $(DIAGRAM_BASE).mmd -o $(DIAGRAM_BASE).svg
 	mmdc -i $(DIAGRAM_BASE).mmd -o $(DIAGRAM_BASE).png -s 10
 
 
