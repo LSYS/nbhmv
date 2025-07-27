@@ -14,7 +14,6 @@ We take our estimates to a counterfactual analysis of an extant ethnic residenti
 │  ├── code
 │  ├── logs
 │  ├── cd-panel.csv
-│  ├── main-spare.do
 │  └── main.do
 ├── assets
 │  ├── build-pipeline.mmd
