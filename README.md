@@ -69,4 +69,4 @@ See [https://github.com/LSYS/nbhmv/blob/main/build/Makefile](https://github.com/
 
 ## 📊 Analysis
 
-`ssc` dependencies are listed in [requirements-stata.txt](https://github.com/LSYS/nbhmv/blob/main/assets/requirements-stata.txt) and custom dependencies are in [`./analysis/code/ado`](https://github.com/LSYS/nbhmv/tree/main/analysis/code/ado)
+`ssc` dependencies are listed in a [requirements-stata.txt](https://github.com/LSYS/nbhmv/blob/main/assets/requirements-stata.txt) and custom dependencies are in [`./analysis/code/ado`](https://github.com/LSYS/nbhmv/tree/main/analysis/code/ado)
