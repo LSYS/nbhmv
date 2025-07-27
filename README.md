@@ -67,7 +67,7 @@ make setup
 
 which uses dependencies listed in [`requirements.txt`](https://github.com/LSYS/nbhmv/blob/main/assets/requirements.txt).
 
-To build the complete dataset
+To build the complete dataset:
 
 ![Build dependency graph](./assets/build-pipeline.png)
 
@@ -75,7 +75,7 @@ To build the complete dataset
 make data
 ```
 
-See [https://github.com/LSYS/nbhmv/blob/main/build/Makefile](https://github.com/LSYS/nbhmv/blob/main/build/Makefile), which uses [`runpynb`](https://pypi.org/project/runpynb/) to execute relevant notebooks in sequence in the `venv`.
+using [https://github.com/LSYS/nbhmv/blob/main/build/Makefile](https://github.com/LSYS/nbhmv/blob/main/build/Makefile), which uses [`runpynb`](https://pypi.org/project/runpynb/) to execute relevant notebooks in sequence in the `venv`.
 
 
 See [`./build`](https://github.com/LSYS/nbhmv/tree/main/build) for more details.
