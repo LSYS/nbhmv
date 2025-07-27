@@ -28,7 +28,7 @@ graph LR
 
     %% Intermediate Files
     SubzoneList["<i>citydata-subzones.csv</i>"]
-    DeviceIDs["<i>deviceID-list</i>"]
+    DeviceIDs["<i>deviceID-list/*</i>"]
     DeviceHomes["<i>device-area-maxcount.csv.gz</i>"]
     MovementCounts["<i>daily-movecount.csv.gz</i>"]
     PostalCrosswalk["<i>fixed_postal_subzone_xwalk.csv</i>"]
@@ -85,7 +85,7 @@ graph LR
     POICounts --> File7
 
     %% Final output
-    File7 --> FinalPanel
+    %% File7 --> FinalPanel
 
     %% Styling
     classDef pyfile fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
