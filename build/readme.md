@@ -4,7 +4,7 @@
 
 ## Setup Requirements
 
-Set up `venv` from `root` using 
+Set up the `Python` `venv` from `root` using 
 
 ```bash
 make setup
@@ -12,7 +12,9 @@ make setup
 
 which uses dependencies listed in [`requirements.txt`](https://github.com/LSYS/nbhmv/blob/main/assets/requirements.txt).
 
-Do a 
+## Build
+
+To build the final data panel, do a 
 
 ```
 make data
@@ -21,8 +23,6 @@ make data
 to build `cd-panel.csv` using [runpynb](https://pypi.org/project/runpynb/) to execute relevant notebooks in sequence in a `venv` (see dependencies in [requirements.txt](https://github.com/LSYS/nbhmv/blob/main/assets/requirements.txt)) and the `make` recipe:
 
 ```make
-
-```
 .PHONY: data
 data: ## Run all notebooks in sequence with output versions (-o)
 	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
@@ -38,9 +38,11 @@ data: ## Run all notebooks in sequence with output versions (-o)
 	  6b-map-weather.ipynb \
 	  7-merge.ipynb
 	mv *-out.ipynb logs/
+```
+
 ---
 
-## Build Order
+## Build Order of Scripts
 
 | Step | Script                              | Purpose                                         | Key Input(s)                                        | Key Output(s)                                          |
 |------|-------------------------------------|-------------------------------------------------|-----------------------------------------------------|--------------------------------------------------------|
