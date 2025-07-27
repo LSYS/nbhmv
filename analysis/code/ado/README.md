@@ -51,3 +51,6 @@ adopath ++ <project_path>/stata-utils
     </details>
     
     (Works like `pip install -r requirements.txt`)
+
+**Source:** https://github.com/LSYS/stata-utils
+

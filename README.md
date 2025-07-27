@@ -11,25 +11,62 @@ We take our estimates to a counterfactual analysis of an extant ethnic residenti
 ```bash
 .
 ├── analysis
+│  ├── code
+│  ├── logs
+│  ├── cd-panel.csv
+│  ├── main-spare.do
+│  └── main.do
 ├── assets
+│  ├── build-pipeline.mmd
+│  ├── build-pipeline.png
+│  ├── build-pipeline.svg
+│  ├── requirements-stata.txt
 │  └── requirements.txt
 ├── build
+│  ├── aux-notebooks
+│  ├── cache
+│  ├── intermediate-output
+│  ├── logs
+│  ├── preprocessed-data
 │  ├── raw-data
-│  ├── 0a-get-devicecount-subzone-day.ipynb
-│  ├── 0b-get-subzones-from-records.ipynb
-│  ├── 1-get-device-appearances-count.ipynb
-│  ├── 2-get-IDs.ipynb
-│  ├── 3-get-devicehome.ipynb
+│  ├── tests
+│  ├── 0-get-subzones-from-records.ipynb
+│  ├── 1-get-IDs.ipynb
+│  ├── 2-get-devicehome.ipynb
+│  ├── 3-get-movementcount.ipynb
 │  ├── 4-postal_to_2014subzonename.ipynb
-│  ├── 5a-clean-housetype.ipynb
-│  ├── 5b-compile-POI-count.ipynb
-│  ├── 5c-map-weather.ipynb
-│  ├── 5d-get-movementcount.ipynb
-│  ├── 6-merge.ipynb
+│  ├── 5-compile-POI-count-Copy1.ipynb
+│  ├── 5-compile-POI-count.ipynb
+│  ├── 6a-clean-housetype.ipynb
+│  ├── 6b-map-weather.ipynb
+│  ├── 7-merge.ipynb
+│  ├── cd-panel.csv
+│  ├── Makefile
 │  ├── readme.md
 │  └── utilities.py
+├── results
+│  ├── figures
+│  ├── logs
+│  ├── tables
+│  └── README.md
+├── venv_nbhmv
 ├── .gitignore
 ├── LICENSE
 ├── Makefile
 └── README.md
 ```
+
+## 🔧 Build
+
+To build the complete dataset, use
+
+```bash
+make data
+```
+See [https://github.com/LSYS/nbhmv/blob/main/build/Makefile](https://github.com/LSYS/nbhmv/blob/main/build/Makefile), which uses [runpynb](https://pypi.org/project/runpynb/) to execute relevant notebooks in sequence in a `venv` (see dependencies in [requirements.txt](https://github.com/LSYS/nbhmv/blob/main/assets/requirements.txt)):
+
+![Build dependency graph](./assets/build-pipeline.png)
+
+## 📊 Analysis
+
+`ssc` dependencies are listed in [requirements-stata.txt](https://github.com/LSYS/nbhmv/blob/main/assets/requirements-stata.txt) and custom dependencies are in [`./analysis/code/ado`](https://github.com/LSYS/nbhmv/tree/main/analysis/code/ado)

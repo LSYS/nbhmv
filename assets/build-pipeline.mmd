@@ -1,0 +1,100 @@
+%%{init: {"flowchart": {"htmlLabels": true}}}%%
+graph TB
+    %% Raw Data Sources
+    RawDevices["Raw Device Records<br/>(<i>sg_subzones_devices</i>)"]
+    Buildings["Buildings JSON<br/>(<i>buildings.json</i>)"]
+    Subzones2014["2014 Subzone Boundaries<br/>(<i>master-plan-2014-subzone...</i>)"]
+    Weather["Weather Data<br/>(<i>SWEAT/weather</i>)"]
+    Demographics["Demographics<br/>(<i>resident-population-by...</i>)"]
+    Housing["Housing Types<br/>(<i>singapore-residents-by...</i>)"]
+    POIData["POI Data Sources<br/>(parks, libraries, transit, etc.)"]
+    BusinessReg["Business Registration<br/>(<i>ACRAInformation...</i>)"]
+    PropertyPrices["Property Prices<br/>(HDB + REALIS)"]
+    DistanceData["Distance Data<br/>(<i>distance_subzone_2014.csv</i>)"]
+    PubRentals["Public Rentals<br/>(<i>subzone_rental_portion.csv</i>)"]
+    HawkerData["Hawker Centres<br/>(<i>HawkerCentresGEOJSON.geojson</i>)"]
+    OSMData["OpenStreetMap Data<br/>(Shopping Malls)"]
+
+    %% File Processing
+    File0["<b>Step 0</b><br/>Extract Subzones<br/><i>0-get-subzones-from-records.py</i>"]
+    File1["<b>Step 1</b><br/>Device ID Mapping<br/><i>1-get-IDs.py</i>"]
+    File2["<b>Step 2</b><br/>Device Home Detection<br/><i>2-get-devicehome.py</i>"]
+    File3["<b>Step 3</b><br/>Movement Counts<br/><i>3-get-movementcount.py</i>"]
+    File4["<b>Step 4</b><br/>Postal-Subzone Crosswalk<br/><i>4-postal_to_2014subzonename.py</i>"]
+    File5["<b>Step 5</b><br/>POI Counts<br/><i>5-compile-POI-count.py</i>"]
+    File6a["<b>Step 6a</b><br/>Housing Types<br/><i>6a-clean-housetype.py</i>"]
+    File6b["<b>Step 6b</b><br/>Weather Station Mapping<br/><i>6b-map-weather.py</i>"]
+    File7["<b>Step 7</b><br/>Final Merge<br/><i>7-merge.py</i>"]
+
+    %% Intermediate Files
+    SubzoneList["<i>citydata-subzones.csv</i>"]
+    DeviceIDs["<i>deviceID-list</i>"]
+    DeviceHomes["<i>device-area-maxcount.csv.gz</i>"]
+    MovementCounts["<i>daily-movecount.csv.gz</i>"]
+    PostalCrosswalk["<i>fixed_postal_subzone_xwalk.csv</i>"]
+    POICounts["<i>subzones-poi-count.csv</i>"]
+    HousingTypes["<i>htype.csv</i>"]
+    WeatherCrosswalk["<i>subzones2014-weatherstation-crosswalk.csv</i>"]
+
+    %% Final Output
+    FinalPanel["<i>cd-panel.csv</i><br/>(Final gravity model dataset)"]
+
+    %% Dependencies
+    RawDevices --> File0
+    RawDevices --> File1
+    RawDevices --> File2
+    RawDevices --> File3
+
+    Buildings --> File4
+    Subzones2014 --> File4
+    Subzones2014 --> File5
+    Subzones2014 --> File6b
+
+    Weather --> File6b
+    Demographics --> File7
+    Housing --> File6a
+    POIData --> File5
+    BusinessReg --> File5
+    PropertyPrices --> File7
+    DistanceData --> File7
+    PubRentals --> File7
+    HawkerData --> File5
+    OSMData --> File5
+
+    %% Intermediate file creation
+    File0 --> SubzoneList
+    File1 --> DeviceIDs
+    File2 --> DeviceHomes
+    File3 --> MovementCounts
+    File4 --> PostalCrosswalk
+    File5 --> POICounts
+    File6a --> HousingTypes
+    File6b --> WeatherCrosswalk
+
+    %% Intermediate file usage
+    SubzoneList --> File2
+    DeviceIDs --> File2
+    PostalCrosswalk --> File5
+    DeviceHomes --> File3
+
+    %% Final merge dependencies
+    MovementCounts --> File7
+    HousingTypes --> File7
+    WeatherCrosswalk --> File7
+    Weather --> File7
+    POICounts --> File7
+
+    %% Final output
+    File7 --> FinalPanel
+
+    %% Styling
+    classDef pyfile fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef raw fill:#f1f8e9,stroke:#388e3c,stroke-width:2px
+    classDef intermediate fill:#fce4ec,stroke:#7b1fa2,stroke-width:2px
+    classDef final fill:#e8f5e8,stroke:#1b5e20,stroke-width:3px
+    classDef default fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,font-size:11px,padding:0px
+
+    class File0,File1,File2,File3,File4,File5,File6a,File6b,File7 pyfile
+    class RawDevices,Buildings,Subzones2014,Weather,Demographics,Housing,POIData,BusinessReg,PropertyPrices,DistanceData,PubRentals,HawkerData,OSMData raw
+    class SubzoneList,DeviceIDs,DeviceHomes,MovementCounts,PostalCrosswalk,POICounts,HousingTypes,WeatherCrosswalk intermediate
+    class FinalPanel final
