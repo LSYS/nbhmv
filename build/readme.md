@@ -1,9 +1,43 @@
 # Constructing panel of daily neighborhood O-D linkages w/ demogarphics & POIs
 
+![Build dependency graph](./assets/build-pipeline.png)
 
-Final output:  
-**`cd-panel.csv`** — daily panel with device counts, mobility flows, housing type, POIs, and weather by subzone, etc.
+## Setup Requirements
 
+Set up `venv` from `root` using 
+
+```bash
+make setup
+```
+
+which uses dependencies listed in [`requirements.txt`](https://github.com/LSYS/nbhmv/blob/main/assets/requirements.txt).
+
+Do a 
+
+```
+make data
+```
+
+to build `cd-panel.csv` using [runpynb](https://pypi.org/project/runpynb/) to execute relevant notebooks in sequence in a `venv` (see dependencies in [requirements.txt](https://github.com/LSYS/nbhmv/blob/main/assets/requirements.txt)) and the `make` recipe:
+
+```make
+
+```
+.PHONY: data
+data: ## Run all notebooks in sequence with output versions (-o)
+	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
+	. $(ACTIVATE_PATH) && \
+	runpynb -s -o \
+	  0-get-subzones-from-records.ipynb \
+	  1-get-IDs.ipynb \
+	  2-get-devicehome.ipynb \
+	  3-get-movementcount.ipynb \
+	  4-postal_to_2014subzonename.ipynb \
+	  5-compile-POI-count.ipynb \
+	  6a-clean-housetype.ipynb \
+	  6b-map-weather.ipynb \
+	  7-merge.ipynb
+	mv *-out.ipynb logs/
 ---
 
 ## Build Order
@@ -20,6 +54,8 @@ Final output:
 | 6b   | `6b-map-weather.py`                | Crosswalk subzones to weather stations          | Subzone shapefiles, SWEAT metadata                  | `subzones2014-weatherstation-crosswalk.csv`           |
 | 7    | `7-merge.py`                       | Merge all features into panel dataset           | All above outputs                                   | `cd-panel.csv`                    
 
+Final output:  
+**`cd-panel.csv`** — daily panel with device counts, mobility flows, housing type, POIs, and weather by subzone, etc.
 
 ## 📘 Supplementary Script Descriptions
 
