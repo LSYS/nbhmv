@@ -36,8 +36,8 @@
   </tr>
   <tr>
     <td>
-      <img src="./figures/regplot-wpsm-price-pa.png" width="100%"/><br>
-      <b>Figure 2b: Bottom subfigure</b>
+      <img src="./figures/supplementary/regplot-wpsm-price-pa.png" width="100%"/><br>
+      <b>Correlation</b>
     </td>
   </tr>
 </table>

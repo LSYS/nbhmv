@@ -6,7 +6,8 @@ import os
 import platform
 import re
 from datetime import datetime
-from typing import Iterable, Optional
+from typing import Iterable, Optional, List, Dict, Union, Any
+import statistics
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -617,3 +618,89 @@ ryb_hex_colors = [
 custom_cmap = LinearSegmentedColormap.from_list(
     "custom_ryb", ryb_hex_colors[::-1], N=256
 )
+
+
+
+
+def cat_to_num(
+    array: List[str], 
+    rm_patterns: List[str] = None, 
+    **kwargs: Union[int, float]
+) -> Dict[str, Union[int, float]]:
+    """
+    Convert categorical string data to numerical values by extracting and processing digits.
+    
+    This function processes a list of strings by removing specified patterns, extracting
+    numerical digits, and converting them to numerical values. If multiple digits are found
+    in a string, their mean is calculated. The function returns a mapping from original
+    strings to their corresponding numerical values.
+    
+    Parameters
+    ----------
+    array : List[str]
+        List of strings containing categorical data to be converted to numerical values.
+        Each string may contain digits along with other characters.
+    rm_patterns : List[str], optional
+        List of patterns/characters to remove from each string before processing.
+        If None, defaults to ['$', ','] to handle common currency and number formatting.
+    **kwargs : Union[int, float]
+        Optional keyword arguments to override specific entries in the output dictionary.
+        Keys should match strings from the input array, values should be numbers.
+    
+    Returns
+    -------
+    Dict[str, Union[int, float]]
+        Dictionary mapping original strings to their numerical equivalents.
+        Values are integers if only one digit is found, or floats if multiple digits
+        are averaged.
+    
+    Raises
+    ------
+    IndexError
+        If a string contains no digits after pattern removal and processing.
+    ValueError
+        If digit extraction or conversion fails.
+    
+    Examples
+    --------
+    >>> data = ["$10-20", "30,000", "5"]
+    >>> cat_to_num(data)
+    {'$10-20': 15.0, '30,000': 30000, '5': 5}
+    
+    >>> cat_to_num(["$100", "$200"], custom_override=150)
+    {'$100': 100, '$200': 200, 'custom_override': 150}
+    
+    >>> cat_to_num(["low: 1-3", "high: 8-10"], rm_patterns=[':'])
+    {'low: 1-3': 2.0, 'high: 8-10': 9.0}
+    """
+    DEFAULT_RM_PATTERNS = ['$', ',']
+
+    if rm_patterns is None:
+        rm_patterns = DEFAULT_RM_PATTERNS.copy()
+    
+    original_array = array
+    processed_array = array.copy()
+    
+    # Remove specified patterns from strings
+    for pattern in rm_patterns:
+        processed_array = [s.replace(pattern, '').strip() for s in processed_array]
+    
+    # Extract numerical values
+    values = []
+    for cat in processed_array:
+        digits = [int(token) for token in cat.split() if token.isdigit()]
+        if len(digits) > 1:
+            values.append(statistics.mean(digits))
+        elif len(digits) == 1:
+            values.append(digits[0])
+        else:
+            raise ValueError(f"No digits found in processed string: '{cat}' (original: '{original_array[processed_array.index(cat)]}')")
+    
+    # Create output dictionary
+    output = dict(zip(original_array, values))
+    
+    # Apply optional overrides from kwargs
+    for key, val in kwargs.items():
+        output[key] = val
+    
+    return output
