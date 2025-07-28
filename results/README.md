@@ -4,12 +4,12 @@
 
 <table>
   <tr>
-    <td><img src="./figures/xx" width="400"/></td>
-    <td><img src="./figures/xx" width="400"/></td>
+    <td><img src="./figures/supplementary/borders-region.png" width="400"/></td>
+    <td><img src="./figures/borders-zones.png" width="400"/></td>
   </tr>
   <tr>
-    <td><img src="./figures/xx" width="400"/></td>
-    <td><img src="./figures/xxx" width="400"/></td>
+    <td><img src="./figures/supplementary/borders-subzones.png" width="400"/></td>
+    <td><img src="./figures/supplementary/borders-neighbourhoods.png" width="400"/></td>
   </tr>
 </table>
 
