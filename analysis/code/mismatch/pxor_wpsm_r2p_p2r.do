@@ -1,3 +1,5 @@
+cap log close mismatch
+log using $logsavedir/pxor_wpsm_r2p_p2r.txt, replace text name(mismatch)
 
 set more off
 // local x1 mismatch_p25_p2r
@@ -110,3 +112,5 @@ esttab using $tabsavedir/pxor-wpsm-r2p-p2r-frag.tex,
 	fragment replace
 	compress;
 #delimit cr
+
+log close mismatch

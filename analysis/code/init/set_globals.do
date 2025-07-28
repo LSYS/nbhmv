@@ -73,6 +73,8 @@ global coeff_labels
     mismatch_race_c2m   "Maj $\rightarrow$ Mnr"
     eudist "$|\text{income}_o - \text{income}_d|$"
     lmismatch_race "log(Ethnic \pxor{})"
+    mismatch_race   "Ethnic \pxor{}"
+    1.ncentral_d#c.mismatch_race "Ethnic \pxor{} $\times$ Non-central destination"
 	"
 ;
 #delimit cr
