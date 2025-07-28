@@ -31,7 +31,7 @@
     </td>
     <td width="40%">
       <img src="./figures/supplementary/choropleth-income.png" width="100%"/><br>
-      <b>Figure 2a: Top subfigure</b>
+      <b>Monthly income</b>
     </td>
   </tr>
   <tr>
