@@ -1,5 +1,5 @@
 cap log close
-local myLog "local log ../results/logs/full-log"
+local myLog "local log ./logs/main"
 `myLog'
 display "`myLog'"
 // log using `log'.smcl
@@ -33,6 +33,7 @@ tictoc tic 1
 do code/init/set_globals.do
 do code/init/data_preamble.do
 
+// preserve
 // keep if _n in 1/5000
 *======================================
 * Linking scripts to exhibits numbering
@@ -76,9 +77,36 @@ end
 
 cap program drop make_fig10
 program define make_fig10
-	// do code/policy/visits_increase_by_ethnicmismatch_percentiles.do
+	do code/policy/visits_increase_by_ethnicmismatch_percentiles.do
 	do code/policy/visits_increase_by_ethnicmismatch_c2m_percentiles.do
 	do code/policy/graph.do
+end
+
+cap program drop make_figS6
+program define make_figS6
+	do code/cutoffs/cutoffs_pxor_wpsm_ncentral.do
+	do code/cutoffs/graph_cutoffs_pxor_wpsm_ncentral.do
+end
+
+cap program drop make_tabD1
+program define make_tabD1
+	do code/additional_specifications/eudist_wpsm.do
+end
+
+cap program drop make_tabD5
+program define make_tabD5
+	do code/additional_specifications/pxor_race_loglog.do
+end
+
+cap program drop make_tabD6
+program define make_tabD6
+	/* Also makes */
+	do code/mismatch/pxor_race_ncentral.do
+end
+
+cap program drop make_tabD8
+program define make_tabD8
+	do code/additional_specifications/pxor_wpsm_race.do
 end
 
 * =========================================================
@@ -97,7 +125,17 @@ end
 // make_fig9
 // do code/policy/visits_increase_by_ethnicmismatch_percentiles.do
 
-make_fig10
+// make_fig10
+
+// make_figS6
+
+// make_tabD1
+// make_tabD5
+
+// make_tabD6
+// make_tabD8
+// for preserve before keep if _n < 5000
+// restore
 
 * =========================================================
 * Nbh flows and mismatch
@@ -105,6 +143,7 @@ make_fig10
 tictoc toc 1
 beepme 5
 
+// restore
 // log close
 // `myLog'
 // translate `log'.smcl `log'.log linesize(150)
