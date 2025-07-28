@@ -26,17 +26,17 @@
 <table>
   <tr>
     <td rowspan="2" width="60%">
-      <img src="./figures/main-figure.png" width="100%"/><br>
+      <img src="./figures/choropleth-price.png" width="100%"/><br>
       <b>Figure 1: Main figure description</b>
     </td>
     <td width="40%">
-      <img src="./figures/subfigure1.png" width="100%"/><br>
+      <img src="./figures/choropleth-income.png" width="100%"/><br>
       <b>Figure 2a: Top subfigure</b>
     </td>
   </tr>
   <tr>
     <td>
-      <img src="./figures/subfigure2.png" width="100%"/><br>
+      <img src="./figures/regplot-wpsm-price-pa.png" width="100%"/><br>
       <b>Figure 2b: Bottom subfigure</b>
     </td>
   </tr>

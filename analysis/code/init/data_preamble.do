@@ -234,11 +234,11 @@ label var mismatch_p25_r2p "Rich→Poor income mismatch (25th percentile)"
 gen mismatch_p25 = mismatch_p25_p2r + mismatch_p25_r2p
 label var mismatch_p25 "Income mismatch b/w origin and destination (25th percentile)"
 
-gen mismatch_p75_r2p = p75_wpsm_home * (1 - p75_wpsm_dest)
-label var mismatch_p75_r2p "Rich→Non-rich income mismatch (75th percentile)"
-
-gen mismatch_p75_p2r = p75_wpsm_dest * (1- p75_wpsm_home)
+gen mismatch_p75_p2r = p75_wpsm_home * (1 - p75_wpsm_dest)
 label var mismatch_p75_p2r "Non-rich→Rich income mismatch (75th percentile)"
+
+gen mismatch_p75_r2p = p75_wpsm_dest * (1- p75_wpsm_home)
+label var mismatch_p75_r2p "Rich→Non-rich income mismatch (75th percentile)"
 
 gen mismatch_p75 = mismatch_p75_r2p + mismatch_p75_p2r
 label var mismatch_p75 "Income mismatch b/w origin and destination (75th percentile)"

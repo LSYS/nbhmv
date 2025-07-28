@@ -1,6 +1,7 @@
 global graphsavedir ../results/figures/
 global graphformats png pdf eps
 global tabsavedir ../results/tables/
+global logsavedir ./logs/
 
 global dist ///
     centroid_distance ///
@@ -70,6 +71,8 @@ global coeff_labels
 	1.mismatch_p25#1.ncentral_d	"Income \pxor{} $\times$ Non-central destination"
     mismatch_race_m2c   "Mnr $\rightarrow$ Maj"
     mismatch_race_c2m   "Maj $\rightarrow$ Mnr"
+    eudist "$|\text{income}_o - \text{income}_d|$"
+    lmismatch_race "log(Ethnic \pxor{})"
 	"
 ;
 #delimit cr

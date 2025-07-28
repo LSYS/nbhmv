@@ -15,7 +15,10 @@ tqdm
 shapely
 geopandas
 fiona
+contextily
+matplotlib_scalebar
 osmnx
+scikit-learn
 nbqa
 black
 pyflakes
