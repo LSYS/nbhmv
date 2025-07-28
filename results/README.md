@@ -5,7 +5,7 @@
 <table>
   <tr>
     <td><img src="./figures/supplementary/borders-region.png" width="400"/></td>
-    <td><img src="./figures/borders-zones.png" width="400"/></td>
+    <td><img src="./figures/supplementary/borders-zones.png" width="400"/></td>
   </tr>
   <tr>
     <td><img src="./figures/supplementary/borders-subzones.png" width="400"/></td>
