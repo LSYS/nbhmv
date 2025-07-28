@@ -9,6 +9,8 @@ import numpy as np
 import pandas as pd
 import platform
 from shapely.ops import nearest_points
+import matplotlib.pyplot as plt
+from typing import Iterable, Optional
 
 
 def walk_through_files(path, file_extension, fullpath=False, returnboth=False):
@@ -439,3 +441,48 @@ def get_html_table_metadata(
         df_payload, how="left", left_index=True, right_index=True, validate="1:1"
     )
     return df_payload
+
+
+def save_mpl_fig(
+    savepath: str, formats: Optional[Iterable[str]] = None, dpi: Optional[int] = None
+) -> None:
+    """Save matplotlib figures to ../output.
+
+    Will handle saving in png and in pdf automatically using the same file stem.
+
+    Parameters
+    ----------
+    savepath: str
+        Name of file to save to. No extensions.
+    formats: Array-like
+        List containing formats to save in. (By default 'png' and 'pdf' are saved).
+        Do a:
+            plt.gcf().canvas.get_supported_filetypes()
+        or:
+            plt.gcf().canvas.get_supported_filetypes_grouped()
+        To see the Matplotlib-supported file formats to save in.
+        (Source: https://stackoverflow.com/a/15007393)
+    dpi: int
+        DPI for saving in png.
+
+    Returns
+    -------
+    None
+    """
+    # Save pdf
+    plt.savefig(f"{savepath}.pdf", dpi=None, bbox_inches="tight", pad_inches=0)
+
+    # save png
+    plt.savefig(f"{savepath}.png", dpi=dpi, bbox_inches="tight", pad_inches=0)
+
+    # Save additional file formats, if specified
+    if formats:
+        for format in formats:
+            plt.savefig(
+                f"{savepath}.{format}",
+                dpi=None,
+                bbox_inches="tight",
+                pad_inches=0,
+            )
+    return None
+    

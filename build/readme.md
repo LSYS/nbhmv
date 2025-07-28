@@ -59,6 +59,22 @@ data: ## Run all notebooks in sequence with output versions (-o)
 Final output:  
 **`cd-panel.csv`** — daily panel with device counts, mobility flows, housing type, POIs, and weather by subzone, etc.
 
+
+## Notebook Sync
+
+For easier version control, notebooks are synced with Python files using [Jupytext](https://jupytext.readthedocs.io/) to `./logs/`:
+
+```bash
+# One-time setup: create paired .py files in logs/
+make sync-setup
+
+# Sync changes between .ipynb and .py files
+make sync
+```
+
+The `sync-setup` creates paired Python files in the `logs/` directory, while `sync` keeps notebooks and their Python counterparts synchronized for better git tracking.
+
+
 ## 📘 Supplementary Script Descriptions
 
 ---

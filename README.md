@@ -33,7 +33,6 @@ We take our estimates to a counterfactual analysis of an extant ethnic residenti
 │  ├── 2-get-devicehome.ipynb
 │  ├── 3-get-movementcount.ipynb
 │  ├── 4-postal_to_2014subzonename.ipynb
-│  ├── 5-compile-POI-count-Copy1.ipynb
 │  ├── 5-compile-POI-count.ipynb
 │  ├── 6a-clean-housetype.ipynb
 │  ├── 6b-map-weather.ipynb
