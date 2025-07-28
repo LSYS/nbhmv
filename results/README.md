@@ -26,8 +26,8 @@
 <table>
   <tr>
     <td rowspan="2" width="60%">
-      <img src="./figures/choropleth-price.png" width="100%"/><br>
-      <b>Figure 1: Main figure description</b>
+      <img src="./figures/supplementary/choropleth-price.png" width="100%"/><br>
+      <b>House prices</b>
     </td>
     <td width="40%">
       <img src="./figures/choropleth-income.png" width="100%"/><br>

@@ -16,6 +16,7 @@ shapely
 geopandas
 fiona
 contextily
+mapclassify
 matplotlib_scalebar
 osmnx
 scikit-learn
