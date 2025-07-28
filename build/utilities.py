@@ -15,6 +15,7 @@ from matplotlib.pyplot import Axes
 from matplotlib_scalebar.scalebar import ScaleBar
 from shapely.ops import nearest_points
 from sklearn.metrics.pairwise import haversine_distances
+from matplotlib.colors import LinearSegmentedColormap
 
 
 def walk_through_files(path, file_extension, fullpath=False, returnboth=False):
@@ -594,3 +595,25 @@ def add_north_arrow(
         alpha=0.9,
     )
     return None
+
+
+ryb_hex_colors = [
+    # Reds
+    "#830022",
+    "#a34035",
+    "#c26d4c",
+    "#db9d6b",
+    "#eecd94",
+    # Yellows
+    "#fffedf",
+    # Blues
+    "#cddcb3",
+    "#9bbaa8",
+    "#6f9799",
+    "#4b7587",
+    "#255474",
+]
+
+custom_cmap = LinearSegmentedColormap.from_list(
+    "custom_ryb", ryb_hex_colors[::-1], N=256
+)
