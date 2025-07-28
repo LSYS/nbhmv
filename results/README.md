@@ -25,18 +25,18 @@
 ### Figure 3
 <table>
   <tr>
-    <td rowspan="2" width="60%">
+    <td rowspan="2" width="55%">
       <img src="./figures/supplementary/choropleth-price.png" width="100%"/><br>
       <b>House prices</b>
     </td>
-    <td width="40%">
-      <img src="./figures/supplementary/choropleth-income.png" width="100%"/><br>
+    <td width="45%">
+      <img src="./figures/supplementary/choropleth-income.png" width="50%"/><br>
       <b>Monthly income</b>
     </td>
   </tr>
   <tr>
     <td>
-      <img src="./figures/supplementary/regplot-wpsm-price-pa.png" width="100%"/><br>
+      <img src="./figures/supplementary/regplot-wpsm-price-pa.png" width="50%"/><br>
       <b>Correlation</b>
     </td>
   </tr>
