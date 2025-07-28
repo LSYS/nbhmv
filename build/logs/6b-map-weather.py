@@ -194,7 +194,7 @@ unmapped_stations.plot(
 plt.axis("off")
 plt.tight_layout()
 plt.margins(0, 0)
-save_mpl_fig(os.path.join(SAVEPATH, "ws-mapping-vanilla.pdf"))
+save_mpl_fig(os.path.join(SAVEPATH, "ws-mapping-vanilla"))
 # -
 
 # #### Visual validation plot
@@ -262,7 +262,7 @@ for id1, slat, slong in zip(
 plt.margins(0.01, 0)
 plt.axis("off")
 plt.tight_layout()
-save_mpl_fig(os.path.join(SAVEPATH, "ws-mapping-validation2.pdf"))
+save_mpl_fig(os.path.join(SAVEPATH, "ws-mapping-validation2"))
 # -
 
 
