@@ -30,7 +30,7 @@
       <b>House prices</b>
     </td>
     <td width="40%">
-      <img src="./figures/choropleth-income.png" width="100%"/><br>
+      <img src="./figures/supplementary/choropleth-income.png" width="100%"/><br>
       <b>Figure 2a: Top subfigure</b>
     </td>
   </tr>
