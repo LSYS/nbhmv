@@ -17,8 +17,8 @@
 
 <table>
   <tr>
-    <td><img src="./figures/xx" width="400"/></td>
-    <td><img src="./figures/xx" width="400"/></td>
+    <td><img src="./figures/supplementary/choropleth-devices-legend.png" width="400"/></td>
+    <td><img src="./figures/supplementary/choropleth-resident-legend.png" width="400"/></td>
   </tr>
 </table>
 
