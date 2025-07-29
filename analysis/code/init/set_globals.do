@@ -65,7 +65,8 @@ global s5 $s4 i.date##c.($poi)		/* + POIs */
 global coeff_labels
 	"
 	mismatch_p25 "Income \pxor{}"
-	mismatch_p75 "Income \pxor{} (p75)"
+    mismatch_p75 "Income \pxor{} (p75)"
+	1.mismatch_p75 "Income \pxor{} (p75)"
 	1.mismatch_p25_p2r "P $\rightarrow$ NP"
 	1.mismatch_p25_r2p "NP $\rightarrow$ P"
     1.mismatch_p75_p2r "P $\rightarrow$ NP (p75)"
