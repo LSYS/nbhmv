@@ -82,8 +82,8 @@ program define make_fig10
 	do code/policy/graph.do
 end
 
-cap program drop make_figS6
-program define make_figS6
+cap program drop make_figD1
+program define make_figD1
 	do code/cutoffs/cutoffs_pxor_wpsm_ncentral.do
 	do code/cutoffs/graph_cutoffs_pxor_wpsm_ncentral.do
 end
@@ -112,28 +112,29 @@ end
 * =========================================================
 * Nbh flows and mismatch
 * =========================================================
-// make_fig4a
-// make_fig4b
+make_fig4a
+make_fig4b
 
-// make_fig6a
-// make_fig6b
+make_fig6a
+make_fig6b
 
-// make_fig7
+make_fig7
 
 // make_fig8
 
 // make_fig9
-// do code/policy/visits_increase_by_ethnicmismatch_percentiles.do
 
-// make_fig10
+make_fig10
 
-// make_figS6
+// make_figD1
 
-// make_tabD1
-// make_tabD5
+make_tabD1
+make_tabD5
 
-// make_tabD6
-// make_tabD8
+make_tabD6
+make_tabD8
+
+
 // for preserve before keep if _n < 5000
 // restore
 
