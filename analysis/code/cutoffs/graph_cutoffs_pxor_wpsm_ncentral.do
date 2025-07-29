@@ -233,7 +233,7 @@ twoway
 	(scatter beta_`y' spec_id_`y' if p25==1, symbol(D) color(maroon) )
 ;
 #delimit cr
-savefig, path($graphsavedir/sorted-`y'=interacted-ncentral) format($graphformats)
+savefig, path($graphsavedir/sorted-`y'-interacted-ncentral) format($graphformats)
 
 
 restore

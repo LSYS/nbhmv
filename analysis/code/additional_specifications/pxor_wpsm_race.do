@@ -62,7 +62,7 @@ esttab using $tabsavedir/pxor-wpsm-race-frag.tex,
 	varwidth(20)
 	modelwidth(8)
 	drop(_cons)
-	coeflabel(`coeff_labels')
+	coeflabel($coeff_labels)
 	scalar(
 		"timeFE Day fixed effects"
 		"censusPA Census area-by-day fixed effects"

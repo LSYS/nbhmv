@@ -17,7 +17,7 @@ twoway line increase_visits spec_id,
 	ylab(5(5)25, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
 	yscale(r(0 25))
 	xlab(0(20)100, labsize(`XLAB_SIZE'))
-	xtitle("`XTITLE'", size(`XTITLE_SIZE') )
+	xtitle("Percentile reduction in (non-directional) ethnic mismatch", size(`XTITLE_SIZE') )
 	ytitle("")
 	title("{bf:`TITLE1'}" "{bf:`TITLE2'}", pos(11) size(`TITLESIZE'))
 	graphregion(fcolor(white) lcolor(white) margin(0 0 0 0) )

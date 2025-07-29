@@ -216,6 +216,8 @@ label var mismatch_race_c2m "Majority→Minority ethnic mismatch"
 gen mismatch_race = mismatch_race_m2c + mismatch_race_c2m
 label var mismatch_race "Mismatch in race b/w origin and destination"
 
+gen lmismatch_race = ln(mismatch_race)
+
 *========================
 * Public Rentals Mismatch
 *========================
