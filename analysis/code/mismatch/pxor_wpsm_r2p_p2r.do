@@ -79,7 +79,7 @@ coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 savefig, path($graphsavedir/pxor-wpsm-r2p-p2r) format($graphformats);
 
 *~~~~~~~~~~~~~~~~~
-* Make LaTex Table
+* Make LaTex Table 
 *~~~~~~~~~~~~~~~~~
 #delimit;
 esttab using $tabsavedir/pxor-wpsm-r2p-p2r-frag.tex, 
