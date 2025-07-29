@@ -14,7 +14,8 @@ We take our estimates to a counterfactual analysis of an extant ethnic residenti
 │  ├── code
 │  ├── logs
 │  ├── cd-panel.csv
-│  └── main.do
+│  ├── main.do
+│  └── readme.md
 ├── assets
 │  ├── build-pipeline.mmd
 │  ├── build-pipeline.png
@@ -41,12 +42,24 @@ We take our estimates to a counterfactual analysis of an extant ethnic residenti
 │  ├── Makefile
 │  ├── readme.md
 │  └── utilities.py
+├── geo
+│  ├── logs
+│  ├── out
+│  ├── bootstrap-r2.ipynb
+│  ├── borders.ipynb
+│  ├── choropleth-devices.ipynb
+│  ├── choropleth-income.ipynb
+│  ├── choropleth-price.ipynb
+│  ├── get-devicecount-subzone-day.ipynb
+│  ├── Makefile
+│  ├── pa-price.ipynb
+│  ├── ping-variation.ipynb
+│  ├── regplot_wpsm_income_pa.do
+│  └── utilities.py -> ../build/utilities.py
 ├── results
 │  ├── figures
-│  ├── logs
 │  ├── tables
 │  └── README.md
-├── venv_nbhmv
 ├── .gitignore
 ├── LICENSE
 ├── Makefile
@@ -72,7 +85,7 @@ To build the complete dataset:
 make data
 ```
 
-using [https://github.com/LSYS/nbhmv/blob/main/build/Makefile](https://github.com/LSYS/nbhmv/blob/main/build/Makefile), which uses [`runpynb`](https://pypi.org/project/runpynb/) to execute relevant notebooks in sequence in the `venv`.
+using the [`Makefile`](https://github.com/LSYS/nbhmv/blob/main/build/Makefile) and [`runpynb`](https://pypi.org/project/runpynb/) to execute relevant notebooks in sequence in the `venv`.
 
 
 See [`./build`](https://github.com/LSYS/nbhmv/tree/main/build) for more details.

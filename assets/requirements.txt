@@ -3,9 +3,10 @@ numpy
 dask[distributed]
 pyarrow
 pyjanitor
-matplotlib
+matplotlib<3.8
 seaborn
 jupyter
+ptitprince
 notebook==6.4.12
 jupyter_contrib_nbextensions
 jupyter_nbextensions_configurator
@@ -18,6 +19,7 @@ fiona
 contextily
 mapclassify
 matplotlib_scalebar
+legendgram
 osmnx
 scikit-learn
 nbqa
