@@ -463,15 +463,41 @@
 /Slw 0.576 def
 1852 1555 1852 21333 Sln
 1852 11444 1556 11444 Sln
+/Helvetica-Bold findfont
+		dup length dict begin
+		{1 index /FID ne {def} {pop pop} ifelse} forall
+		/Encoding ISOLatin1Encoding def
+		currentdict
+end
+/MF-Helvetica-Bold {
+  /newfontname exch def
+  /fontname exch def
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+  fontdict {
+  exch dup /FID eq {pop pop} {exch newfont 3 1 roll put} ifelse
+  } forall
+  newfont /FontName newfontname put
+  newfont /Encoding ISOLatin1Encoding put
+  newfontname newfont definefont pop
+} def
+/Helvetica-Bold /Helvetica-Bold-0 MF-Helvetica-Bold
 1051 11444 0
+/Helvetica-Bold-0 findfont 1185 yratio mul scalefont setfont
+(Income mismatch) stringwidth pop add
 /Helvetica-0 findfont 1185 yratio mul scalefont setfont
-(Income mismatch b/w origin and destination \(75th percentile\)) stringwidth pop add
+( \(p75\)) stringwidth pop add
 2 div xratio div
 dup 4 3 roll exch 90.000 cos mul sub 3 1 roll 90.000 sin mul sub 2 copy
+/fntsize {/Helvetica-Bold-0 findfont exch scalefont setfont } def
+90.000 1185
+(Income mismatch) Stxtl
+(Income mismatch) stringwidth pop xratio div
+dup 4 3 roll exch 90.000 cos mul add 3 1 roll 90.000 sin mul add 2 copy
 /fntsize {/Helvetica-0 findfont exch scalefont setfont } def
 90.000 1185
-(Income mismatch b/w origin and destination \(75th percentile\)) Stxtl
-(Income mismatch b/w origin and destination \(75th percentile\)) stringwidth pop xratio div
+( \(p75\)) Stxtl
+( \(p75\)) stringwidth pop xratio div
 dup 4 3 roll exch 90.000 cos mul add 3 1 roll 90.000 sin mul add 2 copy
 pop pop pop pop
 1852 1555 32000 1555 Sln
@@ -536,25 +562,6 @@ pop pop pop pop
 2946 5317 519 0 Sdia
 2946 3983 519 0 Stri
 2579 2283 3313 3017 0 Srect
-/Helvetica-Bold findfont
-		dup length dict begin
-		{1 index /FID ne {def} {pop pop} ifelse} forall
-		/Encoding ISOLatin1Encoding def
-		currentdict
-end
-/MF-Helvetica-Bold {
-  /newfontname exch def
-  /fontname exch def
-  /fontdict fontname findfont def
-  /newfont fontdict maxlength dict def
-  fontdict {
-  exch dup /FID eq {pop pop} {exch newfont 3 1 roll put} ifelse
-  } forall
-  newfont /FontName newfontname put
-  newfont /Encoding ISOLatin1Encoding put
-  newfontname newfont definefont pop
-} def
-/Helvetica-Bold /Helvetica-Bold-0 MF-Helvetica-Bold
 3909 7620 2 copy
 /fntsize {/Helvetica-Bold-0 findfont exch scalefont setfont } def
 0.000 1037
