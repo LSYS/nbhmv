@@ -79,6 +79,10 @@ global coeff_labels
     lmismatch_race "log(Ethnic \pxor{})"
     mismatch_race   "Ethnic \pxor{}"
     1.ncentral_d#c.mismatch_race "Ethnic \pxor{} $\times$ Non-central destination"
+    wpsm_home                   "Wealth in origin"
+    wpsm_dest                   "Wealth in destination"
+    1.cny_sat_sun#c.wpsm_home   "Wealth in origin $ \times \mathds{1}^{\text{CNY}} $"
+    1.cny_sat_sun#c.wpsm_dest   "Wealth in destination $ \times \mathds{1}^{\text{CNY}} $"
 	"
 ;
 #delimit cr
