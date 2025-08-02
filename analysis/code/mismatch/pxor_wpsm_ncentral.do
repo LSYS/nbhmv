@@ -3,8 +3,7 @@ log using $logsavedir/pxor_wpsm_ncentral.txt, replace text name(mismatch)
 
 set more off
 
-// local x mismatch_p25
-local x mismatch_p75
+local x mismatch_p25
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications

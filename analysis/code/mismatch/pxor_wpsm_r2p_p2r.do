@@ -2,10 +2,8 @@ cap log close mismatch
 log using $logsavedir/pxor_wpsm_r2p_p2r.txt, replace text name(mismatch)
 
 set more off
-// local x1 mismatch_p25_p2r
-// local x2 mismatch_p25_r2p
-local x1 mismatch_p75_p2r
-local x2 mismatch_p75_r2p
+local x1 mismatch_p25_p2r
+local x2 mismatch_p25_r2p
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications
