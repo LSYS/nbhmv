@@ -82,7 +82,7 @@ diagram: ## Make dependency diagram (mermaid)
 ########################################################################
 # 'Freeze' current venv packages
 ########################################################################
-LOCKFILE := requirements-locked.txt
+LOCKFILE := ./assets/requirements-locked.txt
 .PHONY: pipfreeze
 pipfreeze: ## Write specific pkg versions to assets/requirements-locked.txt
 	@echo "==> $@"
