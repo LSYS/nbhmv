@@ -1,19 +1,19 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,logs//py
+#     formats: ipynb,logs//py:percent
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.14.5
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.17.2
 #   kernelspec:
 #     display_name: Python (venv_nbhmv)
 #     language: python
 #     name: venv_nbhmv
 # ---
 
-# +
+# %%
 import os
 import pandas as pd
 import numpy as np
@@ -32,7 +32,7 @@ import osmnx
 import warnings
 warnings.filterwarnings('ignore')
 
-# +
+# %%
 FP_SUBZONES_SHP = os.path.join(
     "zip://" "./",
     "raw-data",
@@ -96,8 +96,8 @@ FP_XWALK_ZIP_SUBZONE = os.path.join(
 FP_HAWKERS = os.path.join("raw-data", "HawkerCentresGEOJSON.geojson")
 
 SAVEPATH = os.path.join("intermediate-output", "subzones-poi-count.csv")
-# -
 
+# %%
 xwalk = (
     pd.read_csv(FP_XWALK_ZIP_SUBZONE)
     .rename(columns={"POSTAL": "postcode", "subzone_name": "subzone"})
@@ -105,8 +105,10 @@ xwalk = (
 )
 xwalk.head(3)
 
+# %% [markdown]
 # ### Data.gov.sg resources
 
+# %%
 subzones = (
     gpd.read_file(FP_SUBZONES_SHP)
     .rename(columns={"Name": "subzone"})
@@ -114,7 +116,7 @@ subzones = (
 )
 subzones.head(3)
 
-# +
+# %%
 # Parks
 parks = (
     gpd.read_file(FP_PARKS).rename(columns={"Name": "park"}).drop("Description", axis=1)
@@ -131,7 +133,7 @@ parks = (
 )
 parks.head(3)
 
-# +
+# %%
 # Libraries
 lib = (
     gpd.read_file(FP_LIB)
@@ -150,7 +152,7 @@ lib = (
 )
 lib.head(3)
 
-# +
+# %%
 # LRT & MRT stations
 transit = (
     gpd.read_file(FP_TRANSIT)
@@ -169,7 +171,7 @@ transit = (
 )
 transit.head(3)
 
-# +
+# %%
 # Preschools
 presch = (
     gpd.read_file(FP_PRESCH)
@@ -187,7 +189,7 @@ presch = (
     .rename(columns={0: "preschools"})
 )
 
-# +
+# %%
 # Sport facilities
 sport = (
     gpd.read_file(FP_SPORT)
@@ -205,7 +207,7 @@ sport = (
     .rename(columns={0: "sport_facilities"})
 )
 
-# +
+# %%
 # Supermarkets
 marts = (
     gpd.read_file(FP_MART)
@@ -223,7 +225,7 @@ marts = (
     .rename(columns={0: "supermarkets"})
 )
 
-# +
+# %%
 # LTA school zones
 schzone = (
     gpd.read_file(FP_SCHZONE)
@@ -241,7 +243,7 @@ schzone = (
     .rename(columns={0: "schzones"})
 )
 
-# +
+# %%
 # LTA silver zones
 silver = (
     gpd.read_file(FP_SILVER)
@@ -259,7 +261,7 @@ silver = (
     .rename(columns={0: "silverzones"})
 )
 
-# +
+# %%
 # Tourist attractions
 tour = (
     gpd.read_file(FP_TOURIST)
@@ -276,13 +278,14 @@ tour = (
     .reset_index()
     .rename(columns={0: "tour"})
 )
-# -
 
+# %% [markdown]
 # ### Open-source resources
 
+# %% [markdown]
 # #### Schools
 
-# +
+# %%
 poi = (
     pd.read_json(FP_BUILDINGS)
     .rename(columns={"BUILDING": "poi", "POSTAL": "postcode"})
@@ -307,10 +310,11 @@ schools = (
     .reset_index()
     .rename(columns={0: "schools"})
 )
-# -
 
+# %% [markdown]
 # #### Transit
 
+# %%
 lrts = (
     pd.read_json(FP_LRT)
     .rename(columns={"Possible Locations": "geopayload"})
@@ -325,6 +329,7 @@ lrts = (
     .rename(columns={0: "lrts"})
 )
 
+# %%
 mrts = (
     pd.read_json(FP_MRT)
     .rename(columns={"Possible Locations": "geopayload"})
@@ -339,6 +344,7 @@ mrts = (
     .rename(columns={0: "mrts"})
 )
 
+# %% [markdown]
 # #### Distribution of industry groups
 # Resources on SSIC:
 #
@@ -356,7 +362,7 @@ mrts = (
 # * Transport & storage 49
 # * Land transport & Support svcs 49?
 
-# +
+# %%
 csv_files = list(walk_through_files(FP_REG_BUSINESS, "csv", fullpath=True))
 dfs = []
 for file in csv_files:
@@ -391,7 +397,7 @@ services = df[(df["ind"] == "46") | (df["ind"] == "47") | (df["ind"] == "49")]
 
 df.head()
 
-# +
+# %%
 manufact = (
     manufact.merge(xwalk, how="left", on="postcode")
     .groupby("subzone")["count"]
@@ -417,12 +423,14 @@ services = (
     .reset_index()
     .rename(columns={"count": "services"})
 )
-# -
 
+# %% [markdown]
 # ### New
 
+# %% [markdown]
 # #### Hawkers
 
+# %%
 gdf_hawkers = (
     gpd.read_file(FP_HAWKERS)
     .pipe(get_html_table_metadata)
@@ -443,6 +451,7 @@ gdf_hawkers = (
 )
 gdf_hawkers.head()
 
+# %%
 hawkers = (
     gdf_hawkers
     .merge(xwalk, how="left", on="postcode")
@@ -454,9 +463,10 @@ hawkers = (
 )
 hawkers.head()
 
+# %% [markdown]
 # #### Shopping malls
 
-# +
+# %%
 # https://wiki.openstreetmap.org/wiki/Tag:shop%3Dmall
 payload = osmnx.features_from_place("Singapore", tags={'shop': 'mall'})
 
@@ -483,8 +493,8 @@ gdf_malls = (
     .rename_column("centroid", "geometry")
 )
 gdf_malls
-# -
 
+# %%
 assert gdf_malls.crs == subzones.crs
 shopping_malls = (
     gpd.sjoin(gdf_malls, subzones, how="left", predicate="intersects")
@@ -495,9 +505,10 @@ shopping_malls = (
 )
 shopping_malls.head()
 
+# %% [markdown]
 # ### Merge all
 
-# +
+# %%
 df_list_toappend = [
     lib,
     marts,
@@ -531,10 +542,11 @@ for _pddf in df_list_toappend:
 df.fillna(0, inplace=True)
 
 auto_reduce_mem(df, downcast_float="integer")
-# -
 
+# %%
 df
 
+# %%
 df.to_csv(SAVEPATH, index=False)
 
-
+# %%
