@@ -1,0 +1,47 @@
+  lint-notebooks:
+    name: NBQA lint (.ipynb)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install NBQA + project deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r assets/requirements.txt
+
+      - name: nbqa pyflakes selected notebooks
+        run: |
+          NOTEBOOKS="\
+            build/0-get-subzones-from-records.ipynb \
+            build/1-get-IDs.ipynb \
+            build/2-get-devicehome.ipynb \
+            build/3-get-movementcount.ipynb \
+            build/4-postal_to_2014subzonename.ipynb \
+            build/5-compile-POI-count.ipynb \
+            build/6a-clean-housetype.ipynb \
+            build/6b-map-weather.ipynb \
+            build/7-merge.ipynb"
+          nbqa pyflakes $NOTEBOOKS
+
+      - name: nbqa black --check selected notebooks
+        run: |
+          NOTEBOOKS="\
+            build/0-get-subzones-from-records.ipynb \
+            build/1-get-IDs.ipynb \
+            build/2-get-devicehome.ipynb \
+            build/3-get-movementcount.ipynb \
+            build/4-postal_to_2014subzonename.ipynb \
+            build/5-compile-POI-count.ipynb \
+            build/6a-clean-housetype.ipynb \
+            build/6b-map-weather.ipynb \
+            build/7-merge.ipynb"
+          nbqa black --check $NOTEBOOKS          
