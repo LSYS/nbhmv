@@ -26,5 +26,6 @@ nbqa
 black
 pyflakes
 mypy
+isort
 runpynb
 jupytext
