@@ -7,7 +7,7 @@ import platform
 import re
 import statistics
 from datetime import datetime
-from typing import Any, Dict, Iterable, List, Optional, Union
+from typing import Dict, Iterable, List, Optional, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -143,8 +143,8 @@ def save_df_in_chunks(pd_df, savepath, n_chunks, prefix, fileformat, compression
             temp-folder/mydf2.csv
             temp-folder/mydf3.csv
     """
-    for ix, df_chunk in enumerate(np.array_split(pd_df, n_chunks)):
-        df_chunk.to_csv(
+    for ix, df_chunk in enumerate(np.array_split(pd_df, n_chunks)): 
+        df_chunk.to_csv(  # type: ignore[attr-defined]
             os.path.join(savepath, f"{prefix}{ix+1}.{fileformat}"),
             index=False,
             compression=compression,

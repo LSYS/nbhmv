@@ -43,6 +43,19 @@ sync: ## Manually sync w/ Jupytext all paired notebooks with their .py files
 	@echo "Sync complete"
 
 ########################################################################
+# Jupytext sync to .py
+########################################################################
+UTIL := utilities.py
+
+.PHONY: pylint
+pylint: ## Run mypy, pyflakes, isort, black on utilities.py (same as GH action)
+	. $(ACTIVATE_PATH) && \
+	mypy --ignore-missing-imports --check-untyped-defs --exclude='.*__init__\.py$$' $(UTIL) && \
+	pyflakes $(UTIL) && \
+	isort $(UTIL) && \
+	black -l 88 --check $(UTIL)
+
+########################################################################
 # Other utilities
 ########################################################################
 .PHONY: help
