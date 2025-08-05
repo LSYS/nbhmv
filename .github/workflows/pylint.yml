@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9]
+        python-version: [3.8]
 
     steps:
       - uses: actions/checkout@v3
@@ -34,13 +34,13 @@ jobs:
           mypy --ignore-missing-imports \
           --check-untyped-defs \
           --exclude=.*__init__\.py$ \
-          scripts/utilities.py
+          build/utilities.py
       - name: pyflakes
         run: |
-          pyflakes scripts/utilities.py
+          pyflakes build/utilities.py
       - name: isort
         run: |
-          isort scripts/utilities.py
+          isort build/utilities.py
       - name: black
         run: |
-          black -l 88 scripts/utilities.py          
+          black -l 88 build/utilities.py          
