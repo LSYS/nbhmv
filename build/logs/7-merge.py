@@ -23,7 +23,8 @@ import gc
 from utilities import walk_through_files
 
 import warnings
-warnings.filterwarnings('ignore')
+
+warnings.filterwarnings("ignore")
 
 pd.set_option("display.max_rows", 250)
 pd.set_option("display.max_columns", 150)
@@ -43,9 +44,7 @@ FP_SUBZONES_SHP = os.path.join(
     "master-plan-2014-subzone-boundary-no-sea-shp.zip",
 )
 
-FP_REALIS = os.path.join(
-    "preprocessed-data", "realis_with_postal_code_complete.csv.gz"
-)
+FP_REALIS = os.path.join("preprocessed-data", "realis_with_postal_code_complete.csv.gz")
 FP_HDBRESALE = os.path.join("preprocessed-data", "hdb_saledata_with_geodata.csv.gz")
 
 FP_AGEGENDER = os.path.join(
@@ -126,7 +125,7 @@ df = (
     .drop("area_id", axis=1)
     .assign(home=lambda df: df["home"].replace(clean_cd_subzone))
     .assign(area=lambda df: df["area"].replace(clean_cd_subzone))
-#     .sort_values(["home", "area", "date"], ignore_index=True)
+    #     .sort_values(["home", "area", "date"], ignore_index=True)
     .sort_values(["home", "date", "area"], ignore_index=True)
 )
 print(len(df))
@@ -138,29 +137,25 @@ print(df["area"].nunique())
 print(df["date"].nunique())
 
 # %%
-300*91
+300 * 91
 
 # %%
-df[df.duplicated(subset=['home', 'area', 'date'], keep=False)]
+df[df.duplicated(subset=["home", "area", "date"], keep=False)]
 
 # %% [markdown]
 # ### Merge with house types
 
 # %% code_folding=[]
 # read in and merge
-htype = (
-    pd.read_csv(FP_HTYPE)
-    .assign(
-        area=lambda df: df["area"].str.lower().str.strip()
-    )
-)
+htype = pd.read_csv(FP_HTYPE).assign(area=lambda df: df["area"].str.lower().str.strip())
 # Get home area dwelling type
 df = (
     df
     # Convert home column to string to ensure compatibility
-    .assign(home=lambda df: df["home"].astype(str))
-    .merge(
-        htype.add_suffix("_home").rename(columns={"area_home": "home"}).assign(home=lambda df: df["home"].astype(str)),
+    .assign(home=lambda df: df["home"].astype(str)).merge(
+        htype.add_suffix("_home")
+        .rename(columns={"area_home": "home"})
+        .assign(home=lambda df: df["home"].astype(str)),
         how="left",
         on="home",
         validate="m:1",
@@ -171,9 +166,10 @@ df = (
 df = (
     df
     # Convert AREA column to string to ensure compatibility (not home!)
-    .assign(area=lambda df: df["area"].astype(str))
-    .merge(
-        htype.add_suffix("_dest").rename(columns={"area_dest": "area"}).assign(area=lambda df: df["area"].astype(str)),
+    .assign(area=lambda df: df["area"].astype(str)).merge(
+        htype.add_suffix("_dest")
+        .rename(columns={"area_dest": "area"})
+        .assign(area=lambda df: df["area"].astype(str)),
         how="left",
         on="area",  # merging on 'area', not 'home'
         validate="m:1",
@@ -240,12 +236,11 @@ len(weather["wsid"].unique().tolist())
 # %%
 # Fill in missing data
 weather = (
-    weather.groupby(["wsid"]).apply(
-    lambda group: group.interpolate(method="linear")
-    )
-    .drop(columns=['wsid'])
+    weather.groupby(["wsid"])
+    .apply(lambda group: group.interpolate(method="linear"))
+    .drop(columns=["wsid"])
     .reset_index()
-    .drop(columns=['level_1'])
+    .drop(columns=["level_1"])
 )
 weather
 
@@ -440,14 +435,12 @@ age65_ = (
 # %% code_folding=[]
 # Merge origin
 for pd_df in [females, age_20, age20_40, age65_, ttpop]:
-
     _pd_df = pd_df.add_suffix("_o").rename(columns={"subzone_o": "home"})
 
     df = df.merge(_pd_df, how="left", on="home", validate="m:1")
 
 # Merge dest
 for pd_df in [females, age_20, age20_40, age65_, ttpop]:
-
     _pd_df = pd_df.add_suffix("_d").rename(columns={"subzone_d": "area"})
 
     df = df.merge(_pd_df, how="left", on="area", validate="m:1")
@@ -526,14 +519,12 @@ tt_ethnic = (
 # %% code_folding=[]
 # Merge origin
 for pd_df in [chinese, malay, indian, other, tt_ethnic]:
-
     _pd_df = pd_df.add_suffix("_o").rename(columns={"subzone_o": "home"})
 
     df = df.merge(_pd_df, how="left", on="home", validate="m:1")
 
 # Merge dest
 for pd_df in [chinese, malay, indian, other, tt_ethnic]:
-
     _pd_df = pd_df.add_suffix("_d").rename(columns={"subzone_d": "area"})
 
     df = df.merge(_pd_df, how="left", on="area", validate="m:1")
@@ -627,39 +618,44 @@ df.head()
 YEARS = [2017, 2018, 2019]  # 3 years before sample year of 2020
 
 df_price = (
-    pd.concat([
-        (
-            pd.read_csv(
-                FP_HDBRESALE,
-                compression="gzip",
-                usecols=["month", "psm", "resale_price", "subzone_name"],
-            )
-            .rename(columns={"resale_price": "price"})
-            .assign(area=lambda df: df["subzone_name"].str.lower())
-            # retain only transactions in 2017 to 2019
-            .assign(year=lambda df: df["month"].str.slice(stop=4).astype(int))
-            .query("year in @YEARS")
-            .filter(["area", "psm", "price"])
-        ),
-        (
-            pd.read_csv(
-                FP_REALIS,
-                compression="gzip",
-                usecols=[
-                    "contractdate",
-                    "unitpricepsm",
-                    "transactedprice",
-                    "subzone_name",
-                ],
-            )
-            .rename(columns={"transactedprice": "price", "unitpricepsm": "psm"})
-            .assign(area=lambda df: df["subzone_name"].str.lower())
-            # retain only transactions in 2017 to 2019
-            .assign(year=lambda df: df["contractdate"].str.slice(stop=4).astype(int))
-            .query("year in @YEARS")
-            .filter(["area", "psm", "price"])
-        )
-    ], ignore_index=True)
+    pd.concat(
+        [
+            (
+                pd.read_csv(
+                    FP_HDBRESALE,
+                    compression="gzip",
+                    usecols=["month", "psm", "resale_price", "subzone_name"],
+                )
+                .rename(columns={"resale_price": "price"})
+                .assign(area=lambda df: df["subzone_name"].str.lower())
+                # retain only transactions in 2017 to 2019
+                .assign(year=lambda df: df["month"].str.slice(stop=4).astype(int))
+                .query("year in @YEARS")
+                .filter(["area", "psm", "price"])
+            ),
+            (
+                pd.read_csv(
+                    FP_REALIS,
+                    compression="gzip",
+                    usecols=[
+                        "contractdate",
+                        "unitpricepsm",
+                        "transactedprice",
+                        "subzone_name",
+                    ],
+                )
+                .rename(columns={"transactedprice": "price", "unitpricepsm": "psm"})
+                .assign(area=lambda df: df["subzone_name"].str.lower())
+                # retain only transactions in 2017 to 2019
+                .assign(
+                    year=lambda df: df["contractdate"].str.slice(stop=4).astype(int)
+                )
+                .query("year in @YEARS")
+                .filter(["area", "psm", "price"])
+            ),
+        ],
+        ignore_index=True,
+    )
     # Remove comma from valuations (e.g. 17,493)
     .assign(
         psm=lambda df: df["psm"].astype("string").str.replace(",", "").astype("float")
