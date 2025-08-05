@@ -42,7 +42,7 @@ jobs:
             build/1-get-IDs.ipynb \
             build/2-get-devicehome.ipynb \
             build/3-get-movementcount.ipynb \
-            build/4-postal_to_2014subzonename.ipynb \
+            build/4-postal-to-2014subzonename.ipynb \
             build/5-compile-POI-count.ipynb \
             build/6a-clean-housetype.ipynb \
             build/6b-map-weather.ipynb \
@@ -59,7 +59,7 @@ jobs:
             build/1-get-IDs.ipynb \
             build/2-get-devicehome.ipynb \
             build/3-get-movementcount.ipynb \
-            build/4-postal_to_2014subzonename.ipynb \
+            build/4-postal-to-2014subzonename.ipynb \
             build/5-compile-POI-count.ipynb \
             build/6a-clean-housetype.ipynb \
             build/6b-map-weather.ipynb \
