@@ -8,21 +8,20 @@ else
 	ACTIVATE_PATH := ../$(VENVPATH)/bin/activate
 endif
 
-# .PHONY: data
-# data: ## Run all notebooks in sequence with output versions (-o)
-# 	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
-# 	. $(ACTIVATE_PATH) && \
-# 	runpynb -s -o \
-# 	  0-get-subzones-from-records.ipynb \
-# 	  1-get-IDs.ipynb \
-# 	  2-get-devicehome.ipynb \
-# 	  3-get-movementcount.ipynb \
-# 	  4-postal_to_2014subzonename.ipynb \
-# 	  5-compile-POI-count.ipynb \
-# 	  6a-clean-housetype.ipynb \
-# 	  6b-map-weather.ipynb \
-# 	  7-merge.ipynb
-# 	mv *-out.ipynb logs/
+.PHONY: analysis
+analysis: ## Run all notebooks with output versions (-o)
+	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
+	. $(ACTIVATE_PATH) && \
+	runpynb -o \
+	  bootstrap-r2.ipynb \
+	  borders.ipynb \
+	  choropleth-devices.ipynb \
+	  choropleth-income.ipynb \
+	  choropleth-price.ipynb \
+	  get-devicecount-subzone-day.ipynb \
+	  lower-vs-higher-ptiles.ipynb \
+	  pa-price.ipynb
+	mv *-out.ipynb logs/
 
 ########################################################################
 # Jupytext sync to .py
@@ -41,6 +40,26 @@ sync: ## Manually sync w/ Jupytext all paired notebooks with their .py files
 	. $(ACTIVATE_PATH) && \
 	jupytext --sync *.ipynb
 	@echo "Sync complete"
+
+########################################################################
+# Notebook lint
+########################################################################
+NOTEBOOKS := \
+    ./bootstrap-r2.ipynb \
+    ./borders.ipynb \
+    ./choropleth-devices.ipynb \
+    ./choropleth-income.ipynb \
+    ./choropleth-price.ipynb \
+    ./get-devicecount-subzone-day.ipynb \
+    ./lower-vs-higher-ptiles.ipynb \
+    ./pa-price.ipynb
+
+.PHONY: lint-notebooks
+lint-notebooks: ## Run nbqa pyflakes and black --check on selected notebooks
+	@echo "==> NBQA pyflakes"
+	. $(ACTIVATE_PATH) && nbqa pyflakes $(NOTEBOOKS)
+	@echo "==> NBQA black --check"
+	. $(ACTIVATE_PATH) && nbqa black $(NOTEBOOKS)
 
 ########################################################################
 # Other utilities
