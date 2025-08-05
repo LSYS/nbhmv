@@ -1,0 +1,46 @@
+name: pylint
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths: 
+      - build/utilities.py
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+      - build/utilities.py
+
+jobs:
+  build:
+    name: Style and type linter, Coverage
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r assets/requirements.txt
+      - name: Check type annotation
+        run: |
+          mypy --ignore-missing-imports \
+          --check-untyped-defs \
+          --exclude=.*__init__\.py$ \
+          scripts/utilities.py
+      - name: pyflakes
+        run: |
+          pyflakes scripts/utilities.py
+      - name: isort
+        run: |
+          isort scripts/utilities.py
+      - name: black
+        run: |
+          black -l 88 scripts/utilities.py          
