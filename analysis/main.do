@@ -82,8 +82,8 @@ end
 
 cap program drop make_fig10
 program define make_fig10
-	do code/policy/visits_increase_by_ethnicmismatch_percentiles.do
-	do code/policy/visits_increase_by_ethnicmismatch_c2m_percentiles.do
+	// do code/policy/visits_increase_by_ethnicmismatch_percentiles.do
+	// do code/policy/visits_increase_by_ethnicmismatch_c2m_percentiles.do
 	do code/policy/graph.do
 end
 
@@ -126,6 +126,8 @@ cap program drop make_tabH2
 program define make_tabH2
 	do code/additional_specifications/cny_wpsm.do
 end
+
+
 * =========================================================
 * Nbh flows and mismatch
 * =========================================================
@@ -152,10 +154,33 @@ end
 // make_tabD6
 // make_tabD4
 
-make_tabH1
+// make_tabH1
 // make_tabH2
 // for preserve before keep if _n < 5000
 // restore
+
+// do code/mismatch_top25p/pxor_wpsm_top25p.do
+// do code/mismatch_top25p/pxor_wpsm_r2p_p2r_top25p.do
+// do code/mismatch_top25p/pxor_wpsm_ncentral_top25p.do
+
+// do code/dow/pxor_wpsm_wkday_wkend.do
+// do code/dow/pxor_wpsm_r2p_p2r_wkday_wkend.do
+// do code/dow/pxor_wpsm_ncentral_wkday_wkend.do
+
+// do code/adjacency_filter/pxor_wpsm_adjacency_filter.do
+// do code/adjacency_filter/pxor_wpsm_r2p_p2r_adjacency_filter.do
+// do code/adjacency_filter/pxor_wpsm_ncentral_adjacency_filter.do
+// do code/adjacency_filter/pxor_race_adjacency_filter.do
+// do code/adjacency_filter/pxor_race_asymmetry_adjacency_filter.do
+// do code/adjacency_filter/pxor_race_ncentral_adjacency_filter.do
+
+// do code/additional_specifications/exc_majorempcenters_pxor_wpsm.do
+// do code/additional_specifications/exc_majorempcenters_pxor_wpsm_r2p_p2r.do
+// do code/additional_specifications/exc_majorempcenters_pxor_wpsm_ncentral.do
+
+// do code/additional_specifications/exc_majorempcenters_pxor_race.do
+// do code/additional_specifications/exc_majorempcenters_pxor_race_asymmetry.do
+// do code/additional_specifications/exc_majorempcenters_pxor_race_ncentral.do
 
 * =========================================================
 * Nbh flows and mismatch
