@@ -79,6 +79,17 @@ diagram: ## Make dependency diagram (mermaid)
 	mmdc -i $(DIAGRAM_BASE).mmd -o $(DIAGRAM_BASE).svg
 	mmdc -i $(DIAGRAM_BASE).mmd -o $(DIAGRAM_BASE).png -s 10
 
+########################################################################
+# 'Freeze' current venv packages
+########################################################################
+LOCKFILE := requirements-locked.txt
+.PHONY: pipfreeze
+pipfreeze: ## Write specific pkg versions to assets/requirements-locked.txt
+	@echo "==> $@"
+	@echo "==> Freezing packages from $(VENVPATH)"
+	@. $(ACTIVATE_PATH) && python -m pip freeze > $(LOCKFILE)
+	@echo; echo "Contents of $(LOCKFILE):"; cat $(LOCKFILE)
+	@cat $(LOCKFILE)
 
 ########################################################################
 # Other utilities
