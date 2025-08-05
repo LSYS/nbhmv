@@ -1,19 +1,19 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,logs//py
+#     formats: ipynb,logs//py:percent
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.14.5
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.17.2
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# +
+# %%
 import os
 import pandas as pd
 import geopandas as gpd
@@ -71,11 +71,11 @@ FP_SUBZONES_SHP = os.path.join(
 )
 
 SAVEPATH = os.path.join("cd-panel.csv")
-# -
 
+# %% [markdown]
 # ### Prep Citydata gravity panel
 
-# + code_folding=[]
+# %% code_folding=[]
 # Prep area to xid dict AND dict to clean 4 names
 xid_area = (
     pd.read_csv(FP_CD_AREANAMES)
@@ -93,7 +93,7 @@ clean_cd_subzone = {
 }
 xid_area
 
-# +
+# %%
 # First, let's see what's actually in the date column before any processing
 df_raw = pd.read_csv(FP_CDGRAVITY, compression="gzip")
 print("Original date column info:")
@@ -107,11 +107,11 @@ if df_raw['date'].dtype == 'object':
     print("Non-numeric values found:")
     non_numeric = df_raw[pd.to_numeric(df_raw['date'], errors='coerce').isnull()]
     print(non_numeric['date'].unique()[:10])
-# -
 
+# %%
 pd.read_csv(FP_CDGRAVITY, compression="gzip")
 
-# +
+# %%
 df = pd.read_csv(FP_CDGRAVITY, compression="gzip")
 
 df = (
@@ -150,19 +150,22 @@ df = (
 )
 print(len(df))
 df
-# -
 
+# %%
 print(df["home"].nunique())
 print(df["area"].nunique())
 print(df["date"].nunique())
 
+# %%
 300*91
 
+# %%
 df[df.duplicated(subset=['home', 'area', 'date'], keep=False)]
 
+# %% [markdown]
 # ### Merge with house types
 
-# + code_folding=[]
+# %% code_folding=[]
 # read in and merge
 htype = (
     pd.read_csv(FP_HTYPE)
@@ -199,11 +202,11 @@ df = (
 del htype
 gc.collect()
 df.head()
-# -
 
+# %% [markdown]
 # ### Prep Weather
 
-# + code_folding=[]
+# %% code_folding=[]
 # 2014 Area to weather station crosswalk
 ws_area_crosswalk = (
     pd.read_csv(FP_WEATHERSTATION_CROSSWALK)
@@ -213,7 +216,7 @@ ws_area_crosswalk = (
 
 ws_area_crosswalk = dict(zip(ws_area_crosswalk["area"], ws_area_crosswalk["wsid"]))
 
-# + code_folding=[]
+# %% code_folding=[]
 # Read in weather data
 WEATHER_DATA = list(walk_through_files(FP_WEATHER, "csv", returnboth=True))
 
@@ -244,16 +247,16 @@ for path, file in WEATHER_DATA:
         )
 
         weather = pd.concat([weather, _df], ignore_index=True)
-# -
 
+# %%
 len(weather["wsid"].unique().tolist())
 
-# +
+# %%
 # weather = (weather.merge(ws_area_crosswalk, how='inner', on='wsid', validate='m:m')
 #            .drop('wsid', axis=1)
 #           )
-# -
 
+# %%
 # Fill in missing data
 weather = (
     weather.groupby(["wsid"]).apply(
@@ -265,16 +268,20 @@ weather = (
 )
 weather
 
+# %%
 weather
 
+# %% [markdown]
 # ### Merge with weather
 
+# %%
 assert type(df.loc[0, "date"]) == type(weather.reset_index().loc[0, "date"])
 
+# %%
 df["wsid_home"] = df["home"].map(ws_area_crosswalk)
 df["wsid_dest"] = df["area"].map(ws_area_crosswalk)
 
-# + code_folding=[]
+# %% code_folding=[]
 # Home area weather
 df = df.merge(
     weather.rename(columns={"wsid": "wsid_home", "rainfall": "rain_home"}),
@@ -296,11 +303,11 @@ gc.collect()
 
 df.drop(["wsid_home", "wsid_dest"], axis=1, inplace=True)
 df.head()
-# -
 
+# %% [markdown]
 # ### Merge area distance and continguity
 
-# +
+# %%
 _usecols = [
     "Subzone Name_o",
     "Subzone Name_d",
@@ -323,16 +330,16 @@ del dist
 gc.collect()
 df.head()
 
-# +
+# %%
 # get_diff_stringval_from_2columns(df, 'home', dist, 'home')
 
-# +
+# %%
 # get_diff_stringval_from_2columns(df, 'area', dist, 'area')
-# -
 
+# %% [markdown]
 # ### Get area's land area
 
-# + code_folding=[]
+# %% code_folding=[]
 # https://www.singstat.gov.sg/-/media/files/publications/population/population2018-map1.pdf
 subzones_area = (
     gpd.read_file(FP_SUBZONES_SHP)
@@ -343,7 +350,7 @@ subzones_area = (
 )
 # subzones_area.crs
 
-# + code_folding=[]
+# %% code_folding=[]
 # Merge
 df = df.merge(
     subzones_area.rename(
@@ -363,13 +370,14 @@ df = df.merge(
     validate="m:1",
 )
 df.head()
-# -
 
+# %% [markdown]
 # ### Merge other available subzone census var.
 
+# %% [markdown]
 # #### Age and gender
 
-# + code_folding=[]
+# %% code_folding=[]
 # Read in and prep
 collapse_age_brackets = {
     "0 - 4": "0-9",
@@ -448,7 +456,7 @@ age65_ = (
     .rename(columns={"value": "age65_"})
 )
 
-# + code_folding=[]
+# %% code_folding=[]
 # Merge origin
 for pd_df in [females, age_20, age20_40, age65_, ttpop]:
 
@@ -465,7 +473,7 @@ for pd_df in [females, age_20, age20_40, age65_, ttpop]:
 
 del agegender, females, ttpop, age20_40, age_20, age65_
 
-# + code_folding=[]
+# %% code_folding=[]
 # Get proportions and drop total
 for x in ["females_o", "age_20_o", "age20_40_o", "age65__o"]:
     df[x] = 100 * (df[x] / df["tt_pop_o"])
@@ -475,11 +483,11 @@ for x in ["females_d", "age_20_d", "age20_40_d", "age65__d"]:
 
 df.drop(["tt_pop_o", "tt_pop_d"], axis=1, inplace=True)
 df.head()
-# -
 
+# %% [markdown]
 # #### Ethnic
 
-# + code_folding=[]
+# %% code_folding=[]
 # Read in and prep
 ethnic = (
     pd.read_csv(FP_ETHNIC, usecols=["level_1", "level_2", "level_4", "value"])
@@ -534,7 +542,7 @@ tt_ethnic = (
     .rename(columns={"value": "tt_ethnic"})
 )
 
-# + code_folding=[]
+# %% code_folding=[]
 # Merge origin
 for pd_df in [chinese, malay, indian, other, tt_ethnic]:
 
@@ -551,7 +559,7 @@ for pd_df in [chinese, malay, indian, other, tt_ethnic]:
 
 del chinese, indian, malay, other, tt_ethnic
 
-# + code_folding=[]
+# %% code_folding=[]
 # Get proportions and drop total
 for x in ["chinese_o", "malays_o", "indians_o", "others_o"]:
     df[x] = 100 * (df[x] / df["tt_ethnic_o"])
@@ -561,11 +569,11 @@ for x in ["chinese_d", "malays_d", "indians_d", "others_d"]:
 
 df.drop(["tt_ethnic_o", "tt_ethnic_d"], axis=1, inplace=True)
 df.head()
-# -
 
+# %% [markdown]
 # ### Merge with POIs count
 
-# +
+# %%
 poi = (
     pd.read_csv(FP_POI)
     .assign(subzone=lambda df: df["subzone"].str.lower().str.strip())
@@ -577,11 +585,11 @@ df = df.merge(poi, how="left", on="area", validate="m:1")
 del poi
 gc.collect()
 df.head()
-# -
 
+# %% [markdown]
 # ### Merge Public Rentals
 
-# +
+# %%
 _usecols = [
     "area",
     "1room_rental_pct",
@@ -627,13 +635,14 @@ df = df.merge(
 del pub_rentals
 gc.collect()
 df.head()
-# -
 
+# %% [markdown]
 # ### Merge resale price
 
+# %% [markdown]
 # #### Avg public & private together
 
-# +
+# %%
 YEARS = [2017, 2018, 2019]  # 3 years before sample year of 2020
 
 df_price = (
@@ -699,7 +708,7 @@ df_price = (
 
 df_price.head()
 
-# +
+# %%
 df = df.merge(
     df_price.add_suffix("_home").rename(columns={"area_home": "home"}),
     how="left",
@@ -714,13 +723,14 @@ df = df.merge(
     validate="m:1",
 )
 df.head()
-# -
 
+# %%
 df_price.num_transactions.sum()
 
+# %% [markdown]
 # #### Keep public & private separate
 
-# +
+# %%
 df_hdb_price = (
     (
         pd.read_csv(
@@ -759,7 +769,7 @@ df_price = df_price.merge(df_hdb_price, how="left", on="area", validate="1:1")
 
 df_hdb_price.head(2)
 
-# +
+# %%
 # Merge with df
 df = df.merge(
     df_hdb_price.add_suffix("_home").rename(columns={"area_home": "home"}),
@@ -778,7 +788,7 @@ df = df.merge(
 del df_hdb_price
 gc.collect()
 
-# +
+# %%
 df_private_price = (
     (
         pd.read_csv(
@@ -829,7 +839,7 @@ df_price = df_price.merge(df_private_price, how="left", on="area", validate="1:1
 
 df_private_price.head(2)
 
-# +
+# %%
 # Merge with df
 df = df.merge(
     df_private_price.add_suffix("_home").rename(columns={"area_home": "home"}),
@@ -848,7 +858,7 @@ df = df.merge(
 del df_private_price
 gc.collect()
 
-# +
+# %%
 # Save subzone level transaction price
 df_price.to_csv(
     os.path.join("intermediate-output", "propprice-subzone.csv"), index=False
@@ -856,11 +866,11 @@ df_price.to_csv(
 
 del df_price
 gc.collect()
-# -
 
+# %% [markdown]
 # #### Compute weighted (by public/private residence share) house price
 
-# +
+# %%
 # weighted PSM for home
 df["wpsm_private_home"] = df["private_home"] / 100 * df["private_psm_home"]
 df["wpsm_public_home"] = (100 - df["private_home"]) / 100 * df["public_psm_home"]
@@ -879,37 +889,41 @@ df["wpsm_dest"] = df[["wpsm_private_dest", "wpsm_public_dest"]].sum(
 # If zero, means both private and public data is missing, replace as missing
 df["wpsm_dest"] = np.where(df["wpsm_dest"] == 0, np.nan, df["wpsm_dest"])
 
-# weighted price for home
-df["wprice_private_home"] = df["private_home"] / 100 * df["private_price_home"]
-df["wprice_public_home"] = (100 - df["private_home"]) / 100 * df["public_price_home"]
-df["wprice_home"] = df[["wprice_private_home", "wprice_public_home"]].sum(
-    axis=1, skipna=True
-)  # Treat na as 0
-# If zero, means both private and public data is missing, replace as missing
-df["wprice_home"] = np.where(df["wprice_home"] == 0, np.nan, df["wprice_home"])
+# # weighted price for home
+# df["wprice_private_home"] = df["private_home"] / 100 * df["private_price_home"]
+# df["wprice_public_home"] = (100 - df["private_home"]) / 100 * df["public_price_home"]
+# df["wprice_home"] = df[["wprice_private_home", "wprice_public_home"]].sum(
+#     axis=1, skipna=True
+# )  # Treat na as 0
+# # If zero, means both private and public data is missing, replace as missing
+# df["wprice_home"] = np.where(df["wprice_home"] == 0, np.nan, df["wprice_home"])
 
-# weighted price for dest
-df["wprice_private_dest"] = df["private_home"] / 100 * df["private_price_dest"]
-df["wprice_public_dest"] = (100 - df["private_home"]) / 100 * df["public_price_dest"]
-df["wprice_dest"] = df[["wprice_private_dest", "wprice_public_dest"]].sum(
-    axis=1, skipna=True
-)  # Treat na as 0
-# If zero, means both private and public data is missing, replace as missing
-df["wprice_dest"] = np.where(df["wprice_dest"] == 0, np.nan, df["wprice_dest"])
-# -
+# # weighted price for dest
+# df["wprice_private_dest"] = df["private_home"] / 100 * df["private_price_dest"]
+# df["wprice_public_dest"] = (100 - df["private_home"]) / 100 * df["public_price_dest"]
+# df["wprice_dest"] = df[["wprice_private_dest", "wprice_public_dest"]].sum(
+#     axis=1, skipna=True
+# )  # Treat na as 0
+# # If zero, means both private and public data is missing, replace as missing
+# df["wprice_dest"] = np.where(df["wprice_dest"] == 0, np.nan, df["wprice_dest"])
 
+# %% [markdown]
 # ### Save
 
+# %%
 # Dont remember what this is for
 _g = ["pa_home", "home", "rm12_home"]
 df[_g].drop_duplicates().sort_values("rm12_home", ascending=False).head(10)
 
+# %%
 # Codify area names (remove text names, e.g. Crawford --> 16)
 for col in ["home", "area", "pa_home", "pa_dest"]:
     df[col] = df[col].astype("category").cat.codes
 
+# %%
 df.head(3)
 
+# %%
 df.to_csv(SAVEPATH, index=False)
 
-
+# %%

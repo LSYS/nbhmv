@@ -25,6 +25,7 @@ fiona.drvsupport.supported_drivers["KML"] = (
 )
 import gc
 import janitor 
+janitor
 pd.set_option("display.max_rows", 500)
 
 from utilities import walk_through_files, auto_reduce_mem, get_html_table_metadata

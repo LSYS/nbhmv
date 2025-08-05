@@ -8,6 +8,10 @@ else
 	ACTIVATE_PATH := ../$(VENVPATH)/bin/activate
 endif
 
+
+########################################################################
+# Make data in pipeline
+########################################################################
 .PHONY: data
 data: ## Run all notebooks in sequence with output versions (-o)
 	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
@@ -43,7 +47,7 @@ sync: ## Manually sync w/ Jupytext all paired notebooks with their .py files
 	@echo "Sync complete"
 
 ########################################################################
-# Jupytext sync to .py
+# Pylint
 ########################################################################
 UTIL := utilities.py
 
@@ -54,6 +58,27 @@ pylint: ## Run mypy, pyflakes, isort, black on utilities.py (same as GH action)
 	pyflakes $(UTIL) && \
 	isort $(UTIL) && \
 	black -l 88 --check $(UTIL)
+
+########################################################################
+# Notebook lint
+########################################################################
+NOTEBOOKS := \
+    ./0-get-subzones-from-records.ipynb \
+    ./1-get-IDs.ipynb \
+    ./2-get-devicehome.ipynb \
+    ./3-get-movementcount.ipynb \
+    ./4-postal_to_2014subzonename.ipynb \
+    ./5-compile-POI-count.ipynb \
+    ./6a-clean-housetype.ipynb \
+    ./6b-map-weather.ipynb \
+    ./7-merge.ipynb
+
+.PHONY: lint-notebooks
+lint-notebooks: ## Run nbqa pyflakes and black --check on selected notebooks
+	@echo "==> NBQA pyflakes"
+	. $(ACTIVATE_PATH) && nbqa pyflakes $(NOTEBOOKS)
+	@echo "==> NBQA black --check"
+	. $(ACTIVATE_PATH) && nbqa black --check $(NOTEBOOKS)
 
 ########################################################################
 # Other utilities

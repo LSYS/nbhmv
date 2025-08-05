@@ -1,31 +1,31 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,logs//py
+#     formats: ipynb,logs//py:percent
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.14.5
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.17.2
 #   kernelspec:
 #     display_name: Python (venv_nbhmv)
 #     language: python
 #     name: venv_nbhmv
 # ---
 
-# +
+# %%
 import os
 import pandas as pd
-from tqdm.notebook import tqdm
-import time
-import janitor 
-from utilities import get_date, get_subzone_name, walk_through_files
+import janitor
+janitor
+
+from utilities import walk_through_files
 
 import warnings
 
 warnings.filterwarnings("ignore")
-# -
 
+# %%
 RECORDS_PATH = os.path.join("raw-data", "sg_subzones_devices", "sg_subzones_devices")
 SAVEPATH = os.path.join("intermediate-output", "device-area-maxcount.csv.gz")
 SUBZONE_PATH = os.path.join("intermediate-output", "citydata-subzones.csv")
@@ -34,52 +34,60 @@ DEVICE_ID_DICT_PATH = os.path.join(
     "intermediate-output", "deviceID-list", "deviceID-list-chunk*.csv.gz"
 )
 
+# %% [markdown]
 # #### Replicate datadump with (integer) IDs
 
-if False:
+# %%
+# from tqdm.notebook import tqdm
+# import time
+# from utilities import get_date, get_subzone_name
 
-    # Get device ID dict DEVICE_ID_DICT_PATH
-    devices = (dd.read_csv(DEVICE_ID_DICT_PATH, compression="gzip")).compute()
-    devices = dict(zip(devices["hashid"], devices["xid"]))
+# if False:
 
-    # Get area ID dict
-    subzones = pd.read_csv(SUBZONE_PATH)
-    subzones = dict(zip(subzones["subzone"].str.lower(), subzones["areaid"]))
+#     # Get device ID dict DEVICE_ID_DICT_PATH
+#     devices = (dd.read_csv(DEVICE_ID_DICT_PATH, compression="gzip")).compute()
+#     devices = dict(zip(devices["hashid"], devices["xid"]))
 
-    file_lists = tuple(walk_through_files(RECORDS_PATH, "csv.gz", returnboth=True))
+#     # Get area ID dict
+#     subzones = pd.read_csv(SUBZONE_PATH)
+#     subzones = dict(zip(subzones["subzone"].str.lower(), subzones["areaid"]))
 
-    # Create alternate datadump
-    for filepath, filename in tqdm(file_lists):
-        # open file
-        _date = get_date(filename)
-        # https://stackoverflow.com/questions/19801727/convert-datetime-to-unix-timestamp-and-convert-it-back-in-python
-        _date = time.mktime(_date.timetuple())
-        _subzone = get_subzone_name(filename)
+#     file_lists = tuple(walk_through_files(RECORDS_PATH, "csv.gz", returnboth=True))
 
-        df = (
-            pd.read_csv(
-                os.path.join(filepath, filename),
-                compression="gzip",
-                names=["device", "ios"],
-            )
-            .assign(date=_date)
-            .assign(area_id=subzones[_subzone])
-            #           .assign(device=lambda x: [devices[device] for device in x['device']])
-            .assign(device=lambda x: [devices[device] for device in x["device"]])
-            .rename(columns={"device": "device_xid"})
-            .astype(
-                {"area_id": "int", "device_xid": "int", "ios": "int", "date": "int"}
-            )
-        ).to_csv(
-            os.path.join(ALTERNATE_DUMP_PATH, filename), index=False, compression="gzip"
-        )
+#     # Create alternate datadump
+#     for filepath, filename in tqdm(file_lists):
+#         # open file
+#         _date = get_date(filename)
+#         # https://stackoverflow.com/questions/19801727/convert-datetime-to-unix-timestamp-and-convert-it-back-in-python
+#         _date = time.mktime(_date.timetuple())
+#         _subzone = get_subzone_name(filename)
 
+#         df = (
+#             pd.read_csv(
+#                 os.path.join(filepath, filename),
+#                 compression="gzip",
+#                 names=["device", "ios"],
+#             )
+#             .assign(date=_date)
+#             .assign(area_id=subzones[_subzone])
+#             #           .assign(device=lambda x: [devices[device] for device in x['device']])
+#             .assign(device=lambda x: [devices[device] for device in x["device"]])
+#             .rename(columns={"device": "device_xid"})
+#             .astype(
+#                 {"area_id": "int", "device_xid": "int", "ios": "int", "date": "int"}
+#             )
+#         ).to_csv(
+#             os.path.join(ALTERNATE_DUMP_PATH, filename), index=False, compression="gzip"
+#         )
+
+# %% [markdown]
 # #### Get max count
 
+# %%
 file_lists = tuple(walk_through_files(ALTERNATE_DUMP_PATH, "csv.gz", fullpath=True))
 len(file_lists)
 
-# +
+# %%
 df = (pd.concat([pd.read_csv(f, compression='gzip', usecols=['device_xid', 'area_id']) 
                  for f in file_lists])
       .groupby(['device_xid', 'area_id']).size()
@@ -90,10 +98,11 @@ df = (pd.concat([pd.read_csv(f, compression='gzip', usecols=['device_xid', 'area
      )
 
 df
-# -
 
+# %%
 df.to_csv(SAVEPATH, index=False, compression="gzip")
 
+# %% [markdown]
 # #### Testing output using dummyfiles/datadump.csv
 #
 # * contains only 3 devices, 3 areas, over 3 dates
@@ -102,11 +111,12 @@ df.to_csv(SAVEPATH, index=False, compression="gzip")
 # * device 2's home is a tie between area 1 and 2 (appears in area 1 and 2 twice)
 # * device 3 is one of those that only appears once in the sample, still, output should return "home" as that one area 3 it appeared in.
 
+# %%
 DUMMY_PATH = os.path.join("tests", "datadump.csv")
 dummy = pd.read_csv(DUMMY_PATH)
 dummy
 
-# +
+# %%
 dummyhome = (
     dummy.groupby(["device_xid", "area_id"])
     .size()
@@ -118,6 +128,6 @@ dummyhome = (
 )
 
 dummyhome
-# -
 
+# %%
 dummyhome.to_csv(os.path.join("tests", "dummy-home.csv"), index=False)

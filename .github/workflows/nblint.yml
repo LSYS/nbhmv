@@ -1,4 +1,4 @@
-name: NBQA-notebook-lint
+name: Build notebooks lint
 
 on:
   workflow_dispatch:
