@@ -1,19 +1,19 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,logs//py
+#     formats: ipynb,logs//py:percent
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.14.5
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.17.2
 #   kernelspec:
 #     display_name: Python (venv_nbhmv)
 #     language: python
 #     name: venv_nbhmv
 # ---
 
-# +
+# %%
 import os
 import pandas as pd
 import geopandas as gpd
@@ -35,7 +35,7 @@ warnings.filterwarnings("ignore")
 
 pd.set_option("display.max_rows", 500)
 
-# + code_folding=[]
+# %% code_folding=[]
 # SUBZONE_SHP2014_FILE = os.path.join('zip://', '..', 'raw-files', 'master-plan-2014-subzone-boundary-no-sea', 'master-plan-2014-subzone-boundary-no-sea-shp.zip')
 SUBZONE_KML2014_FILE = os.path.join(
     "zip://",
@@ -51,11 +51,11 @@ CROSSWALK_SAVEPATH = os.path.join(
 
 SAVEPATH = os.path.join("..", "results", "figures", "supplementary")
 make_folder(SAVEPATH)
-# -
 
+# %% [markdown]
 # ### Read in subzones
 
-# +
+# %%
 subzones = (
     gpd.read_file(SUBZONE_KML2014_FILE)
     .assign(centroid=lambda df: df.centroid)
@@ -67,11 +67,11 @@ subzones = (
 )
 
 crs = subzones.crs
-# -
 
+# %% [markdown]
 # ### Read in stations
 
-# + code_folding=[]
+# %% code_folding=[]
 # Get weather stations recorded in Jan-Mar 2020
 WEATHER_DATA = list(walk_through_files(FP_WEATHER, "csv", returnboth=True))
 
@@ -105,7 +105,7 @@ for path, file in WEATHER_DATA:
 
 avail_ws = weather["wsid"].unique().tolist()
 
-# +
+# %%
 stations = pd.read_csv(os.path.join(SWEAT_FILEPATH, "station-data.csv")).rename(
     columns={"device_id": "id"}
 )
@@ -118,11 +118,11 @@ stations.crs = crs
 
 # Filter out only WS recorded in Jan-Mar 2020
 stations = stations[stations["id"].isin(avail_ws)]
-# -
 
+# %% [markdown]
 # ### Get nearest station
 
-# +
+# %%
 multipoints = stations.unary_union
 
 subzones["weather_station"] = subzones.apply(
@@ -133,13 +133,14 @@ subzones["lat"] = subzones["centroid"].y
 subzones["long"] = subzones["centroid"].x
 
 subzones[["subzone", "weather_station"]].to_csv(CROSSWALK_SAVEPATH, index=False)
-# -
 
+# %% [markdown]
 # ### Plot
 
+# %% [markdown]
 # #### Vanilla plot
 
-# +
+# %%
 # https://stackoverflow.com/questions/31051488/combining-two-matplotlib-colormaps
 # sample the colormaps that you want to use.
 colors1 = plt.cm.viridis(np.linspace(0.0, 1, 21))
@@ -150,7 +151,7 @@ colors2 = plt.cm.bone(np.linspace(0, 1, 4))
 colors = np.vstack((colors1, colors2, colors2))
 mymap = mcolors.LinearSegmentedColormap.from_list("my_colormap", colors)
 
-# +
+# %%
 # Get list of stations to plot, both gdf should have same unique list of stations for the colormapping to work as expected
 ws_plotorder = subzones.sort_values("weather_station")["weather_station"].unique()
 mapped_stations = stations[stations["id"].isin(ws_plotorder)]
@@ -165,7 +166,7 @@ MSIZE = 600
 
 DPI = 5000
 
-# + code_folding=[]
+# %% code_folding=[]
 # plot
 _, ax = plt.subplots(figsize=FIGSIZE)
 
@@ -195,11 +196,11 @@ plt.axis("off")
 plt.tight_layout()
 plt.margins(0, 0)
 save_mpl_fig(os.path.join(SAVEPATH, "ws-mapping-vanilla"))
-# -
 
+# %% [markdown]
 # #### Visual validation plot
 
-# +
+# %%
 fig, ax = plt.subplots(figsize=FIGSIZE)
 
 # Area layer
@@ -231,11 +232,11 @@ plt.axis("off")
 plt.tight_layout()
 # Lost the color scheme
 # plt.savefig(os.path.join(SAVEPATH, 'ws-mapping-validation.pdf'), dpi=DPI, bbox_inches='tight', pad_inches=0)
-# -
 
+# %% [markdown]
 # ### Visual validation by lines
 
-# +
+# %%
 _, ax = plt.subplots(figsize=FIGSIZE)
 
 mapped_stations.plot(
@@ -263,6 +264,5 @@ plt.margins(0.01, 0)
 plt.axis("off")
 plt.tight_layout()
 save_mpl_fig(os.path.join(SAVEPATH, "ws-mapping-validation2"))
-# -
-
+# %%
 

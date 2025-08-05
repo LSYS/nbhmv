@@ -1,19 +1,19 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,logs//py
+#     formats: ipynb,logs//py:percent
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.14.5
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.17.2
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# +
+# %%
 import os
 import pandas as pd
 import gc
@@ -24,8 +24,8 @@ FP_DWELLING = os.path.join(
     "planning-area-subzone-age-group-sex-and-type-of-dwelling-june-2011-2019.csv",
 )
 SAVEPATH = os.path.join("intermediate-output", "htype.csv")
-# -
 
+# %% [markdown]
 # **Data notes**:
 # 1. Drop
 # * HUDC Flats (excluding those privatised)
@@ -37,7 +37,7 @@ SAVEPATH = os.path.join("intermediate-output", "htype.csv")
 # * as "Private" houses.
 # 3. For year=2019 only
 
-# + code_folding=[]
+# %% code_folding=[]
 # Read in
 area_rm12 = (
     pd.read_csv(
@@ -203,13 +203,14 @@ htype = (
 del area_tt, area_private, area_rm12, area_rm3, area_rm4, area_rm5
 gc.collect()
 
-# + code_folding=[]
+# %% code_folding=[]
 for x in ["private", "rm12", "rm3", "rm4", "rm5"]:
     htype[x] = 100 * (htype[x] / htype["resident_count"])
-# -
 
+# %%
 htype
 
+# %%
 htype.to_csv(SAVEPATH, index=False)
 
-
+# %%

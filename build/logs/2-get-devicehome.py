@@ -17,6 +17,7 @@
 import os
 import pandas as pd
 import janitor
+
 janitor
 
 from utilities import walk_through_files
@@ -88,14 +89,20 @@ file_lists = tuple(walk_through_files(ALTERNATE_DUMP_PATH, "csv.gz", fullpath=Tr
 len(file_lists)
 
 # %%
-df = (pd.concat([pd.read_csv(f, compression='gzip', usecols=['device_xid', 'area_id']) 
-                 for f in file_lists])
-      .groupby(['device_xid', 'area_id']).size()
-      .reset_index()
-      .rename_column(0, 'count')
-      .loc[lambda x: x.groupby('device_xid')['count'].transform('max') == x['count']]
-#       .sort_values(["device_xid", "area_id", "count"], ascending=(False, False, True), ignore_index=True)
-     )
+df = (
+    pd.concat(
+        [
+            pd.read_csv(f, compression="gzip", usecols=["device_xid", "area_id"])
+            for f in file_lists
+        ]
+    )
+    .groupby(["device_xid", "area_id"])
+    .size()
+    .reset_index()
+    .rename_column(0, "count")
+    .loc[lambda x: x.groupby("device_xid")["count"].transform("max") == x["count"]]
+    #       .sort_values(["device_xid", "area_id", "count"], ascending=(False, False, True), ignore_index=True)
+)
 
 df
 

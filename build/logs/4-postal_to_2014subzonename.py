@@ -1,22 +1,23 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,logs//py
+#     formats: ipynb,logs//py:percent
 #     text_representation:
 #       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.14.5
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.17.2
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
+# %% [markdown]
 # ### this file generates the postal code to subzone name/code crosswalk,
 # ### postal_to_kmlno_xwalk.csv
 
-# +
+# %%
 import pandas as pd
 import geopandas as gpd
 
@@ -36,8 +37,7 @@ subzones = gpd.read_file(
 )
 
 
-# -
-
+# %%
 def brute_force_check(point, subzone_df):
 
     try:
@@ -50,18 +50,19 @@ def brute_force_check(point, subzone_df):
         return None
 
 
+# %%
 # %%time
 buildings_df["subzone_name"] = buildings_df.geometry.apply(
     lambda point: brute_force_check(point, subzones)
 )
 
-# + code_folding=[]
+# %% code_folding=[]
 if True:
     buildings_df[["POSTAL", "subzone_name"]].to_csv(
         "./intermediate-output/fixed_postal_subzone_xwalk.csv", index=False
     )
-# -
 
+# %%
 buildings_df
 
-
+# %%

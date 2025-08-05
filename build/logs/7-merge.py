@@ -34,7 +34,6 @@ FP_WEATHERSTATION_CROSSWALK = os.path.join(
     "intermediate-output", "subzones2014-weatherstation-crosswalk.csv"
 )
 FP_WEATHER = os.path.join("raw-data", "SWEAT", "datafiles", "weather")
-# FP_WEATHERSTATION_ID = os.path.join('raw-data', 'SWEAT', 'datafiles', 'station-data.csv')
 
 FP_CD_AREANAMES = os.path.join("intermediate-output", "citydata-subzones.csv")
 FP_HTYPE = os.path.join("intermediate-output", "htype.csv")
@@ -92,24 +91,6 @@ clean_cd_subzone = {
     "peoples park": "people's park",
 }
 xid_area
-
-# %%
-# First, let's see what's actually in the date column before any processing
-df_raw = pd.read_csv(FP_CDGRAVITY, compression="gzip")
-print("Original date column info:")
-print("Type:", df_raw['date'].dtype)
-print("Sample values:", df_raw['date'].head(10))
-print("Unique value count:", df_raw['date'].nunique())
-print("Any null values:", df_raw['date'].isnull().sum())
-
-# Check if there are any non-numeric strings
-if df_raw['date'].dtype == 'object':
-    print("Non-numeric values found:")
-    non_numeric = df_raw[pd.to_numeric(df_raw['date'], errors='coerce').isnull()]
-    print(non_numeric['date'].unique()[:10])
-
-# %%
-pd.read_csv(FP_CDGRAVITY, compression="gzip")
 
 # %%
 df = pd.read_csv(FP_CDGRAVITY, compression="gzip")
@@ -914,6 +895,9 @@ df["wpsm_dest"] = np.where(df["wpsm_dest"] == 0, np.nan, df["wpsm_dest"])
 # Dont remember what this is for
 _g = ["pa_home", "home", "rm12_home"]
 df[_g].drop_duplicates().sort_values("rm12_home", ascending=False).head(10)
+
+# %%
+df.to_csv("cd-panel-labels.csv", index=False)
 
 # %%
 # Codify area names (remove text names, e.g. Crawford --> 16)

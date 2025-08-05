@@ -24,14 +24,16 @@ fiona.drvsupport.supported_drivers["KML"] = (
     "rw"  # enable KML support which is disabled by default
 )
 import gc
-import janitor 
+import janitor
+
 janitor
 pd.set_option("display.max_rows", 500)
 
 from utilities import walk_through_files, auto_reduce_mem, get_html_table_metadata
 import osmnx
 import warnings
-warnings.filterwarnings('ignore')
+
+warnings.filterwarnings("ignore")
 
 # %%
 FP_SUBZONES_SHP = os.path.join(
@@ -86,9 +88,6 @@ FP_BUILDINGS = os.path.join(
     "raw-data", "poi", "singapore-postal-codes-master", "buildings.json"
 )
 
-# FP_REG_BUSINESS = os.path.join(
-#     "..", "..", "wgw-lf", "acra-information-on-corporate-entities"
-# )
 FP_REG_BUSINESS = os.path.join("raw-data", "ACRAInformationonCorporateEntities")
 FP_XWALK_ZIP_SUBZONE = os.path.join(
     "intermediate-output", "fixed_postal_subzone_xwalk.csv"
@@ -438,14 +437,18 @@ gdf_hawkers = (
     .query("STATUS!='Under Construction'")
     # keep those before 2020
     .assign(
-        completion_date=lambda df_: pd.to_datetime(df_["EST_ORIGINAL_COMPLETION_DATE"], errors='coerce'),
-        completion_year=lambda df_: np.where(df_["completion_date"].isna(), 
-                                             df_["EST_ORIGINAL_COMPLETION_DATE"], 
-                                             df_["completion_date"].dt.year),
+        completion_date=lambda df_: pd.to_datetime(
+            df_["EST_ORIGINAL_COMPLETION_DATE"], errors="coerce"
+        ),
+        completion_year=lambda df_: np.where(
+            df_["completion_date"].isna(),
+            df_["EST_ORIGINAL_COMPLETION_DATE"],
+            df_["completion_date"].dt.year,
+        ),
     )
     .replace("Pre-War", 1990)
     .assign(completion_year=lambda df_: df_["completion_year"].fillna(1900).apply(int))
-    .query('completion_year<2020')
+    .query("completion_year<2020")
     .reset_index()
     .assign(postcode=lambda df_: df_["ADDRESSPOSTALCODE"].astype("str").str.zfill(6))
     .filter(["postcode"])
@@ -454,8 +457,7 @@ gdf_hawkers.head()
 
 # %%
 hawkers = (
-    gdf_hawkers
-    .merge(xwalk, how="left", on="postcode")
+    gdf_hawkers.merge(xwalk, how="left", on="postcode")
     .drop("postcode", axis=1)
     .groupby("subzone")
     .size()
@@ -469,27 +471,30 @@ hawkers.head()
 
 # %%
 # https://wiki.openstreetmap.org/wiki/Tag:shop%3Dmall
-payload = osmnx.features_from_place("Singapore", tags={'shop': 'mall'})
+payload = osmnx.features_from_place("Singapore", tags={"shop": "mall"})
 
 priority_order = {
-   'way': 1,      # Building footprints - most accurate for mall boundaries
-   'node': 2,     # Point locations - simple but less detailed
-   'relation': 3  # Complex structures - often contain duplicate data from member ways
+    "way": 1,  # Building footprints - most accurate for mall boundaries
+    "node": 2,  # Point locations - simple but less detailed
+    "relation": 3,  # Complex structures - often contain duplicate data from member ways
 }
 
 gdf_malls = (
-    payload
-    .clean_names()
+    payload.clean_names()
     .reset_index()
     .query("addr_housename==addr_housename | name==name")
-    .assign(name=lambda df_: np.where(df_["name"].isna(), df_["addr_housename"], df_["name"]))
+    .assign(
+        name=lambda df_: np.where(
+            df_["name"].isna(), df_["addr_housename"], df_["name"]
+        )
+    )
     # Dedup
-    .assign(priority=lambda df_: df_['element'].map(priority_order))
-    .sort_values('priority')
-    .drop_duplicates(subset=['name'], keep='first', ignore_index=True)
-    .remove_columns('priority')
+    .assign(priority=lambda df_: df_["element"].map(priority_order))
+    .sort_values("priority")
+    .drop_duplicates(subset=["name"], keep="first", ignore_index=True)
+    .remove_columns("priority")
     # get centroid for PIP
-    .assign(centroid=lambda df_: df_['geometry'].centroid)
+    .assign(centroid=lambda df_: df_["geometry"].centroid)
     .remove_columns("geometry")
     .rename_column("centroid", "geometry")
 )
@@ -502,7 +507,7 @@ shopping_malls = (
     .groupby("subzone")
     .size()
     .reset_index()
-    .rename(columns={0: "shopping_malls"})    
+    .rename(columns={0: "shopping_malls"})
 )
 shopping_malls.head()
 
