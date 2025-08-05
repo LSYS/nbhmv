@@ -6,6 +6,9 @@ We find stark asymmetries.
 Income-based segregation is driven by a lack of visits from richer to poorer neighborhoods, while ethnic-based segregation is driven by a lack of visits from majority- to minority-ethnic neighborhoods.
 We take our estimates to a counterfactual analysis of an extant ethnic residential integration policy. The findings show that the policy’s effect on fostering cross-neighborhood flows would have been three times smaller without accounting for directional asymmetries in ethnic mismatch.
 
+[![PyLint](https://github.com/LSYS/nbhmv/actions/workflows/pylint.yml/badge.svg)](https://github.com/LSYS/nbhmv/actions/workflows/pylint.yml)
+[![Build notebooks lint](https://github.com/LSYS/nbhmv/actions/workflows/nblint.yml/badge.svg)](https://github.com/LSYS/nbhmv/actions/workflows/nblint.yml)
+
 ## 📂 Repo Structure and Scripts
 
 ```bash
