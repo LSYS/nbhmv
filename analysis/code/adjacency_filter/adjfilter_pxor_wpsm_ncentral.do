@@ -1,31 +1,30 @@
-cap log close exc_emp
-log using $logsavedir/pxor_race_exc_majorempcenters.txt, replace text name(exc_emp)
-
-preserve
-drop if inlist(pa_origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
-drop if inlist(pa_dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+cap log close adjacency_filter
+log using $logsavedir/adjfilter_pxor_wpsm_ncentral.txt, replace text name(adjacency_filter)
 
 set more off
 
-local x mismatch_race
+local x mismatch_p25
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y `x', absorb(\$s`i') vce($se)
+	eststo: reghdfe y i.`x'##i.ncentral_d if contiguous==0, absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
 		* Add sample sizes report
 		mat femat = e(dof_table)
 		local days = femat[1,1]
-		estadd local days "\multicolumn{1}{c}{$ `days' $}"
+		estadd local days "\multicolumn{1}{c}{$ `days' $}"		
 		local clusters: display %9.0fc `e(N_clust1)'
 		estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"		
 		local nobs: display %9.0fc `e(N)'
 		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
+		* Test mismatch + mismatch*ncentral = 0 [total effect outside central]
+		qui test 1.`x' + 1.`x'#1.ncentral_d = 0
+		estadd local pval = string(round(`r(p)', 0.001))
 		* Add indicators for additional controls
 		if `i'==2 {
 			estadd local demo 		"\multicolumn{1}{c}{\checkmark}"				
@@ -50,30 +49,35 @@ forvalues i = 1/5 {
 *~~~~~~~~~~~~~~
 * Plot coefplot
 *~~~~~~~~~~~~~~
+local MSIZE vlarge
+local YLABSIZE medlarge
+local LEGEND_SIZE medlarge
 #delimit;
-coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
-		 (est2, msymbol(Oh) msize($MSIZE) mlwidth($MLWIDTH) offset())
-		 (est3, msymbol(dh) msize($MSIZE) mlwidth($MLWIDTH) offset())
-		 (est4, msymbol(th) msize($MSIZE) mlwidth($MLWIDTH) offset()) 
-		 (est5, msymbol(sh) msize($MSIZE) mlwidth($MLWIDTH) offset()),
-			keep(`x')
+coefplot (est1, msymbol(O)  msize(`MSIZE') mlwidth($MLWIDTH) )
+		 (est2, msymbol(Oh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
+		 (est3, msymbol(dh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
+		 (est4, msymbol(th) msize(`MSIZE') mlwidth($MLWIDTH) offset()) 
+		 (est5, msymbol(sh) msize(`MSIZE') mlwidth($MLWIDTH) offset()),
+			keep(*`x'*)
 		 level(90)
 		 ciopts(recast(rcap) lwidth($CIWIDTH))	
 		 asequation 
-		 xlabel(-.4(.2).2, labsize($XLABSIZE) )
-		 xscale(range(-.6 .35))
-		 ylabel(, angle(vertical) labsize($YLABSIZE))
-		 rename(`x' = "{bf:Ethnic mismatch}")		 		
+		 xlabel(-.08(.04).08, labsize($XLABSIZE) )
+		 xscale(range(-.1 .1))
+		 ylabel(, angle(horizontal) labsize(`YLABSIZE'))
+		 rename(1.`x' = "{bf: Income mismatch}"
+		 		1.`x'#1.ncentral_d = "x {bf:Non-central dest.}"
+		 		)
 		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
 				label(6 "{bf:+ Businesses}") 	 label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
-				col(1) ring(0) bplacement(se) size($LEGEND_SIZE)
+				col(1) ring(0) bplacement(se) size(`LEGEND_SIZE')
 				)
 		scheme(lean2)
 		plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0)) 	
 		graphregion(color(white) margin(0 0 0 0)) 
 		xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
 		;
-savefig, path($graphsavedir/pxor-race-exc-majorempcenters) format($graphformats);
+savefig, path($graphsavedir/adjfilter-pxor-wpsm-ncentral) format($graphformats);
 #delimit cr
 
 
@@ -81,7 +85,7 @@ savefig, path($graphsavedir/pxor-race-exc-majorempcenters) format($graphformats)
 * Make LaTex Table
 *~~~~~~~~~~~~~~~~~
 #delimit;
-esttab using $tabsavedir/pxor-race-exc-majorempcenters-frag.tex, 
+esttab using $tabsavedir/adjfilter-pxor-wpsm-ncentral-frag.tex, 
 	b(%9.4fc)
 	se(%9.4fc)
 	star (* 0.1 ** 0.05 *** 0.01)
@@ -101,6 +105,7 @@ esttab using $tabsavedir/pxor-race-exc-majorempcenters-frag.tex,
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
 		"POI Places of interest"
+		"pval $ p$-val: $\hat{\beta}$ + $\hat{\gamma} = 0 $"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"
@@ -111,6 +116,4 @@ esttab using $tabsavedir/pxor-race-exc-majorempcenters-frag.tex,
 	compress;		
 #delimit cr
 
-restore
-
-log close exc_emp
+log close adjacency_filter

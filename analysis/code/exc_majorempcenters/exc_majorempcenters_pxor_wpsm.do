@@ -1,15 +1,20 @@
-cap log close adjacency_filter
-log using $logsavedir/pxor_wpsm_adjacency_filter.txt, replace text name(adjacency_filter)
+cap log close exc_emp
+log using $logsavedir/exc_majorempcenters_pxor_wpsm.txt, replace text name(exc_emp)
+
+preserve
+drop if inlist(pa_origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+drop if inlist(pa_dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
 
 set more off
 local x mismatch_p25
+// local x mismatch_p75
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y `x' if contiguous==0, absorb(\$s`i') vce($se)
+	eststo: reghdfe y `x', absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
@@ -72,13 +77,13 @@ coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 		graphregion(color(white) margin(0 0 0 0))
 		xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
 		;
-savefig, path($graphsavedir/pxor-wpsm-adjacency-filter) format($graphformats);
+savefig, path($graphsavedir/exc-majorempcenters-pxor-wpsm) format($graphformats);
 
 *~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Make LaTex Table Fragment
 *~~~~~~~~~~~~~~~~~~~~~~~~~~
 #delimit;
-esttab using $tabsavedir/pxor-wpsm-adjacency-filter-frag.tex, 
+esttab using $tabsavedir/exc-majorempcenters-pxor-wpsm-frag.tex, 
 	b(%9.4fc)
 	se(%9.4fc)
 	star (* 0.1 ** 0.05 *** 0.01)
@@ -108,4 +113,6 @@ esttab using $tabsavedir/pxor-wpsm-adjacency-filter-frag.tex,
 	compress;		
 #delimit cr
 
-log close adjacency_filter
+restore
+
+log close exc_emp

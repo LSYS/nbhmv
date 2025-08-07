@@ -8,7 +8,7 @@ set more off
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y i.cny_sat_sun##c.(wpsm_home wpsm_dest), absorb(\$s`i') vce($se)
+	eststo: reghdfe y i.cny_sat_sun##c.(wpsm_home wpsm_dest), absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"

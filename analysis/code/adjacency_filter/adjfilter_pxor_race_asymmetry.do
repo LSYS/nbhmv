@@ -1,20 +1,16 @@
-cap log close exc_emp
-log using $logsavedir/pxor_wpsm_exc_majorempcenters.txt, replace text name(exc_emp)
-
-preserve
-drop if inlist(pa_origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
-drop if inlist(pa_dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+cap log close adjacency_filter
+log using $logsavedir/adjfilter_pxor_race_asymmetry.txt, replace text name(adjacency_filter)
 
 set more off
-local x mismatch_p25
-// local x mismatch_p75
+local x1 mismatch_race_m2c 
+local x2 mismatch_race_c2m
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y `x', absorb(\$s`i') vce($se)
+	eststo: reghdfe y `x1' `x2' if contiguous==0, absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
@@ -26,6 +22,9 @@ forvalues i = 1/5 {
 		estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"		
 		local nobs: display %9.0fc `e(N)'
 		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
+		* Test r2p + p2r = 0
+		qui test `x1' + `x2' = 0
+		estadd local pval = string(round(`r(p)', 0.001))
 		* Add indicators for additional controls
 		if `i'==2 {
 			estadd local demo 		"\multicolumn{1}{c}{\checkmark}"				
@@ -54,36 +53,35 @@ forvalues i = 1/5 {
 coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 		 (est2, msymbol(Oh) msize($MSIZE) mlwidth($MLWIDTH) offset())
 		 (est3, msymbol(dh) msize($MSIZE) mlwidth($MLWIDTH) offset())
-		 (est4, msymbol(th) msize($MSIZE) mlwidth($MLWIDTH) offset())
+		 (est4, msymbol(th) msize($MSIZE) mlwidth($MLWIDTH) offset()) 
 		 (est5, msymbol(sh) msize($MSIZE) mlwidth($MLWIDTH) offset()),
-			keep(`x')
+			keep(`x1' `x2')
 		 level(90)
-		 ciopts(recast(rcap) lwidth($CIWIDTH))
-		 asequation
-		 xlabel(-.02(.02).04, labsize($XLABSIZE) )
-		 xscale(range(-.03 .045))
+		 ciopts(recast(rcap) lwidth($CIWIDTH))	
+		 asequation 
+		 xlabel(-.6(.2).2, labsize($XLABSIZE) )
+		 xscale(range(-.68 .39))
 		 ylabel(, angle(vertical) labsize($YLABSIZE))
-		 rename(
-		 	mismatch_p25 = "{bf:Income mismatch}"
-		 	mismatch_p75 = "{bf:Income mismatch} (p75)"
-		 )
-		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}")
+		 rename(mismatch_race_m2c = "{bf:Mnr {&rarr} Maj}"
+		 		mismatch_race_c2m = "{bf:Maj {&rarr} Mnr}"
+		 		)
+		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
 				label(6 "{bf:+ Businesses}") 	 label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
-				col(1) ring(0) bplacement(sw) size($LEGEND_SIZE)
-				region(lwidth(none))
+				col(1) ring(0) bplacement(se) size($LEGEND_SIZE)
 				)
 		scheme(lean2)
-		plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0))
-		graphregion(color(white) margin(0 0 0 0))
+		plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0)) 	
+		graphregion(color(white) margin(0 0 0 0)) 
 		xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
 		;
-savefig, path($graphsavedir/pxor-wpsm-exc-majorempcenters) format($graphformats);
+savefig, path($graphsavedir/adjfilter-pxor-race-asymmetry) format($graphformats);
+#delimit cr
 
-*~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Make LaTex Table Fragment
-*~~~~~~~~~~~~~~~~~~~~~~~~~~
+*~~~~~~~~~~~~~~~~~
+* Make LaTex Table
+*~~~~~~~~~~~~~~~~~
 #delimit;
-esttab using $tabsavedir/pxor-wpsm-exc-majorempcenters-frag.tex, 
+esttab using $tabsavedir/adjfilter-pxor-race-asymmetry-frag.tex, 
 	b(%9.4fc)
 	se(%9.4fc)
 	star (* 0.1 ** 0.05 *** 0.01)
@@ -103,16 +101,15 @@ esttab using $tabsavedir/pxor-wpsm-exc-majorempcenters-frag.tex,
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
 		"POI Places of interest"
+		"pval $ p $-val: (Mnr $\rightarrow$ Maj) $\neq$ (Maj $\rightarrow$ Mnr)"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"
-		"nobs Observations") 
+		"nobs Observations") 	
 	alignment(D{.}{.}{-1})	
 	substitute(\_ _)
 	fragment replace
 	compress;		
 #delimit cr
 
-restore
-
-log close exc_emp
+log close adjacency_filter

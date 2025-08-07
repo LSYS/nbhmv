@@ -10,7 +10,7 @@ local x2 mismatch_race_c2m
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y `x1' `x2', absorb(\$s`i') vce($se)
+	eststo: reghdfe y `x1' `x2', absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"

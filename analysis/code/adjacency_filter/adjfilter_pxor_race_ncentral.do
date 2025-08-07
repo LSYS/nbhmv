@@ -1,24 +1,16 @@
-cap log close exc_emp
-log using $logsavedir/pxor_wpsm_r2p_p2r_exc_majorempcenters.txt, replace text name(exc_emp)
-
-preserve
-drop if inlist(pa_origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
-drop if inlist(pa_dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+cap log close adjacency_filter
+log using $logsavedir/adjfilter_pxor_race_ncentral.txt, replace text name(adjacency_filter)
 
 set more off
-local x1 mismatch_p25_p2r
-local x2 mismatch_p25_r2p
-// local x1 mismatch_p75_p2r
-// local x2 mismatch_p75_r2p
-// local x1 mismatch_p80_p2r
-// local x2 mismatch_p80_r2p
+
+local x mismatch_race
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y i.`x1' i.`x2', absorb(\$s`i') vce($se)
+	eststo: reghdfe y c.`x'##i.ncentral_d if contiguous==0, absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
@@ -30,8 +22,8 @@ forvalues i = 1/5 {
 		estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"		
 		local nobs: display %9.0fc `e(N)'
 		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
-		* Test r2p + p2r = 0
-		qui test 1.`x1' + 1.`x2' = 0
+		* Test mismatch + mismatch*ncentral = 0 [total effect outside central]
+		qui test `x' + `x'#1.ncentral_d = 0
 		estadd local pval = string(round(`r(p)', 0.001))
 		* Add indicators for additional controls
 		if `i'==2 {
@@ -57,38 +49,44 @@ forvalues i = 1/5 {
 *~~~~~~~~~~~~~~
 * Plot coefplot
 *~~~~~~~~~~~~~~
+local MSIZE vlarge
+local YLABSIZE medlarge
+local XLABSIZE medlarge
+local LEGEND_SIZE medlarge
+
 #delimit;
-coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
-		 (est2, msymbol(Oh) msize($MSIZE) mlwidth($MLWIDTH) offset())
-		 (est3, msymbol(dh) msize($MSIZE) mlwidth($MLWIDTH) offset())
-		 (est4, msymbol(th) msize($MSIZE) mlwidth($MLWIDTH) offset()) 
-		 (est5, msymbol(sh) msize($MSIZE) mlwidth($MLWIDTH) offset()),
-			keep(1.`x1' 1.`x2')
+coefplot (est1, msymbol(O)  msize(`MSIZE') mlwidth($MLWIDTH) )
+		 (est2, msymbol(Oh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
+		 (est3, msymbol(dh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
+		 (est4, msymbol(th) msize(`MSIZE') mlwidth($MLWIDTH) offset()) 
+		 (est5, msymbol(sh) msize(`MSIZE') mlwidth($MLWIDTH) offset()),
+			keep(*mismatch_race*)
 		 level(90)
 		 ciopts(recast(rcap) lwidth($CIWIDTH))	
 		 asequation 
-		 xlabel(-.04(.02).06, labsize($XLABSIZE) )
-		 xscale(range(-.05 .08))
-		 ylabel(, angle(vertical) labsize($YLABSIZE))
-		 rename(1.`x1' = "{bf:P {&rarr} NP}"
-		 		1.`x2' = "{bf:NP {&rarr} P}"
+		 xlabel(-.6(.3).9, labsize(`XLABSIZE') )
+		 xscale(range(-.4 1.2))
+		 ylabel(, angle(horizontal) labsize(`YLABSIZE'))
+		 rename(mismatch_race = "{bf: Ethnic mismatch}"
+		 		1.ncentral_d#c.mismatch_race = "x {bf:Non-central dest.}"
 		 		)
 		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
 				label(6 "{bf:+ Businesses}") 	 label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
-				col(1) ring(0) bplacement(se) size($LEGEND_SIZE)
+				col(1) ring(0) bplacement(se) size(`LEGEND_SIZE')
 				)
 		scheme(lean2)
 		plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0)) 	
 		graphregion(color(white) margin(0 0 0 0)) 
 		xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
-		;
-savefig, path($graphsavedir/pxor-wpsm-r2p-p2r-exc-majorempcenters) format($graphformats);
+		;		
+savefig, path($graphsavedir/adjfilter-pxor-race-ncentral) format($graphformats);
+#delimit cr
 
 *~~~~~~~~~~~~~~~~~
-* Make LaTex Table 
+* Make LaTex Table
 *~~~~~~~~~~~~~~~~~
 #delimit;
-esttab using $tabsavedir/pxor-wpsm-r2p-p2r-exc-majorempcenters-frag.tex, 
+esttab using $tabsavedir/adjfilter-pxor-race-ncentral-frag.tex, 
 	b(%9.4fc)
 	se(%9.4fc)
 	star (* 0.1 ** 0.05 *** 0.01)
@@ -108,17 +106,16 @@ esttab using $tabsavedir/pxor-wpsm-r2p-p2r-exc-majorempcenters-frag.tex,
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
 		"POI Places of interest"
-		"pval $ p $-val: (P $\rightarrow$ NP) $\neq$ (NP $\rightarrow$ P)"
+		"pval $ p$-val: $\hat{\beta}$ + $\hat{\gamma} = 0 $"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"
-		"nobs Observations") 	
+		"nobs Observations") 
 	alignment(D{.}{.}{-1})	
 	substitute(\_ _)
 	fragment replace
-	compress;
+	compress;		
 #delimit cr
+beep 
 
-restore
-
-log close exc_emp
+log close adjacency_filter

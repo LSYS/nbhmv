@@ -10,7 +10,7 @@ local x2 mismatch_p25_r2p
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y i.`x1' i.`x2', absorb(\$s`i') vce($se)
+	eststo: reghdfe y i.`x1' i.`x2', absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"

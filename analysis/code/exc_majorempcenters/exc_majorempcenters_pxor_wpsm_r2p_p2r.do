@@ -1,16 +1,24 @@
-cap log close adjacency_filter
-log using $logsavedir/pxor_race_asymmetry_adjacency_filter.txt, replace text name(adjacency_filter)
+cap log close exc_emp
+log using $logsavedir/exc_majorempcenters_pxor_wpsm_r2p_p2r.txt, replace text name(exc_emp)
+
+preserve
+drop if inlist(pa_origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+drop if inlist(pa_dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
 
 set more off
-local x1 mismatch_race_m2c 
-local x2 mismatch_race_c2m
+local x1 mismatch_p25_p2r
+local x2 mismatch_p25_r2p
+// local x1 mismatch_p75_p2r
+// local x2 mismatch_p75_r2p
+// local x1 mismatch_p80_p2r
+// local x2 mismatch_p80_r2p
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y `x1' `x2' if contiguous==0, absorb(\$s`i') vce($se)
+	eststo: reghdfe y i.`x1' i.`x2', absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
@@ -23,7 +31,7 @@ forvalues i = 1/5 {
 		local nobs: display %9.0fc `e(N)'
 		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
 		* Test r2p + p2r = 0
-		qui test `x1' + `x2' = 0
+		qui test 1.`x1' + 1.`x2' = 0
 		estadd local pval = string(round(`r(p)', 0.001))
 		* Add indicators for additional controls
 		if `i'==2 {
@@ -55,15 +63,15 @@ coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 		 (est3, msymbol(dh) msize($MSIZE) mlwidth($MLWIDTH) offset())
 		 (est4, msymbol(th) msize($MSIZE) mlwidth($MLWIDTH) offset()) 
 		 (est5, msymbol(sh) msize($MSIZE) mlwidth($MLWIDTH) offset()),
-			keep(`x1' `x2')
+			keep(1.`x1' 1.`x2')
 		 level(90)
 		 ciopts(recast(rcap) lwidth($CIWIDTH))	
 		 asequation 
-		 xlabel(-.6(.2).2, labsize($XLABSIZE) )
-		 xscale(range(-.68 .39))
+		 xlabel(-.04(.02).06, labsize($XLABSIZE) )
+		 xscale(range(-.05 .08))
 		 ylabel(, angle(vertical) labsize($YLABSIZE))
-		 rename(mismatch_race_m2c = "{bf:Mnr {&rarr} Maj}"
-		 		mismatch_race_c2m = "{bf:Maj {&rarr} Mnr}"
+		 rename(1.`x1' = "{bf:P {&rarr} NP}"
+		 		1.`x2' = "{bf:NP {&rarr} P}"
 		 		)
 		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
 				label(6 "{bf:+ Businesses}") 	 label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
@@ -74,14 +82,13 @@ coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 		graphregion(color(white) margin(0 0 0 0)) 
 		xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
 		;
-savefig, path($graphsavedir/pxor-race-asymmetry-adjacency-filter) format($graphformats);
-#delimit cr
+savefig, path($graphsavedir/exc-majorempcenters-pxor-wpsm-r2p-p2r) format($graphformats);
 
 *~~~~~~~~~~~~~~~~~
-* Make LaTex Table
+* Make LaTex Table 
 *~~~~~~~~~~~~~~~~~
 #delimit;
-esttab using $tabsavedir/pxor-race-asymmetry-adjacency-filter-frag.tex, 
+esttab using $tabsavedir/exc-majorempcenters-pxor-wpsm-r2p-p2r-frag.tex, 
 	b(%9.4fc)
 	se(%9.4fc)
 	star (* 0.1 ** 0.05 *** 0.01)
@@ -101,7 +108,7 @@ esttab using $tabsavedir/pxor-race-asymmetry-adjacency-filter-frag.tex,
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
 		"POI Places of interest"
-		"pval $ p $-val: (Mnr $\rightarrow$ Maj) $\neq$ (Maj $\rightarrow$ Mnr)"
+		"pval $ p $-val: (P $\rightarrow$ NP) $\neq$ (NP $\rightarrow$ P)"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"
@@ -109,7 +116,9 @@ esttab using $tabsavedir/pxor-race-asymmetry-adjacency-filter-frag.tex,
 	alignment(D{.}{.}{-1})	
 	substitute(\_ _)
 	fragment replace
-	compress;		
+	compress;
 #delimit cr
 
-log close adjacency_filter
+restore
+
+log close exc_emp

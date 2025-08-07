@@ -1,8 +1,7 @@
 cap log close adjacency_filter
-log using $logsavedir/pxor_wpsm_ncentral_adjacency_filter.txt, replace text name(adjacency_filter)
+log using $logsavedir/adjfilter_pxor_wpsm.txt, replace text name(adjacency_filter)
 
 set more off
-
 local x mismatch_p25
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
@@ -10,7 +9,7 @@ local x mismatch_p25
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y i.`x'##i.ncentral_d if contiguous==0, absorb(\$s`i') vce($se)
+	eststo: reghdfe y `x' if contiguous==0, absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
@@ -22,9 +21,6 @@ forvalues i = 1/5 {
 		estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"		
 		local nobs: display %9.0fc `e(N)'
 		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
-		* Test mismatch + mismatch*ncentral = 0 [total effect outside central]
-		qui test 1.`x' + 1.`x'#1.ncentral_d = 0
-		estadd local pval = string(round(`r(p)', 0.001))
 		* Add indicators for additional controls
 		if `i'==2 {
 			estadd local demo 		"\multicolumn{1}{c}{\checkmark}"				
@@ -49,43 +45,40 @@ forvalues i = 1/5 {
 *~~~~~~~~~~~~~~
 * Plot coefplot
 *~~~~~~~~~~~~~~
-local MSIZE vlarge
-local YLABSIZE medlarge
-local LEGEND_SIZE medlarge
 #delimit;
-coefplot (est1, msymbol(O)  msize(`MSIZE') mlwidth($MLWIDTH) )
-		 (est2, msymbol(Oh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
-		 (est3, msymbol(dh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
-		 (est4, msymbol(th) msize(`MSIZE') mlwidth($MLWIDTH) offset()) 
-		 (est5, msymbol(sh) msize(`MSIZE') mlwidth($MLWIDTH) offset()),
-			keep(*`x'*)
+coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
+		 (est2, msymbol(Oh) msize($MSIZE) mlwidth($MLWIDTH) offset())
+		 (est3, msymbol(dh) msize($MSIZE) mlwidth($MLWIDTH) offset())
+		 (est4, msymbol(th) msize($MSIZE) mlwidth($MLWIDTH) offset())
+		 (est5, msymbol(sh) msize($MSIZE) mlwidth($MLWIDTH) offset()),
+			keep(`x')
 		 level(90)
-		 ciopts(recast(rcap) lwidth($CIWIDTH))	
-		 asequation 
-		 xlabel(-.08(.04).08, labsize($XLABSIZE) )
-		 xscale(range(-.1 .1))
-		 ylabel(, angle(horizontal) labsize(`YLABSIZE'))
-		 rename(1.`x' = "{bf: Income mismatch}"
-		 		1.`x'#1.ncentral_d = "x {bf:Non-central dest.}"
-		 		)
-		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
+		 ciopts(recast(rcap) lwidth($CIWIDTH))
+		 asequation
+		 xlabel(-.02(.02).04, labsize($XLABSIZE) )
+		 xscale(range(-.03 .045))
+		 ylabel(, angle(vertical) labsize($YLABSIZE))
+		 rename(
+		 	mismatch_p25 = "{bf:Income mismatch}"
+		 	mismatch_p75 = "{bf:Income mismatch} (p75)"
+		 )
+		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}")
 				label(6 "{bf:+ Businesses}") 	 label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
-				col(1) ring(0) bplacement(se) size(`LEGEND_SIZE')
+				col(1) ring(0) bplacement(sw) size($LEGEND_SIZE)
+				region(lwidth(none))
 				)
 		scheme(lean2)
-		plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0)) 	
-		graphregion(color(white) margin(0 0 0 0)) 
+		plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0))
+		graphregion(color(white) margin(0 0 0 0))
 		xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
 		;
-savefig, path($graphsavedir/pxor-wpsm-ncentral-adjacency-filter) format($graphformats);
-#delimit cr
+savefig, path($graphsavedir/adjfilter-pxor-wpsm) format($graphformats);
 
-
-*~~~~~~~~~~~~~~~~~
-* Make LaTex Table
-*~~~~~~~~~~~~~~~~~
+*~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Make LaTex Table Fragment
+*~~~~~~~~~~~~~~~~~~~~~~~~~~
 #delimit;
-esttab using $tabsavedir/pxor-wpsm-ncentral-adjacency-filter-frag.tex, 
+esttab using $tabsavedir/adjfilter-pxor-wpsm-frag.tex, 
 	b(%9.4fc)
 	se(%9.4fc)
 	star (* 0.1 ** 0.05 *** 0.01)
@@ -105,7 +98,6 @@ esttab using $tabsavedir/pxor-wpsm-ncentral-adjacency-filter-frag.tex,
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
 		"POI Places of interest"
-		"pval $ p$-val: $\hat{\beta}$ + $\hat{\gamma} = 0 $"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"
