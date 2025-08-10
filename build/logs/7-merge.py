@@ -131,17 +131,6 @@ df = (
 print(len(df))
 df
 
-# %%
-print(df["home"].nunique())
-print(df["area"].nunique())
-print(df["date"].nunique())
-
-# %%
-300 * 91
-
-# %%
-df[df.duplicated(subset=["home", "area", "date"], keep=False)]
-
 # %% [markdown]
 # ### Merge with house types
 
@@ -866,24 +855,6 @@ df["wpsm_dest"] = df[["wpsm_private_dest", "wpsm_public_dest"]].sum(
 # If zero, means both private and public data is missing, replace as missing
 df["wpsm_dest"] = np.where(df["wpsm_dest"] == 0, np.nan, df["wpsm_dest"])
 
-# # weighted price for home
-# df["wprice_private_home"] = df["private_home"] / 100 * df["private_price_home"]
-# df["wprice_public_home"] = (100 - df["private_home"]) / 100 * df["public_price_home"]
-# df["wprice_home"] = df[["wprice_private_home", "wprice_public_home"]].sum(
-#     axis=1, skipna=True
-# )  # Treat na as 0
-# # If zero, means both private and public data is missing, replace as missing
-# df["wprice_home"] = np.where(df["wprice_home"] == 0, np.nan, df["wprice_home"])
-
-# # weighted price for dest
-# df["wprice_private_dest"] = df["private_home"] / 100 * df["private_price_dest"]
-# df["wprice_public_dest"] = (100 - df["private_home"]) / 100 * df["public_price_dest"]
-# df["wprice_dest"] = df[["wprice_private_dest", "wprice_public_dest"]].sum(
-#     axis=1, skipna=True
-# )  # Treat na as 0
-# # If zero, means both private and public data is missing, replace as missing
-# df["wprice_dest"] = np.where(df["wprice_dest"] == 0, np.nan, df["wprice_dest"])
-
 # %% [markdown]
 # ### Save
 
@@ -896,9 +867,23 @@ df[_g].drop_duplicates().sort_values("rm12_home", ascending=False).head(10)
 df.to_csv("cd-panel-labels.csv", index=False)
 
 # %%
-# Codify area names (remove text names, e.g. Crawford --> 16)
+# Create and save mappings before converting
+all_mappings = []
 for col in ["home", "area", "pa_home", "pa_dest"]:
-    df[col] = df[col].astype("category").cat.codes
+    df[col] = df[col].astype("category")
+    
+    # Store mapping
+    for code, original_name in enumerate(df[col].cat.categories):
+        all_mappings.append({
+            'column': col,
+            'code': code, 
+            'original_name': original_name
+        })
+    
+    df[col] = df[col].cat.codes
+
+df_zone_mappings = pd.DataFrame(all_mappings)
+df_zone_mappings.to_csv('intermediate-output/zone_mappings.csv', index=False)
 
 # %%
 df.head(3)
