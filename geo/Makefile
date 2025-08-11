@@ -66,7 +66,6 @@ analysis: ## Run all notebooks with output versions (-o)
 	    ping-variation.ipynb
 	mv *-out.ipynb logs/
 
-
 ########################################################################
 # Symlink
 # Link assets into input/

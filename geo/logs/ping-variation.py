@@ -137,9 +137,6 @@ df = (
 
 df.head(3)
 
-# %%
-df.columns.tolist()
-
 # %% [markdown]
 # ## Variation by population size
 
@@ -651,7 +648,7 @@ TICKSIZE = 15
 ax.tick_params(axis="both", labelsize=TICKSIZE)
 
 LABSIZE = 18
-plt.xlabel("% Aged 20 and below", fontweight="bold", loc="center", size=LABSIZE)
+plt.xlabel("% Aged below 20", fontweight="bold", loc="center", size=LABSIZE)
 plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
 plt.tight_layout()
 save_mpl_fig(os.path.join(SAVEPATH, "coefplot-origin-pings-age20"))
@@ -681,10 +678,40 @@ TICKSIZE = 15
 ax.tick_params(axis="both", labelsize=TICKSIZE)
 
 LABSIZE = 18
-plt.xlabel("% Aged 20 to 40", fontweight="bold", loc="center", size=LABSIZE)
+plt.xlabel("% Aged 20 to 39", fontweight="bold", loc="center", size=LABSIZE)
 plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
 plt.tight_layout()
 save_mpl_fig(os.path.join(SAVEPATH, "coefplot-origin-pings-age20to40"))
+
+# %%
+# coefplot-origin-pings-age40to64
+_, ax = plt.subplots(figsize=(12 * 0.8, 8 * 0.8))
+
+sns.pointplot(
+    x="age40_65_o_10bin",
+    y="basecount",
+    data=df,
+    ci="sd",
+    n_boot=100,
+    capsize=None,
+    join=False,
+    errwidth=2,  # error bar width
+    scale=0.8,
+    color="black",
+    ax=ax,
+)
+
+plt.xticks(rotation=25, ha="right", rotation_mode="anchor")
+plt.locator_params(axis="y", nbins=4)
+
+TICKSIZE = 15
+ax.tick_params(axis="both", labelsize=TICKSIZE)
+
+LABSIZE = 18
+plt.xlabel("% Aged 40 to 64", fontweight="bold", loc="center", size=LABSIZE)
+plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
+plt.tight_layout()
+save_mpl_fig(os.path.join(SAVEPATH, "coefplot-origin-pings-age40to65"))
 
 # %%
 # coefplot-origin-pings-age65
@@ -776,6 +803,36 @@ plt.tight_layout()
 save_mpl_fig(os.path.join(SAVEPATH, "coefplot-dest-pings-age20to40"))
 
 # %%
+# coefplot-origin-dest-age40to64
+_, ax = plt.subplots(figsize=(12 * 0.8, 8 * 0.8))
+
+sns.pointplot(
+    x="age40_65_d_10bin",
+    y="basecount",
+    data=df,
+    ci="sd",
+    n_boot=100,
+    capsize=None,
+    join=False,
+    errwidth=2,  # error bar width
+    scale=0.8,
+    color="black",
+    ax=ax,
+)
+
+plt.xticks(rotation=25, ha="right", rotation_mode="anchor")
+plt.locator_params(axis="y", nbins=4)
+
+TICKSIZE = 15
+ax.tick_params(axis="both", labelsize=TICKSIZE)
+
+LABSIZE = 18
+plt.xlabel("% Aged 40 to 64", fontweight="bold", loc="center", size=LABSIZE)
+plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
+plt.tight_layout()
+save_mpl_fig(os.path.join(SAVEPATH, "coefplot-dest-pings-age40to65"))
+
+# %%
 # coefplot-dest-pings-age65
 _, ax = plt.subplots(figsize=(12 * 0.8, 8 * 0.8))
 
@@ -828,7 +885,7 @@ sns.pointplot(
 plt.xticks(rotation=25, ha="right", rotation_mode="anchor")
 
 LABSIZE = 16
-plt.xlabel("Females", fontweight="bold", loc="center", size=LABSIZE)
+plt.xlabel("% Females", fontweight="bold", loc="center", size=LABSIZE)
 plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
 plt.tight_layout()
 save_mpl_fig(os.path.join(SAVEPATH, "coefplot-home-pings-female"))
@@ -853,7 +910,7 @@ sns.pointplot(
 plt.xticks(rotation=25, ha="right", rotation_mode="anchor")
 
 LABSIZE = 16
-plt.xlabel("Females", fontweight="bold", loc="center", size=LABSIZE)
+plt.xlabel("% Females", fontweight="bold", loc="center", size=LABSIZE)
 plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
 plt.tight_layout()
 save_mpl_fig(os.path.join(SAVEPATH, "coefplot-dest-pings-female"))
@@ -890,13 +947,13 @@ for race in ["chinese_o", "malays_o", "indians_o", "others_o"]:
 
     LABSIZE = 18
     if "chinese" in xvar:
-        xlabel = "Majority ethnic"
+        xlabel = "% Majority ethnic"
     elif "malay" in xvar:
-        xlabel = "Minority ethnic A"
+        xlabel = "% Minority ethnic A"
     elif "indian" in xvar:
-        xlabel = "Minority ethnic B"
+        xlabel = "% Minority ethnic B"
     elif "other" in xvar:
-        xlabel = "Minority ethnic C"
+        xlabel = "% Minority ethnic C"
     plt.xlabel(xlabel, fontweight="bold", loc="center", size=LABSIZE)
     plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
     save_mpl_fig(os.path.join(SAVEPATH, f"coefplot-pings-{race}"))
@@ -1115,7 +1172,7 @@ sns.lineplot(
     color="black",
     marker="o",
     ci=95,
-    label="Rainfall destination neighborhood",
+    label="Precipitation destination neighborhood",
     ax=ax,
 )
 
@@ -1128,7 +1185,7 @@ sns.lineplot(
     marker="X",
     ci=95,
     markers=True,
-    label="Rainfall origin neighborhood",
+    label="Precipitation origin neighborhood",
     zorder=0,
     ax=ax,
 )
@@ -1139,7 +1196,7 @@ plt.xticks(rotation=25, ha="right", rotation_mode="anchor")
 plt.locator_params(axis="y", nbins=4)
 
 LABSIZE = 16
-plt.xlabel("Rainfall", fontweight="bold", loc="center", size=LABSIZE)
+plt.xlabel("Precipitation (mm)", fontweight="bold", loc="center", size=LABSIZE)
 plt.ylabel("Log inflow", fontweight="bold", loc="center", size=LABSIZE)
 
 plt.legend(frameon=False, loc="best")
@@ -1184,15 +1241,15 @@ for xvar in [
 
     LABSIZE = 18
     if "rm12_home_bin" in xvar:
-        xlabel = "1 to 2 room public flats"
+        xlabel = "% 1 to 2 room public flats"
     elif "rm3_home_bin" in xvar:
-        xlabel = "3 room public flats"
+        xlabel = "% 3 room public flats"
     elif "rm4_home_bin" in xvar:
-        xlabel = "4 room public flats"
+        xlabel = "% 4 room public flats"
     elif "rm5_home_bin" in xvar:
-        xlabel = "5 room public flats"
+        xlabel = "% 5 room public flats"
     elif "private_home_bin" in xvar:
-        xlabel = "Private housing"
+        xlabel = "% Private housing"
     plt.xlabel(xlabel, fontweight="bold", loc="center", size=LABSIZE)
     plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
     plt.tight_layout()
@@ -1231,13 +1288,13 @@ for xvar in [
 
     LABSIZE = 18
     if "rm12_dest_bin" in xvar:
-        xlabel = "1 to 2 room public flats"
+        xlabel = "% 1 to 2 room public flats"
     elif "rm3_dest_bin" in xvar:
-        xlabel = "3 room public flats"
+        xlabel = "% 3 room public flats"
     elif "rm4_dest_bin" in xvar:
-        xlabel = "4 room public flats"
+        xlabel = "% 4 room public flats"
     elif "rm5_dest_bin" in xvar:
-        xlabel = "5 room public flats"
+        xlabel = "% 5 room public flats"
     elif "private_dest_bin" in xvar:
         xlabel = "Private housing"
     plt.xlabel(xlabel, fontweight="bold", loc="center", size=LABSIZE)
