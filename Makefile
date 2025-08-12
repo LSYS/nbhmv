@@ -74,6 +74,7 @@ jn: ## Launch jupyter notebook in venv
 # ============================================================================
 DIAGRAM_BUILD = assets/build-pipeline
 DIAGRAM_GEO = assets/geo
+DIAGRAM_ANALYSIS = assets/analysis
 
 .PHONY: diagram
 diagram: ## Make dependency diagram (mermaid)
@@ -85,6 +86,8 @@ diagram: ## Make dependency diagram (mermaid)
 	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_BUILD).mmd -o $(DIAGRAM_BUILD).png -s 10
 	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_GEO).mmd -o $(DIAGRAM_GEO).svg
 	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_GEO).mmd -o $(DIAGRAM_GEO).png -s 10
+	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_ANALYSIS).mmd -o $(DIAGRAM_ANALYSIS).svg
+	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_ANALYSIS).mmd -o $(DIAGRAM_ANALYSIS).png -s 10
 
 ########################################################################
 # 'Freeze' current venv packages

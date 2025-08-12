@@ -305,7 +305,7 @@ end
 // make_fig9
 // make_figE1
 
-make_tabE6
+make_tabE24
 
 * =========================================================
 * Nbh flows and mismatch
