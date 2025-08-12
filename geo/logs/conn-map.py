@@ -275,7 +275,7 @@ MISSKWDS = {
     "label": "Missing values",
 }
 SCALEBAR_OPTS = dict(
-    height_fraction=.010,
+    height_fraction=0.010,
     location="lower left",
     segments=[1, 1, 2, 2],
     unit_position="right",
@@ -636,7 +636,7 @@ legend.get_title().set_fontweight("bold")
 legend._legend_box.align = "left"
 for text in legend.get_texts():
     text.set_color(".2")
-    
+
 # =====================================================
 # add_scalebar(ax=ax, location="upper right")
 add_north_arrow(ax=ax, x=103.915, y=1.36)
