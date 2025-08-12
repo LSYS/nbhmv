@@ -38,17 +38,17 @@ jobs:
       - name: nbqa pyflakes
         run: |
           NOTEBOOKS="\
-            ./pa-price.ipynb \
-            ./bootstrap-r2.ipynb \
-            ./get-devicecount-subzone-day.ipynb \
-            ./choropleth-devices.ipynb \
-            ./choropleth-income.ipynb \
-            ./choropleth-price.ipynb \
-            ./borders.ipynb \
-            ./lower-vs-higher-ptiles.ipynb \
-            ./cbd.ipynb \
-            ./conn-map.ipynb \
-            ./ping-variation.ipynb"
+            geo/pa-price.ipynb \
+            geo/bootstrap-r2.ipynb \
+            geo/get-devicecount-subzone-day.ipynb \
+            geo/choropleth-devices.ipynb \
+            geo/choropleth-income.ipynb \
+            geo/choropleth-price.ipynb \
+            geo/borders.ipynb \
+            geo/lower-vs-higher-ptiles.ipynb \
+            geo/cbd.ipynb \
+            geo/conn-map.ipynb \
+            geo/ping-variation.ipynb"
           nbqa pyflakes $NOTEBOOKS
 
       # ------------------------------------------------------------------
@@ -57,15 +57,15 @@ jobs:
       - name: nbqa black
         run: |
           NOTEBOOKS="\
-            ./pa-price.ipynb \
-            ./bootstrap-r2.ipynb \
-            ./get-devicecount-subzone-day.ipynb \
-            ./choropleth-devices.ipynb \
-            ./choropleth-income.ipynb \
-            ./choropleth-price.ipynb \
-            ./borders.ipynb \
-            ./lower-vs-higher-ptiles.ipynb \
-            ./cbd.ipynb \
-            ./conn-map.ipynb \
-            ./ping-variation.ipynb"
+            geo/pa-price.ipynb \
+            geo/bootstrap-r2.ipynb \
+            geo/get-devicecount-subzone-day.ipynb \
+            geo/choropleth-devices.ipynb \
+            geo/choropleth-income.ipynb \
+            geo/choropleth-price.ipynb \
+            geo/borders.ipynb \
+            geo/lower-vs-higher-ptiles.ipynb \
+            geo/cbd.ipynb \
+            geo/conn-map.ipynb \
+            geo/ping-variation.ipynb"
           nbqa black --check $NOTEBOOKS

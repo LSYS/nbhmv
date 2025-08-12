@@ -63,7 +63,7 @@ pylint: ## Run mypy, pyflakes, isort, black on utilities.py (same as GH action)
 	mypy --ignore-missing-imports --check-untyped-defs --exclude='.*__init__\.py$$' $(UTIL) && \
 	pyflakes $(UTIL) && \
 	isort $(UTIL) && \
-	black -l 88 --check $(UTIL)
+	black -l 88 $(UTIL)
 
 ########################################################################
 # Notebook lint
