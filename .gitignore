@@ -5,13 +5,14 @@ scratch/*
 *xlsx
 **/*.tar.gz
 **/*.csv*
-**/*.xls
-**/*.xlsx
+**/*.xls*
+**/*.parquet
 build/raw-data
 results/logs/
 **/cache/
 api.yml
 main-spare.do
+_*
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python

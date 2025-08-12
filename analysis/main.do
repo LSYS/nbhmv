@@ -278,7 +278,6 @@ program define make_tabH2
 	do code/additional_specifications/cny_wpsm.do
 end
 
-
 * =========================================================
 * Nbh flows and mismatch
 * =========================================================
@@ -305,6 +304,8 @@ end
 // make_fig8
 // make_fig9
 // make_figE1
+
+make_tabE6
 
 * =========================================================
 * Nbh flows and mismatch

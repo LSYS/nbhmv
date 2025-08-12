@@ -279,150 +279,150 @@ DPI = 300
 # %% [markdown]
 # ### mount pleasant
 
-# %% code_folding=[]
-# Plot mount pleasant
-SELECTED_AREA = "mount pleasant"
-_, ax = plt.subplots(figsize=FIGSIZE)
-# =====================================================
-# Plot wpsm
-gdf_sz_cr.plot(
-    column="wpsm",
-    cmap="Oranges",
-    scheme="quantiles",
-    edgecolor=EDGE_COLOR,
-    linewidth=AREA_LINEWIDTH,
-    ax=ax,
-    zorder=2,
-)
-# =====================================================
-# Plot non-resid hatching
-gdf_sz_cr.query("resident_count!=resident_count").query("wpsm!=wpsm").plot(
-    column="resident_count",
-    alpha=0.5,
-    edgecolor=EDGE_COLOR,
-    missing_kwds=MISSKWDS,
-    ax=ax,
-    zorder=1,
-)
+# %% code_folding=[0]
+# # Plot mount pleasant
+# SELECTED_AREA = "mount pleasant"
+# _, ax = plt.subplots(figsize=FIGSIZE)
+# # =====================================================
+# # Plot wpsm
+# gdf_sz_cr.plot(
+#     column="wpsm",
+#     cmap="Oranges",
+#     scheme="quantiles",
+#     edgecolor=EDGE_COLOR,
+#     linewidth=AREA_LINEWIDTH,
+#     ax=ax,
+#     zorder=2,
+# )
+# # =====================================================
+# # Plot non-resid hatching
+# gdf_sz_cr.query("resident_count!=resident_count").query("wpsm!=wpsm").plot(
+#     column="resident_count",
+#     alpha=0.5,
+#     edgecolor=EDGE_COLOR,
+#     missing_kwds=MISSKWDS,
+#     ax=ax,
+#     zorder=1,
+# )
 
-# =====================================================
-# Highlight selected area border
-selected_gdf = gdf_sz_cr[gdf_sz_cr["subzone"] == SELECTED_AREA]
-selected_gdf.boundary.plot(ax=ax, color="#000080", linewidth=7, zorder=5, alpha=0.7)
+# # =====================================================
+# # Highlight selected area border
+# selected_gdf = gdf_sz_cr[gdf_sz_cr["subzone"] == SELECTED_AREA]
+# selected_gdf.boundary.plot(ax=ax, color="#000080", linewidth=7, zorder=5, alpha=0.7)
 
-selected_gdf = gdf_sz_cr[gdf_sz_cr["subzone"] == "toa payoh central"]
-selected_gdf.boundary.plot(ax=ax, color="#008080", linewidth=6, zorder=5, alpha=0.7)
+# selected_gdf = gdf_sz_cr[gdf_sz_cr["subzone"] == "toa payoh central"]
+# selected_gdf.boundary.plot(ax=ax, color="#008080", linewidth=6, zorder=5, alpha=0.7)
 
-# =====================================================
-# Plot movement lines
-for slat, dlat, slon, dlon, area, flow, base in zip(
-    move["slat"],
-    move["dlat"],
-    move["slong"],
-    move["dlong"],
-    move["source"],
-    move["flow"],
-    move["inflow_count"],
-):
-    if area == SELECTED_AREA:
-        #         if (flow>FLOW_CUTOFF) & (base > BASE_FLOW_CUTOFF):
-        if flow > FLOW_CUTOFF:
-            plt.plot(
-                [slon, dlon],
-                [slat, dlat],
-                linewidth=base / MOVE_LWIDTH_NORM,
-                color="#000080",
-                alpha=MOVE_LINE_ALPHA,
-                zorder=4,
-                linestyle=":",
-                marker=">",
-            )
+# # =====================================================
+# # Plot movement lines
+# for slat, dlat, slon, dlon, area, flow, base in zip(
+#     move["slat"],
+#     move["dlat"],
+#     move["slong"],
+#     move["dlong"],
+#     move["source"],
+#     move["flow"],
+#     move["inflow_count"],
+# ):
+#     if area == SELECTED_AREA:
+#         #         if (flow>FLOW_CUTOFF) & (base > BASE_FLOW_CUTOFF):
+#         if flow > FLOW_CUTOFF:
+#             plt.plot(
+#                 [slon, dlon],
+#                 [slat, dlat],
+#                 linewidth=base / MOVE_LWIDTH_NORM,
+#                 color="#000080",
+#                 alpha=MOVE_LINE_ALPHA,
+#                 zorder=4,
+#                 linestyle=":",
+#                 marker=">",
+#             )
 
-# =====================================================
-# Get quantiles
-classifier = Quantiles(gdf_sz_cr["wpsm"], k=5)
-breaks = classifier.bins
-colors = [plt.cm.Oranges(i / 4) for i in range(5)]
-
-
-def format_price(price):
-    if price >= 1000:
-        return f"{price/1000:.1f}k"
-    else:
-        return f"{price:.0f}"
+# # =====================================================
+# # Get quantiles
+# classifier = Quantiles(gdf_sz_cr["wpsm"], k=5)
+# breaks = classifier.bins
+# colors = [plt.cm.Oranges(i / 4) for i in range(5)]
 
 
-# =====================================================
-# Compose legend
-legend_elements = []
+# def format_price(price):
+#     if price >= 1000:
+#         return f"{price/1000:.1f}k"
+#     else:
+#         return f"{price:.0f}"
 
-# Add quantile legend items
-for i, (color, break_val) in enumerate(zip(colors, breaks)):
-    if i == 0:
-        label = f"< \${format_price(break_val)}"
-    elif i == 4:
-        label = f"> \${format_price(breaks[i-1])}"
-    else:
-        label = f"\${format_price(breaks[i-1])} - \${format_price(break_val)}"
-    legend_elements.append(
-        mpatches.Patch(facecolor=color, edgecolor="black", linewidth=0.5, label=label)
-    )
 
-# Add non-residential areas to legend
-legend_elements.append(
-    mpatches.Patch(
-        facecolor=MISSKWDS.get("color", "lightgray"),
-        hatch=MISSKWDS.get("hatch", "/////"),
-        alpha=0.5,
-        edgecolor=MISSKWDS.get("facecolor", "lightgray"),
-        linewidth=0.5,
-        label="Non-residential",
-    )
-)
+# # =====================================================
+# # Compose legend
+# legend_elements = []
 
-legend = ax.legend(
-    handles=legend_elements,
-    title="Weighted price per\nsqm (SGD)",
-    title_fontsize=15,
-    fontsize=15,
-    loc="lower right",
-    bbox_to_anchor=(1.0, 0),
-    frameon=False,
-    shadow=False,
-    framealpha=0.95,
-    edgecolor="#333333",
-    facecolor="white",
-    borderpad=0,
-    columnspacing=1,
-    labelspacing=0.4,
-    handletextpad=0.5,
-)
-legend.get_title().set_fontweight("bold")
-legend._legend_box.align = "left"
-for text in legend.get_texts():
-    text.set_color(".2")
-# =====================================================
-# add_scalebar(ax=ax, location="upper right")
-add_north_arrow(ax=ax, x=103.915, y=1.36)
-add_segmented_scalebar(
-    ax,
-    location="lower left",
-    segments=[1, 1, 2, 2],
-    unit_position="right",
-    label_offset=0.005,
-    unit_label_spacing=0.003,
-    fontsize=10,
-    unit_fontsize=11,
-)
-plt.tight_layout()
-plt.margins(0, 0)
-plt.axis("off")
-save_mpl_fig(f"{SAVEPATH}/outflow-{'_'.join(SELECTED_AREA.split(' '))}-wpsm")
+# # Add quantile legend items
+# for i, (color, break_val) in enumerate(zip(colors, breaks)):
+#     if i == 0:
+#         label = f"< \${format_price(break_val)}"
+#     elif i == 4:
+#         label = f"> \${format_price(breaks[i-1])}"
+#     else:
+#         label = f"\${format_price(breaks[i-1])} - \${format_price(break_val)}"
+#     legend_elements.append(
+#         mpatches.Patch(facecolor=color, edgecolor="black", linewidth=0.5, label=label)
+#     )
+
+# # Add non-residential areas to legend
+# legend_elements.append(
+#     mpatches.Patch(
+#         facecolor=MISSKWDS.get("color", "lightgray"),
+#         hatch=MISSKWDS.get("hatch", "/////"),
+#         alpha=0.5,
+#         edgecolor=MISSKWDS.get("facecolor", "lightgray"),
+#         linewidth=0.5,
+#         label="Non-residential",
+#     )
+# )
+
+# legend = ax.legend(
+#     handles=legend_elements,
+#     title="Weighted price per\nsqm (SGD)",
+#     title_fontsize=15,
+#     fontsize=15,
+#     loc="lower right",
+#     bbox_to_anchor=(1.0, 0),
+#     frameon=False,
+#     shadow=False,
+#     framealpha=0.95,
+#     edgecolor="#333333",
+#     facecolor="white",
+#     borderpad=0,
+#     columnspacing=1,
+#     labelspacing=0.4,
+#     handletextpad=0.5,
+# )
+# legend.get_title().set_fontweight("bold")
+# legend._legend_box.align = "left"
+# for text in legend.get_texts():
+#     text.set_color(".2")
+# # =====================================================
+# # add_scalebar(ax=ax, location="upper right")
+# add_north_arrow(ax=ax, x=103.915, y=1.36)
+# add_segmented_scalebar(
+#     ax,
+#     location="lower left",
+#     segments=[1, 1, 2, 2],
+#     unit_position="right",
+#     label_offset=0.005,
+#     unit_label_spacing=0.003,
+#     fontsize=10,
+#     unit_fontsize=11,
+# )
+# plt.tight_layout()
+# plt.margins(0, 0)
+# plt.axis("off")
+# save_mpl_fig(f"{SAVEPATH}/outflow-{'_'.join(SELECTED_AREA.split(' '))}-wpsm")
 
 # %% [markdown]
 # ### Malcolm
 
-# %% code_folding=[]
+# %% code_folding=[0]
 # Plot mount pleasant
 SELECTED_AREA = "malcolm"
 _, ax = plt.subplots(figsize=FIGSIZE)
