@@ -274,7 +274,16 @@ MISSKWDS = {
     "hatch": "///",
     "label": "Missing values",
 }
-DPI = 300
+SCALEBAR_OPTS = dict(
+    height_fraction=.010,
+    location="lower left",
+    segments=[1, 1, 2, 2],
+    unit_position="right",
+    label_offset=0.005,
+    unit_label_spacing=0.003,
+    fontsize=10,
+    unit_fontsize=11,
+)
 
 # %% [markdown]
 # ### mount pleasant
@@ -422,7 +431,7 @@ DPI = 300
 # %% [markdown]
 # ### Malcolm
 
-# %% code_folding=[0]
+# %% code_folding=[]
 # Plot mount pleasant
 SELECTED_AREA = "malcolm"
 _, ax = plt.subplots(figsize=FIGSIZE)
@@ -482,80 +491,11 @@ for slat, dlat, slon, dlon, area, flow, base in zip(
             )
 
 # =====================================================
-# Get quantiles
-classifier = Quantiles(gdf_sz_cr["wpsm"], k=5)
-breaks = classifier.bins
-colors = [plt.cm.Oranges(i / 4) for i in range(5)]
-
-
-def format_price(price):
-    if price >= 1000:
-        return f"{price/1000:.1f}k"
-    else:
-        return f"{price:.0f}"
-
-
-# =====================================================
-# Compose legend
-legend_elements = []
-
-# Add quantile legend items
-for i, (color, break_val) in enumerate(zip(colors, breaks)):
-    if i == 0:
-        label = f"< \${format_price(break_val)}"
-    elif i == 4:
-        label = f"> \${format_price(breaks[i-1])}"
-    else:
-        label = f"\${format_price(breaks[i-1])} - \${format_price(break_val)}"
-    legend_elements.append(
-        mpatches.Patch(facecolor=color, edgecolor="black", linewidth=0.5, label=label)
-    )
-
-# Add non-residential areas to legend
-legend_elements.append(
-    mpatches.Patch(
-        facecolor=MISSKWDS.get("color", "lightgray"),
-        hatch=MISSKWDS.get("hatch", "/////"),
-        alpha=0.5,
-        edgecolor=MISSKWDS.get("facecolor", "lightgray"),
-        linewidth=0.5,
-        label="Non-residential",
-    )
-)
-
-legend = ax.legend(
-    handles=legend_elements,
-    title="Weighted price per\nsqm (SGD)",
-    title_fontsize=15,
-    fontsize=15,
-    loc="lower right",
-    bbox_to_anchor=(1.0, 0),
-    frameon=False,
-    shadow=False,
-    framealpha=0.95,
-    edgecolor="#333333",
-    facecolor="white",
-    borderpad=0,
-    columnspacing=1,
-    labelspacing=0.4,
-    handletextpad=0.5,
-)
-legend.get_title().set_fontweight("bold")
-legend._legend_box.align = "left"
-for text in legend.get_texts():
-    text.set_color(".2")
-# =====================================================
 # add_scalebar(ax=ax, location="upper right")
 add_north_arrow(ax=ax, x=103.915, y=1.36)
 add_segmented_scalebar(
     ax,
-    location="lower left",
-    segments=[1, 1, 2, 2],
-    unit_position="right",
-    label_offset=0.005,
-    unit_label_spacing=0.003,
-    fontsize=10,
-    unit_fontsize=11,
+    **SCALEBAR_OPTS,
 )
 plt.tight_layout()
 plt.margins(0, 0)
@@ -565,7 +505,13 @@ save_mpl_fig(f"{SAVEPATH}/outflow-{'_'.join(SELECTED_AREA.split(' '))}-wpsm")
 # %% [markdown]
 # ### toa payoh central
 
-# %% code_folding=[0]
+# %%
+import matplotlib
+
+# %%
+matplotlib.__version__
+
+# %% code_folding=[]
 # Plot toa payoh central
 SELECTED_AREA = "toa payoh central"
 
@@ -628,17 +574,75 @@ for slat, dlat, slon, dlon, area, flow, base in zip(
             )
 
 # =====================================================
+# Get quantiles
+classifier = Quantiles(gdf_sz_cr["wpsm"], k=5)
+breaks = classifier.bins
+colors = [plt.cm.Oranges(i / 4) for i in range(5)]
+
+
+def format_price(price):
+    if price >= 1000:
+        return f"{price/1000:.1f}k"
+    else:
+        return f"{price:.0f}"
+
+
+# =====================================================
+# Compose legend
+legend_elements = []
+
+# Add quantile legend items
+for i, (color, break_val) in enumerate(zip(colors, breaks)):
+    if i == 0:
+        label = f"< \${format_price(break_val)}"
+    elif i == 4:
+        label = f"> \${format_price(breaks[i-1])}"
+    else:
+        label = f"\${format_price(breaks[i-1])} - \${format_price(break_val)}"
+    legend_elements.append(
+        mpatches.Patch(facecolor=color, edgecolor="black", linewidth=0.5, label=label)
+    )
+
+# Add non-residential areas to legend
+legend_elements.append(
+    mpatches.Patch(
+        facecolor=MISSKWDS.get("color", "lightgray"),
+        hatch="//////",
+        alpha=0.5,
+        edgecolor=MISSKWDS.get("facecolor", "lightgray"),
+        linewidth=0.5,
+        label="Non-residential",
+    )
+)
+
+legend = ax.legend(
+    handles=legend_elements,
+    title="Weighted price per\nsqm (SGD)",
+    title_fontsize=15,
+    fontsize=15,
+    loc="lower right",
+    bbox_to_anchor=(1.0, 0),
+    frameon=False,
+    shadow=False,
+    framealpha=0.95,
+    edgecolor="#333333",
+    facecolor="white",
+    borderpad=0,
+    columnspacing=1,
+    labelspacing=0.4,
+    handletextpad=0.5,
+)
+legend.get_title().set_fontweight("bold")
+legend._legend_box.align = "left"
+for text in legend.get_texts():
+    text.set_color(".2")
+    
+# =====================================================
 # add_scalebar(ax=ax, location="upper right")
 add_north_arrow(ax=ax, x=103.915, y=1.36)
 add_segmented_scalebar(
     ax,
-    location="lower left",
-    segments=[1, 1, 2, 2],
-    unit_position="right",
-    label_offset=0.005,
-    unit_label_spacing=0.003,
-    fontsize=10,
-    unit_fontsize=11,
+    **SCALEBAR_OPTS,
 )
 plt.tight_layout()
 plt.margins(0, 0)
