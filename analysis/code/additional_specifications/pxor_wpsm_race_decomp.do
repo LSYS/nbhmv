@@ -1,0 +1,86 @@
+cap log close mismatch
+log using $logsavedir/pxor_wpsm_ncentral.txt, replace text name(mismatch)
+
+
+tictoc tic 99
+set more off
+
+local x mismatch_p25_p2r mismatch_p25_r2p mismatch_race_m2c mismatch_race_c2m
+
+*~~~~~~~~~~~~~~~~~~~~~~~~
+* Estimate specifications
+*~~~~~~~~~~~~~~~~~~~~~~~~
+eststo clear
+forvalues i = 1/5 {
+	eststo: reghdfe y `x', absorb(\$s`i') vce($se)
+		* Add indicators for baseline 
+		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
+		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
+		* Add sample sizes report
+		mat femat = e(dof_table)
+		local days = femat[1,1]
+		estadd local days "\multicolumn{1}{c}{$ `days' $}"		
+		local clusters: display %9.0fc `e(N_clust1)'
+		estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"		
+		local nobs: display %9.0fc `e(N)'
+		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
+		* Add indicators for additional controls
+		if `i'==2 {
+			estadd local demo 		"\multicolumn{1}{c}{\checkmark}"				
+		}
+		else if `i'==3 {
+			estadd local demo 		"\multicolumn{1}{c}{\checkmark}"	
+			estadd local business 	"\multicolumn{1}{c}{\checkmark}"	
+		}
+		else if `i'==4 {
+			estadd local demo 		"\multicolumn{1}{c}{\checkmark}"	
+			estadd local business 	"\multicolumn{1}{c}{\checkmark}"				
+			estadd local rain 		"\multicolumn{1}{c}{\checkmark}"				
+		}
+		else if `i'==5 {
+			estadd local demo 		"\multicolumn{1}{c}{\checkmark}"	
+			estadd local business 	"\multicolumn{1}{c}{\checkmark}"				
+			estadd local rain 		"\multicolumn{1}{c}{\checkmark}"			
+			estadd local POI 		"\multicolumn{1}{c}{\checkmark}"			
+		}
+}
+
+
+*~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Make LaTex Table Fragment
+*~~~~~~~~~~~~~~~~~~~~~~~~~~
+#delimit;
+esttab using $tabsavedir/pxor-wpsm-race-asymmetry-frag.tex, 
+	b(%9.4fc)
+	se(%9.4fc)
+	star (* 0.1 ** 0.05 *** 0.01)
+	obslast
+	noomitted        
+	nobase noobs
+	nonumbers nolines nogaps noeqlines nodepvars
+	nomtitle
+	varwidth(20)
+	modelwidth(8)
+	drop(_cons)
+	coeflabel($coeff_labels)
+	scalar(
+		"timeFE Day fixed effects"
+		"censusPA Census area-by-day fixed effects"
+		"demo Demographics"
+		"business Businesses"
+		"rain Neighborhood-specific rainfall"
+		"POI Places of interest"
+		"r2 R$^2$" 
+		"days Days"
+		"clusters Clusters"
+		"nobs Observations") 
+	alignment(D{.}{.}{-1})	
+	substitute(\_ _)
+	fragment replace
+	compress;		
+#delimit cr
+beep 
+
+tictoc toc 99
+
+log close mismatch
