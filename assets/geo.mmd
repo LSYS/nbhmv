@@ -1,0 +1,101 @@
+%%{init: {"flowchart": {"htmlLabels": true}}}%%
+graph LR
+    %% Input Data Sources (all from input/ folder)
+    CDPanel["<i>input/cd-panel.csv</i><br/>(Main pipeline output)"]
+    CDPanelLabeled["<i>input/cd-panel-labels.csv</i><br/>(Labeled version)"]
+    REALISData["<i>input/realis_with_postal_code_complete.csv.gz</i>"]
+    HDBData["<i>input/hdb_saledata_with_geodata.csv.gz</i>"]
+    SubzoneShapefiles["<i>input/master-plan-2014-subzone-boundary-no-sea/</i>"]
+    PAShapefiles["<i>input/master-plan-2014-planning-area-boundary-no-sea/</i>"]
+    RegionShapefiles["<i>input/master-plan-2014-region-boundary-no-sea/</i>"]
+    IncomeData["<i>input/resident-working-persons-aged-15-years-over.../</i>"]
+    HtypeData["<i>input/htype.csv</i>"]
+    DeviceRaw["<i>input/sg_subzones_devices/</i>"]
+    PropPriceData["<i>input/propprice-subzone.csv</i>"]
+    
+    %% Analysis Scripts (now .ipynb)
+    ChoroplethPrice["<b>Choropleth Price</b><br/>Property Price Maps<br/><i>choropleth-price.ipynb</i>"]
+    DeviceCount["<b>Device Count Analysis</b><br/>Device Count by Subzone<br/><i>get-devicecount-subzone-day.ipynb</i>"]
+    PricePercentiles["<b>Price Percentiles</b><br/>Neighborhood Price Analysis<br/><i>lower-vs-higher-ptiles.ipynb</i>"]
+    PAPrice["<b>Planning Area Prices</b><br/>Aggregate Price by PA<br/><i>pa-price.ipynb</i>"]
+    PingVariation["<b>GPS Ping variation</b><br/>GPS Data Quality Analysis<br/><i>ping-variation.ipynb</i>"]
+    BootstrapR2["<b>Bootstrap R²</b><br/>Statistical Validation<br/><i>bootstrap-r2.ipynb</i>"]
+    Borders["<b>Border Visualization</b><br/>Administrative Boundaries<br/><i>borders.ipynb</i>"]
+    ChoroplethDevices["<b>Device Distribution</b><br/>Device Coverage Maps<br/><i>choropleth-devices.ipynb</i>"]
+    ChoroplethIncome["<b>Income Distribution</b><br/>Income Choropleth Maps<br/><i>choropleth-income.ipynb</i>"]
+    
+    %% Output Files (to out/ folder)
+    DeviceCountOutput["<i>out/devicecount-subzone-day.csv</i>"]
+    PAPriceOutput["<i>out/pa-price.csv</i>"]
+    
+    %% Final Outputs (Figures to ../results/figures/)
+    PriceMaps["Price/Income Maps<br/>(<i>../results/figures/supplementary/</i>)"]
+    DeviceMaps["Device Coverage Maps<br/>(<i>../results/figures/supplementary/</i>)"]
+    StatisticalPlots["GPS scaling with nbh demo/Behavioral regularities<br/>(<i>../results/figures/ping-variation/</i>)"]
+    BorderMaps["Administrative Border Maps<br/>(<i>../results/figures/supplementary/</i>)"]
+    ValidationPlots["Histogram of bootstrapped R²<br/>(<i>../results/figures/supplementary/</i>)"]
+    
+    %% Dependencies
+    REALISData --> ChoroplethPrice
+    HDBData --> ChoroplethPrice
+    PAShapefiles --> ChoroplethPrice
+    SubzoneShapefiles --> ChoroplethPrice
+    
+    DeviceRaw --> DeviceCount
+    
+    CDPanelLabeled --> PricePercentiles
+    SubzoneShapefiles --> PricePercentiles
+    
+    PropPriceData --> PAPrice
+    HtypeData --> PAPrice
+    PAShapefiles --> PAPrice
+    IncomeData --> PAPrice
+    
+    CDPanel --> PingVariation
+    
+    PAPriceOutput --> BootstrapR2
+    
+    SubzoneShapefiles --> Borders
+    PAShapefiles --> Borders
+    RegionShapefiles --> Borders
+    HtypeData --> Borders
+    
+    DeviceCountOutput --> ChoroplethDevices
+    SubzoneShapefiles --> ChoroplethDevices
+    HtypeData --> ChoroplethDevices
+    
+    REALISData --> ChoroplethIncome
+    HDBData --> ChoroplethIncome
+    PAShapefiles --> ChoroplethIncome
+    IncomeData --> ChoroplethIncome
+    
+    %% Intermediate file creation
+    DeviceCount --> DeviceCountOutput
+    PAPrice --> PAPriceOutput
+    
+    %% Final outputs
+    ChoroplethPrice --> PriceMaps
+    PricePercentiles --> PriceMaps
+    ChoroplethIncome --> PriceMaps
+    
+    ChoroplethDevices --> DeviceMaps
+    
+    PingVariation --> StatisticalPlots
+    
+    BootstrapR2 --> ValidationPlots
+    
+    Borders --> BorderMaps
+    
+    %% Styling
+    classDef analysis fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef input fill:#f1f8e9,stroke:#388e3c,stroke-width:2px
+    classDef intermediate fill:#fce4ec,stroke:#7b1fa2,stroke-width:2px
+    classDef output fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef main fill:#ffebee,stroke:#c62828,stroke-width:3px
+    classDef default fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,font-size:11px,padding:0px
+    
+    class ChoroplethPrice,DeviceCount,PricePercentiles,PAPrice,PingVariation,BootstrapR2,Borders,ChoroplethDevices,ChoroplethIncome analysis
+    class REALISData,HDBData,SubzoneShapefiles,PAShapefiles,RegionShapefiles,IncomeData,HtypeData,DeviceRaw,PropPriceData input
+    class DeviceCountOutput,PAPriceOutput intermediate
+    class PriceMaps,DeviceMaps,StatisticalPlots,BorderMaps,ValidationPlots output
+    class CDPanel,CDPanelLabeled main
