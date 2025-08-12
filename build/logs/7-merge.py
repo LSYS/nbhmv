@@ -17,7 +17,6 @@
 import os
 import pandas as pd
 import geopandas as gpd
-import numpy as np
 import gc
 
 from utilities import walk_through_files
@@ -836,54 +835,53 @@ gc.collect()
 # %% [markdown]
 # #### Compute weighted (by public/private residence share) house price
 
-# %%
-# weighted PSM for home
-df["wpsm_private_home"] = df["private_home"] / 100 * df["private_psm_home"]
-df["wpsm_public_home"] = (100 - df["private_home"]) / 100 * df["public_psm_home"]
-df["wpsm_home"] = df[["wpsm_private_home", "wpsm_public_home"]].sum(
-    axis=1, skipna=True
-)  # Treat na as 0
-# If zero, means both private and public data is missing, replace as missing
-df["wpsm_home"] = np.where(df["wpsm_home"] == 0, np.nan, df["wpsm_home"])
-
-# weighted PSM for dest
-df["wpsm_private_dest"] = df["private_dest"] / 100 * df["private_psm_dest"]
-df["wpsm_public_dest"] = (100 - df["private_dest"]) / 100 * df["public_psm_dest"]
-df["wpsm_dest"] = df[["wpsm_private_dest", "wpsm_public_dest"]].sum(
-    axis=1, skipna=True
-)  # Treat na as 0
-# If zero, means both private and public data is missing, replace as missing
-df["wpsm_dest"] = np.where(df["wpsm_dest"] == 0, np.nan, df["wpsm_dest"])
+# %% code_folding=[]
+df = df.assign(
+    # Home
+    wpsm_private_home=lambda df_: df_["private_home"] / 100 * df_["private_psm_home"],
+    wpsm_public_home=lambda df_: (100 - df_["private_home"])
+    / 100
+    * df_["public_psm_home"],
+    wpsm_home=lambda df_: df_[["wpsm_private_home", "wpsm_public_home"]].sum(
+        axis=1, skipna=True
+    ),
+    # Destination
+    wpsm_private_dest=lambda df_: df_["private_dest"] / 100 * df_["private_psm_dest"],
+    wpsm_public_dest=lambda df_: (100 - df_["private_dest"])
+    / 100
+    * df_["public_psm_dest"],
+    wpsm_dest=lambda df_: df_[["wpsm_private_dest", "wpsm_public_dest"]].sum(
+        axis=1, skipna=True
+    ),
+).assign(
+    # Replace zeros with NaN
+    wpsm_home=lambda df_: df_["wpsm_home"].where(df_["wpsm_home"] != 0),
+    wpsm_dest=lambda df_: df_["wpsm_dest"].where(df_["wpsm_dest"] != 0),
+)
+df.head(3)
 
 # %% [markdown]
 # ### Save
 
 # %%
-# Dont remember what this is for
-_g = ["pa_home", "home", "rm12_home"]
-df[_g].drop_duplicates().sort_values("rm12_home", ascending=False).head(10)
-
-# %%
-df.to_csv("cd-panel-labels.csv", index=False)
+df.to_parquet("cd-panel-labels.parquet", index=False)
 
 # %%
 # Create and save mappings before converting
 all_mappings = []
 for col in ["home", "area", "pa_home", "pa_dest"]:
     df[col] = df[col].astype("category")
-    
+
     # Store mapping
     for code, original_name in enumerate(df[col].cat.categories):
-        all_mappings.append({
-            'column': col,
-            'code': code, 
-            'original_name': original_name
-        })
-    
+        all_mappings.append(
+            {"column": col, "code": code, "original_name": original_name}
+        )
+
     df[col] = df[col].cat.codes
 
 df_zone_mappings = pd.DataFrame(all_mappings)
-df_zone_mappings.to_csv('intermediate-output/zone_mappings.csv', index=False)
+df_zone_mappings.to_csv("intermediate-output/zone_mappings.csv", index=False)
 
 # %%
 df.head(3)
