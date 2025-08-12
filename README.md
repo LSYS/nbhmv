@@ -8,6 +8,7 @@ We take our estimates to a counterfactual analysis of an extant ethnic residenti
 
 [![PyLint](https://github.com/LSYS/nbhmv/actions/workflows/pylint.yml/badge.svg)](https://github.com/LSYS/nbhmv/actions/workflows/pylint.yml)
 [![Build notebooks lint](https://github.com/LSYS/nbhmv/actions/workflows/nblint.yml/badge.svg)](https://github.com/LSYS/nbhmv/actions/workflows/nblint.yml)
+[![Geo notebooks lint](https://github.com/LSYS/nbhmv/actions/workflows/nblint-geo.yml/badge.svg)](https://github.com/LSYS/nbhmv/actions/workflows/nblint-geo.yml)
 
 ## 📂 Repo Structure and Scripts
 
