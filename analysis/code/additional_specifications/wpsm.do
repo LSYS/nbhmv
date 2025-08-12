@@ -43,25 +43,22 @@ forvalues i = 1/5 {
 		}
 }
 
-#delimit;
 
 *~~~~~~~~~~~~~~~~~
 * Make LaTex Table
 *~~~~~~~~~~~~~~~~~
-global esttab_options "b(%9.3fc)
-					 se(%9.3fc)
-					 star (* 0.1 ** 0.05 *** 0.01)
-					 obslast
-					 noomitted        
-					 noobs
-					 nonumbers nolines nogaps noeqlines nodepvars
-					 nomtitle
-					 varwidth(20)
-					 modelwidth(8)
-					";				 
-
+#delimit;
 esttab using $tabsavedir/wpsm-frag.tex, 
-	$esttab_options 
+	b(%9.3fc)
+	se(%9.3fc)
+	star (* 0.1 ** 0.05 *** 0.01)
+	obslast
+	noomitted        
+	noobs
+	nonumbers nolines nogaps noeqlines nodepvars
+	nomtitle
+	varwidth(20)
+	modelwidth(8)
 	drop(_cons)
 	nobase
 	coeflabel($coeff_labels)
