@@ -32,6 +32,7 @@ warnings.filterwarnings("ignore")
 FP_REGION_SHP2014 = "input/master-plan-2014-region-boundary-no-sea/master-plan-2014-region-boundary-no-sea-shp.zip"
 FP_SUBZONE_SHP2014 = "input/master-plan-2014-subzone-boundary-no-sea/master-plan-2014-subzone-boundary-no-sea-shp.zip"
 FP_ZONE_SHP2014 = "input/master-plan-2014-planning-area-boundary-no-sea/master-plan-2014-planning-area-boundary-no-sea-shp.zip"
+FP_HTYPE = "input/htype.csv"
 
 # %% [markdown]
 # ## Regions
@@ -122,8 +123,6 @@ save_mpl_fig(os.path.join(SAVEPATH, "borders-subzones"))
 # ## Neighborhoods
 
 # %%
-FP_HTYPE = os.path.join("..", "build", "intermediate-output", "htype.csv")
-
 # Read in URA2014 version
 subzones2014 = (
     gpd.read_file(FP_SUBZONE_SHP2014)

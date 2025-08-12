@@ -14,7 +14,6 @@
 # ---
 
 # %%
-# import os
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
@@ -25,12 +24,6 @@ import matplotlib.cm as cm
 import warnings
 
 warnings.filterwarnings("ignore")
-# FP_REALIS = os.path.join(
-#     "..", "build", "preprocessed-data", "realis_with_postal_code_complete.csv.gz"
-# )
-# FP_HDBRESALE = os.path.join(
-#     "..", "build", "preprocessed-data", "hdb_saledata_with_geodata.csv.gz"
-# )
 
 FP_INC = "input/resident-working-persons-aged-15-years-over-by-planning-area-gross-monthly-income-from-work-2015/resident-working-persons-aged-15-yrs-over-by-pa-gross-monthly-income-from-work.csv"
 FP_REALIS = "input/realis_with_postal_code_complete.csv.gz"
@@ -45,15 +38,6 @@ from utilities import add_north_arrow, add_scalebar, save_mpl_fig, cat_to_num
 # ### PA
 
 # %%
-# FP_PA_SHP2014 = os.path.join(
-#     "zip://",
-#     "..",
-#     "build",
-#     "raw-data",
-#     "master-plan-2014-planning-area-boundary-no-sea",
-#     "master-plan-2014-planning-area-boundary-no-sea-kml.zip",
-# )
-
 gdf_pa = gpd.read_file(FP_PA_SHP2014).assign(
     planning_area=lambda df: df.Name.str.lower()
 )

@@ -14,7 +14,6 @@
 # ---
 
 # %%
-import os
 import pandas as pd
 import geopandas as gpd
 import fiona
@@ -22,30 +21,6 @@ import fiona
 fiona.drvsupport.supported_drivers["KML"] = "rw"
 import matplotlib.pyplot as plt
 
-# FP_SUBZONE_SHP2014 = os.path.join(
-#     "zip://",
-#     "..",
-#     "build",
-#     "raw-data",
-#     "master-plan-2014-subzone-boundary-no-sea",
-#     "master-plan-2014-subzone-boundary-no-sea-kml.zip",
-# )
-# FP_PA_SHP2014 = os.path.join(
-#     "zip://",
-#     "..",
-#     "build",
-#     "raw-data",
-#     "master-plan-2014-planning-area-boundary-no-sea",
-#     "master-plan-2014-planning-area-boundary-no-sea-kml.zip",
-# )
-
-
-# FP_REALIS = os.path.join(
-#     "..", "build", "preprocessed-data", "realis_with_postal_code_complete.csv.gz"
-# )
-# FP_HDBRESALE = os.path.join(
-#     "..", "build", "preprocessed-data", "hdb_saledata_with_geodata.csv.gz"
-# )
 FP_PA_SHP2014 = "input/master-plan-2014-planning-area-boundary-no-sea/master-plan-2014-planning-area-boundary-no-sea-kml.zip"
 FP_SUBZONE_SHP2014 = "input/master-plan-2014-subzone-boundary-no-sea/master-plan-2014-subzone-boundary-no-sea-kml.zip"
 FP_REALIS = "input/realis_with_postal_code_complete.csv.gz"
