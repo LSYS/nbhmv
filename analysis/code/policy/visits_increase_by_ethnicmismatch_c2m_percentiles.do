@@ -1,7 +1,7 @@
 cap log close counterfactual
 log using $logsavedir/visits_increase_by_ethnicmismatch_c2m_percentiles.txt, replace text name(counterfactual)
 
-local maj2mnr_est = -0.363 // from Table XXX. Asymmetry in ethnic mismatch
+local maj2mnr_est = -0.35 // from Table C3. Asymmetry in ethnic mismatch
 
 local FILENAME mismatch_c2m_eip
 local FILEPATH ./code/policy/out

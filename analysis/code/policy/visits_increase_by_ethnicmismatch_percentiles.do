@@ -1,7 +1,7 @@
 cap log close counterfactual
 log using $logsavedir/visits_increase_by_ethnicmismatch_percentiles.txt, replace text name(counterfactual)
 
-local ethnic_est = -0.199 // (-0.1985) from Table C4. Effect of ethnic mismatch on movement
+local ethnic_est = -0.184 // (-0.184) from Table 2. Effect of ethnic mismatch on movement
 
 local FILENAME mismatch_eip
 local FILEPATH ./code/policy/out

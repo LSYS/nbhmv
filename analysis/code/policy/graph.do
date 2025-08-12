@@ -12,7 +12,7 @@ preserve
 
 use `FILEPATH'/mismatch_eip.dta, clear
 
-local no_asymm_increase = 2.8
+local no_asymm_increase = 2.5
 
 local TITLE1 "Percentage increase in visits"
 // local TITLE2 "  reduction in ethnic mismatch"
@@ -39,7 +39,7 @@ savefig, path($graphsavedir/mismatch-eip) format($graphformats) override(width(1
 use `FILEPATH'/mismatch_c2m_eip.dta, clear
 
 // local TITLE2 "  reduction in (maj {&rarr} mnr) ethnic mismatch"
-local with_asymm_increase = 8.0
+local with_asymm_increase = 7.8
 local TEXT "Increase from EIP = `with_asymm_increase'%"
 local ref_centile 73
 local ref_centile2 = `ref_centile' - 12 
