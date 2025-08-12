@@ -39,7 +39,7 @@ from palettable import colorbrewer
 from utilities import add_north_arrow, add_scalebar, save_mpl_fig
 
 FP_SUBZONE_SHP2014 = "input/master-plan-2014-subzone-boundary-no-sea/master-plan-2014-subzone-boundary-no-sea-shp.zip"
-FP_PANEL = "input/cd-panel-labels.csv"
+FP_PANEL = "input/cd-panel-labels.parquet"
 
 # %%
 gdf_subzones = (
@@ -63,7 +63,7 @@ gdf_subzones
 
 # %%
 df = (
-    pd.read_csv(FP_PANEL, low_memory=False)
+    pd.read_parquet(FP_PANEL, low_memory=False)
     .rename_column("home", "subzone")
     .drop_duplicates(["subzone"], ignore_index=True)
     # ==============

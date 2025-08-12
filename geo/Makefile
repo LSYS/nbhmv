@@ -77,11 +77,13 @@ link: ## Symlink assets
 	@echo "Cleaning existing symlinks in input/..."
 	@find input -type l -delete 2>/dev/null || true
 	@echo "Making symlinks..."
-	cd input && ln $(SYMLINK_OPTS) ../../build/cd-panel-labels.csv .
+	cd input && ln $(SYMLINK_OPTS) ../../build/cd-panel-labels.parquet .
 	cd input && ln $(SYMLINK_OPTS) ../../build/cd-panel.csv .
 	cd input && ln $(SYMLINK_OPTS) ../../build/intermediate-output/citydata-subzones.csv .
 	cd input && ln $(SYMLINK_OPTS) ../../build/intermediate-output/propprice-subzone.csv .
 	cd input && ln $(SYMLINK_OPTS) ../../build/intermediate-output/htype.csv .
+	cd input && ln $(SYMLINK_OPTS) ../../build/intermediate-output/zone_mappings.csv .
+	cd input && ln $(SYMLINK_OPTS) ../../build/intermediate-output/daily-movecount.csv.gz .
 	cd input && ln $(SYMLINK_OPTS) ../../build/preprocessed-data/realis_with_postal_code_complete.csv.gz .
 	cd input && ln $(SYMLINK_OPTS) ../../build/preprocessed-data/hdb_saledata_with_geodata.csv.gz .
 	cd input && ln $(SYMLINK_OPTS) ../../build/raw-data/master-plan-2014-subzone-boundary-no-sea/ .
