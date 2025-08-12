@@ -1,9 +1,10 @@
 cap log close exc_emp
 log using $logsavedir/exc_majorempcenters_pxor_wpsm.txt, replace text name(exc_emp)
 
-preserve
-drop if inlist(pa_origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
-drop if inlist(pa_dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+// drop if inlist(origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+// drop if inlist(dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+// local condition (!inlist(origin, 8, 37, 50, 57, 150, 157, 201, 190) & !inlist(dest, 8, 37, 50, 57, 150, 157, 201, 190) )
+local condition !inlist(dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
 
 set more off
 local x mismatch_p25
@@ -14,7 +15,7 @@ local x mismatch_p25
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: reghdfe y `x', absorb(\$s`i') vce($se)
+	eststo: reghdfe y `x' if $exc_emp, absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
@@ -112,7 +113,5 @@ esttab using $tabsavedir/exc-majorempcenters-pxor-wpsm-frag.tex,
 	fragment replace
 	compress;		
 #delimit cr
-
-restore
 
 log close exc_emp
