@@ -1,4 +1,4 @@
-name: Build notebooks lint
+name: Geo notebooks lint
 
 on:
   workflow_dispatch:
