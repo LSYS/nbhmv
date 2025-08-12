@@ -30,11 +30,9 @@ global SCRATCH 0  // if 1, read only 5000 rows (for faster proofing/debugging)
 
 // do code/init/set_environment.do
 // tictoc tic 1
-do code/init/set_globals.do
+// do code/init/set_globals.do
 // do code/init/data_preamble.do
 
-// preserve
-// keep if _n in 1/5000
 *======================================
 * Linking scripts to exhibits numbering
 *======================================
@@ -52,13 +50,13 @@ end
 
 cap program drop make_fig6a
 program define make_fig6a
-	/* Also makes Tab C3 */
+	/* Also makes Tab 2 */
 	do code/mismatch/pxor_race.do
 end
 
 cap program drop make_fig6b
 program define make_fig6b
-	/* Also makes Tab C4 */
+	/* Also makes Tab C3 */
     do code/mismatch/pxor_race_asymmetry.do
 end
 
@@ -82,13 +80,40 @@ end
 
 cap program drop make_fig10
 program define make_fig10
-	// do code/policy/visits_increase_by_ethnicmismatch_percentiles.do
-	// do code/policy/visits_increase_by_ethnicmismatch_c2m_percentiles.do
+	do code/policy/visits_increase_by_ethnicmismatch_percentiles.do
+	do code/policy/visits_increase_by_ethnicmismatch_c2m_percentiles.do
 	do code/policy/graph.do
+end
+
+
+cap program drop make_top25p
+program define make_top25p
+	make_figD1
+	make_figD2
+	make_figD3
+end
+
+cap program drop make_figD1
+program define make_figD1
+	/* Also makes Tab D1 */
+	do code/mismatch_top25p/top25p_pxor_wpsm.do
+end
+
+cap program drop make_figD2
+program define make_figD2
+	* Also makes Tab D2 */
+	do code/mismatch_top25p/top25p_pxor_wpsm_r2p_p2r.do
+end
+
+cap program drop make_figD3
+program define make_figD3
+	* Also makes Tab D3 */
+	do code/mismatch_top25p/top25p_pxor_wpsm_ncentral.do
 end
 
 cap program drop make_robust
 program define make_robust
+	make_tabE1
 	make_tabE2
 	make_tabE3
 	make_tabE4
@@ -107,13 +132,12 @@ end
 
 cap program drop make_tabE2
 program define make_tabE2
-	/* also makes Fig E2 */
 	do code/additional_specifications/pxor_race_loglog.do
 end
 
 cap program drop make_tabE3
 program define make_tabE3
-	/* Also makes Fig E3 */
+	/* Also makes Fig E2 */
 	do code/mismatch/pxor_race_ncentral.do
 end
 
@@ -244,15 +268,6 @@ program define make_tabE28
 end
 
 
-
-
-
-
-
-
-
-
-
 cap program drop make_tabH1
 program define make_tabH1
 	do code/additional_specifications/wpsm.do
@@ -274,59 +289,22 @@ end
 // make_fig6b
 
 // make_fig7
+make_fig10
 
+// make_robust
+// make_top25p
+// make_exc_emp
 // make_dow
 // make_adj_filter
-make_robust
-
-// do code/mismatch_top25p/pxor_wpsm_top25p.do
-// do code/mismatch_top25p/pxor_wpsm_r2p_p2r_top25p.do
-// do code/mismatch_top25p/pxor_wpsm_ncentral_top25p.do
-
-// do code/dow/pxor_wpsm_wkday_wkend.do
-// do code/dow/pxor_wpsm_r2p_p2r_wkday_wkend.do
-// do code/dow/pxor_wpsm_ncentral_wkday_wkend.do
-// do code/dow/pxor_race_wkday_wkend.do
-// do code/dow/pxor_race_asymmetry_wkday_wkend.do
-// do code/dow/pxor_race_ncentral_wkday_wkend.do
-
-// do code/additional_specifications/exc_majorempcenters_pxor_wpsm.do
-// do code/additional_specifications/exc_majorempcenters_pxor_wpsm_r2p_p2r.do
-// do code/additional_specifications/exc_majorempcenters_pxor_wpsm_ncentral.do
-// do code/additional_specifications/exc_majorempcenters_pxor_race.do
-// do code/additional_specifications/exc_majorempcenters_pxor_race_asymmetry.do
-// do code/additional_specifications/exc_majorempcenters_pxor_race_ncentral.do
-
-// do code/adjacency_filter/pxor_wpsm_adjacency_filter.do
-// do code/adjacency_filter/pxor_wpsm_r2p_p2r_adjacency_filter.do
-// do code/adjacency_filter/pxor_wpsm_ncentral_adjacency_filter.do
-// do code/adjacency_filter/pxor_race_adjacency_filter.do
-// do code/adjacency_filter/pxor_race_asymmetry_adjacency_filter.do
-// do code/adjacency_filter/pxor_race_ncentral_adjacency_filter.do
-
-// make_tabE1
-// make_tabE2
-// make_tabE4
 
 // make_tabH1
 // make_tabH2
 
-// OUTSTANDING: TO RUN
 
+* Cutoffs
 // make_fig8
-
 // make_fig9
-
-// make_fig10
-
-// make_figD1
-
-
-
-
-// for preserve before keep if _n < 5000
-// restore
-
+// make_figE1
 
 * =========================================================
 * Nbh flows and mismatch
@@ -334,7 +312,6 @@ make_robust
 tictoc toc 1
 beepme 5
 
-// restore
 // log close
 // `myLog'
 // translate `log'.smcl `log'.log linesize(150)
