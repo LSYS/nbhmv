@@ -41,7 +41,9 @@ global poi ///
     sport_facilities ///
     transit ///
     tour ///
-    schools
+    schools ///
+    hawkers ///
+    shopping_malls
 
 global business ///
     manufacturing ///
@@ -57,6 +59,7 @@ global s3 $s2 i.date##c.($business) /* + business */
 global s4 $s3 i.date##c.($rain) 	/* + rainfall */
 global s5 $s4 i.date##c.($poi)		/* + POIs */
 
+global exc_emp !inlist(dest, 8, 11, 29, 37, 38, 50, 57, 150, 157, 190, 200, 248)
 
 *================
 * Variable labels
@@ -64,7 +67,8 @@ global s5 $s4 i.date##c.($poi)		/* + POIs */
 #delimit;
 global coeff_labels
 	"
-	mismatch_p25 "Income \pxor{}"
+    mismatch_p25 "Income \pxor{}"
+	1.mismatch_p25 "Income \pxor{}"
     mismatch_p75 "Income \pxor{} (p75)"
 	1.mismatch_p75 "Income \pxor{} (p75)"
 	1.mismatch_p25_p2r "P $\rightarrow$ NP"
@@ -83,7 +87,7 @@ global coeff_labels
     wpsm_dest                   "Wealth in destination"
     1.cny_sat_sun#c.wpsm_home   "Wealth in origin $ \times \mathds{1}^{\text{CNY}} $"
     1.cny_sat_sun#c.wpsm_dest   "Wealth in destination $ \times \mathds{1}^{\text{CNY}} $"
-	"
+    "
 ;
 #delimit cr
 

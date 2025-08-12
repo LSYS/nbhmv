@@ -1,7 +1,12 @@
-cap log close top25p
-log using $logsavedir/pxor_wpsm_top25p.txt, replace text name(top25p)
+cap log close exc_emp
+log using $logsavedir/top25p_exc_majorempcenters_pxor_wpsm_ncentral.txt, replace text name(exc_emp)
+
+// drop if inlist(origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+// drop if inlist(dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+local condition !inlist(dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
 
 set more off
+
 local x mismatch_p75
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
@@ -9,7 +14,7 @@ local x mismatch_p75
 *~~~~~~~~~~~~~~~~~~~~~~~~
 eststo clear
 forvalues i = 1/5 {
-	eststo: qui reghdfe y `x', absorb(\$s`i') vce($se)
+	eststo: reghdfe y i.`x'##i.ncentral_d if $exc_emp, absorb(\$s`i') vce($se)
 		* Add indicators for baseline 
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
@@ -21,6 +26,9 @@ forvalues i = 1/5 {
 		estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"		
 		local nobs: display %9.0fc `e(N)'
 		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
+		* Test mismatch + mismatch*ncentral = 0 [total effect outside central]
+		qui test 1.`x' + 1.`x'#1.ncentral_d = 0
+		estadd local pval = string(round(`r(p)', 0.001))
 		* Add indicators for additional controls
 		if `i'==2 {
 			estadd local demo 		"\multicolumn{1}{c}{\checkmark}"				
@@ -45,40 +53,43 @@ forvalues i = 1/5 {
 *~~~~~~~~~~~~~~
 * Plot coefplot
 *~~~~~~~~~~~~~~
+local MSIZE vlarge
+local YLABSIZE medlarge
+local LEGEND_SIZE medlarge
 #delimit;
-coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
-		 (est2, msymbol(Oh) msize($MSIZE) mlwidth($MLWIDTH) offset())
-		 (est3, msymbol(dh) msize($MSIZE) mlwidth($MLWIDTH) offset())
-		 (est4, msymbol(th) msize($MSIZE) mlwidth($MLWIDTH) offset())
-		 (est5, msymbol(sh) msize($MSIZE) mlwidth($MLWIDTH) offset()),
-			keep(`x')
+coefplot (est1, msymbol(O)  msize(`MSIZE') mlwidth($MLWIDTH) )
+		 (est2, msymbol(Oh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
+		 (est3, msymbol(dh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
+		 (est4, msymbol(th) msize(`MSIZE') mlwidth($MLWIDTH) offset()) 
+		 (est5, msymbol(sh) msize(`MSIZE') mlwidth($MLWIDTH) offset()),
+			keep(*`x'*)
 		 level(90)
-		 ciopts(recast(rcap) lwidth($CIWIDTH))
-		 asequation
-		 xlabel(-.02(.02).04, labsize($XLABSIZE) )
-		 xscale(range(-.03 .045))
-		 ylabel(, angle(vertical) labsize($YLABSIZE))
-		 rename(
-		 	mismatch_p25 = "{bf:Income mismatch}"
-		 	mismatch_p75 = "{bf:Income mismatch} (p75)"
-		 )
-		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}")
+		 ciopts(recast(rcap) lwidth($CIWIDTH))	
+		 asequation 
+		 xlabel(-.08(.04).08, labsize($XLABSIZE) )
+		 xscale(range(-.1 .1))
+		 ylabel(, angle(horizontal) labsize(`YLABSIZE'))
+		 rename(1.`x' = "{bf: Income mismatch}"
+		 		1.`x'#1.ncentral_d = "x {bf:Non-central dest.}"
+		 		)
+		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
 				label(6 "{bf:+ Businesses}") 	 label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
-				col(1) ring(0) bplacement(sw) size($LEGEND_SIZE)
-				region(lwidth(none))
+				col(1) ring(0) bplacement(se) size(`LEGEND_SIZE')
 				)
 		scheme(lean2)
-		plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0))
-		graphregion(color(white) margin(0 0 0 0))
+		plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0)) 	
+		graphregion(color(white) margin(0 0 0 0)) 
 		xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
 		;
-savefig, path($graphsavedir/pxor-wpsm-top25p) format($graphformats);
+savefig, path($graphsavedir/top25p-exc-majorempcenters-pxor-wpsm-ncentral) format($graphformats);
+#delimit cr
 
-*~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Make LaTex Table Fragment
-*~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*~~~~~~~~~~~~~~~~~
+* Make LaTex Table
+*~~~~~~~~~~~~~~~~~
 #delimit;
-esttab using $tabsavedir/pxor-wpsm-top25p-frag.tex, 
+esttab using $tabsavedir/top25p-exc-majorempcenters-pxor-wpsm-ncentral-frag.tex, 
 	b(%9.4fc)
 	se(%9.4fc)
 	star (* 0.1 ** 0.05 *** 0.01)
@@ -98,6 +109,7 @@ esttab using $tabsavedir/pxor-wpsm-top25p-frag.tex,
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
 		"POI Places of interest"
+		"pval $ p$-val: $\hat{\beta}$ + $\hat{\gamma} = 0 $"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"
@@ -108,4 +120,4 @@ esttab using $tabsavedir/pxor-wpsm-top25p-frag.tex,
 	compress;		
 #delimit cr
 
-log close top25p
+log close exc_emp

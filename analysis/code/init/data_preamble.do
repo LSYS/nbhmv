@@ -52,7 +52,6 @@ label var origin "Origin subzone"
 rename area dest
 label var dest "Destination subzone"
 
-rename pa_dest pa_dest
 label var pa_dest "Destination planning/census area"
 
 rename pa_home pa_origin
