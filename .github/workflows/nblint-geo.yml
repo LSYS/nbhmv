@@ -1,0 +1,71 @@
+name: Build notebooks lint
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - geo/*.ipynb
+  pull_request:
+    branches: ["main"]
+    paths:
+      - geo/*.ipynb
+
+jobs:
+  lint-notebooks:
+    name: NBQA lint (.ipynb)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install NBQA + project deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r assets/requirements.txt
+
+      # ------------------------------------------------------------------
+      # pyflakes via nbqa (selected notebooks)
+      # ------------------------------------------------------------------
+      - name: nbqa pyflakes
+        run: |
+          NOTEBOOKS="\
+            ./pa-price.ipynb \
+            ./bootstrap-r2.ipynb \
+            ./get-devicecount-subzone-day.ipynb \
+            ./choropleth-devices.ipynb \
+            ./choropleth-income.ipynb \
+            ./choropleth-price.ipynb \
+            ./borders.ipynb \
+            ./lower-vs-higher-ptiles.ipynb \
+            ./cbd.ipynb \
+            ./conn-map.ipynb \
+            ./ping-variation.ipynb"
+          nbqa pyflakes $NOTEBOOKS
+
+      # ------------------------------------------------------------------
+      # black --check via nbqa (same notebooks)
+      # ------------------------------------------------------------------
+      - name: nbqa black
+        run: |
+          NOTEBOOKS="\
+            ./pa-price.ipynb \
+            ./bootstrap-r2.ipynb \
+            ./get-devicecount-subzone-day.ipynb \
+            ./choropleth-devices.ipynb \
+            ./choropleth-income.ipynb \
+            ./choropleth-price.ipynb \
+            ./borders.ipynb \
+            ./lower-vs-higher-ptiles.ipynb \
+            ./cbd.ipynb \
+            ./conn-map.ipynb \
+            ./ping-variation.ipynb"
+          nbqa black --check $NOTEBOOKS

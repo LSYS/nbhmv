@@ -91,11 +91,11 @@ df = (
         # age
         age_20_o_10bin=lambda df: pd.cut(df.age_20_o, bins=10, labels=xlabels),
         age20_40_o_10bin=lambda df: pd.cut(df.age20_40_o, bins=10, labels=xlabels),
-        age40_65_o_10bin=lambda df: pd.cut(df.age40_65_o, bins=10, labels=xlabels), 
+        age40_65_o_10bin=lambda df: pd.cut(df.age40_65_o, bins=10, labels=xlabels),
         age65__o_10bin=lambda df: pd.cut(df.age65__o, bins=10, labels=xlabels),
         age_20_d_10bin=lambda df: pd.cut(df.age_20_d, bins=10, labels=xlabels),
         age20_40_d_10bin=lambda df: pd.cut(df.age20_40_d, bins=10, labels=xlabels),
-        age40_65_d_10bin=lambda df: pd.cut(df.age40_65_d, bins=10, labels=xlabels),      
+        age40_65_d_10bin=lambda df: pd.cut(df.age40_65_d, bins=10, labels=xlabels),
         age65__d_10bin=lambda df: pd.cut(df.age65__d, bins=10, labels=xlabels),
         # gemder
         females_o_bin=lambda df: pd.cut(df.females_o, bins=10, labels=xlabels),

@@ -38,6 +38,8 @@ NOTEBOOKS := \
     ./choropleth-price.ipynb \
     ./borders.ipynb \
     ./lower-vs-higher-ptiles.ipynb \
+    ./cbd.ipynb \
+    ./conn-map.ipynb \
     ./ping-variation.ipynb
 
 .PHONY: lint-notebooks
@@ -63,6 +65,8 @@ analysis: ## Run all notebooks with output versions (-o)
 	    choropleth-price.ipynb \
 	    borders.ipynb \
 	    lower-vs-higher-ptiles.ipynb \
+	    cbd.ipynb \
+	    conn-map.ipynb \
 	    ping-variation.ipynb
 	mv *-out.ipynb logs/
 

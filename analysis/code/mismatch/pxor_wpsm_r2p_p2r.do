@@ -62,8 +62,8 @@ coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 		 xlabel(-.04(.02).06, labsize($XLABSIZE) )
 		 xscale(range(-.05 .08))
 		 ylabel(, angle(vertical) labsize($YLABSIZE))
-		 rename(1.`x1' = "{bf:P {&rarr} NP}"
-		 		1.`x2' = "{bf:NP {&rarr} P}"
+		 rename(1.`x1' = "{bf:LP {&rarr} HP}"
+		 		1.`x2' = "{bf:HP {&rarr} LP}"
 		 		)
 		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
 				label(6 "{bf:+ Businesses}") 	 label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
@@ -100,7 +100,7 @@ esttab using $tabsavedir/pxor-wpsm-r2p-p2r-frag.tex,
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
 		"POI Places of interest"
-		"pval $ p $-val: (P $\rightarrow$ NP) $\neq$ (NP $\rightarrow$ P)"
+		"pval $ p $-val: (LP $\rightarrow$ HP) $\neq$ (HP $\rightarrow$ LP)"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"

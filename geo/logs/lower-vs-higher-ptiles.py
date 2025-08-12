@@ -63,7 +63,7 @@ gdf_subzones
 
 # %%
 df = (
-    pd.read_parquet(FP_PANEL, low_memory=False)
+    pd.read_parquet(FP_PANEL)
     .rename_column("home", "subzone")
     .drop_duplicates(["subzone"], ignore_index=True)
     # ==============

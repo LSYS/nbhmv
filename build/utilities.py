@@ -704,3 +704,247 @@ def cat_to_num(
         output[key] = val
 
     return output
+
+
+from typing import List
+import numpy as np
+from matplotlib.axes import Axes
+from matplotlib.patches import Rectangle
+
+
+def add_segmented_scalebar(
+    ax: Axes,
+    segments: List[float] = [2.5, 2.5, 5, 5, 5],
+    unit_type: str = "km",
+    location: str = "lower right",
+    length_fraction: float = 0.25,
+    height_fraction: float = 0.015,
+    alternating_colors: bool = True,
+    bar_color: str = "black",
+    alt_color: str = "white",
+    label_offset: float = 0.02,
+    fontsize: int = 12,
+    unit_fontsize: int = None,
+    unit_position: str = "bottom",
+    unit_label_spacing: float = 0.02,
+    map_crs: str = "geographic",
+) -> None:
+    """
+    Add a segmented scalebar to a matplotlib map with custom segment sizes.
+
+    Creates a traditional cartographic scalebar with alternating colored segments
+    stacked in two rows (checkerboard pattern). Each segment can have different
+    lengths, allowing for scales like 0-2.5-5-10-15-20.
+
+    Parameters
+    ----------
+    ax : Axes
+        Matplotlib Axes object to add the scalebar to
+    segments : List[float], default [2.5, 2.5, 5, 5, 5]
+        Individual segment lengths in specified units
+    unit_type : {'km', 'm'}, default 'km'
+        Unit type for segments and labels
+    location : str, default 'lower right'
+        Scalebar placement: 'lower left', 'lower right', 'upper left', 'upper right'
+    length_fraction : float, default 0.25
+        Fraction of axes width the scalebar occupies (0.0-1.0)
+    height_fraction : float, default 0.015
+        Fraction of axes height for each scalebar row thickness
+    alternating_colors : bool, default True
+        Whether to create checkerboard pattern with alternating colors
+    bar_color : str, default 'black'
+        Primary color for segments
+    alt_color : str, default 'white'
+        Alternating color for segments
+    label_offset : float, default 0.02
+        Vertical spacing above scalebar for numeric labels (fraction of axes height)
+    fontsize : int, default 12
+        Font size for numeric labels
+    unit_fontsize : int, optional
+        Font size for unit label. Uses fontsize if None.
+    unit_position : {'bottom', 'right'}, default 'bottom'
+        Unit label position relative to scalebar
+    unit_label_spacing : float, default 0.02
+        Spacing between unit label and scalebar (fraction of axes dimension)
+    map_crs : {'geographic', 'projected'}, default 'geographic'
+        Coordinate system: 'geographic' for lat/lon, 'projected' for meters
+
+    Returns
+    -------
+    None
+    """
+    # ==============================================
+    # Validate inputs
+    if unit_type not in ['km', 'm']:
+        raise ValueError("unit_type must be 'km' or 'm'")
+    if map_crs not in ['geographic', 'projected']:
+        raise ValueError("map_crs must be 'geographic' or 'projected'")
+    if unit_position not in ['bottom', 'right']:
+        raise ValueError("unit_position must be 'bottom' or 'right'")
+    
+    # ==============================================
+    # Configs: Handle defaults
+    if unit_fontsize is None:
+        unit_fontsize = fontsize
+    
+    # Set up units and convert to consistent internal format (km)
+    unit_labels = {'km': 'Kilometers', 'm': 'Meters'}
+    unit_label = unit_labels[unit_type]
+    
+    if unit_type == 'm':
+        segments_km = [seg / 1000 for seg in segments]
+    else:
+        segments_km = segments.copy()
+
+    # ==============================================
+    # Scaling
+    # Get axes coordinate ranges
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    total_width = xlim[1] - xlim[0]
+    total_height = ylim[1] - ylim[0]
+
+    # Calculate distance conversion factor for coordinate system
+    conversion_factor = _calculate_conversion_factor(xlim, ylim, map_crs)
+    
+    # Calculate scalebar dimensions
+    bar_height = total_height * height_fraction
+    total_length_km = sum(segments_km)
+    
+    # Convert total length to data coordinate units
+    if map_crs == 'geographic':
+        scale_width_data = (total_length_km * 1000) / conversion_factor
+    else:
+        scale_width_data = total_length_km * 1000
+    
+    # ==============================================
+    # Calculate individual segment widths
+    segment_widths = [(seg / total_length_km) * scale_width_data for seg in segments_km]
+    
+    # Determine scalebar position
+    x_start, y_pos = _calculate_scalebar_position(
+        xlim, ylim, location, scale_width_data, height_fraction, unit_position
+    )
+    
+    # ==============================================
+    # Draw segments and labels
+    _draw_scalebar_segments(
+        ax, x_start, y_pos, bar_height, segment_widths, segments_km,
+        alternating_colors, bar_color, alt_color, fontsize, label_offset, 
+        total_height, unit_type
+    )
+    
+    # Add unit label
+    _add_unit_label(
+        ax, x_start, y_pos, scale_width_data, unit_label, unit_position,
+        unit_label_spacing, total_width, total_height, unit_fontsize
+    )
+
+    return None
+
+
+def _calculate_conversion_factor(xlim, ylim, map_crs):
+    """Calculate conversion factor between real-world distance and data coordinates."""
+    if map_crs == 'geographic':
+        from sklearn.metrics.pairwise import haversine_distances
+        
+        # Calculate meters per degree longitude at map center
+        center_lon = (xlim[0] + xlim[1]) / 2
+        center_lat = (ylim[0] + ylim[1]) / 2
+        
+        point_a = [np.radians(center_lon), np.radians(center_lat)]
+        point_b = [np.radians(center_lon + 1), np.radians(center_lat)]
+        
+        return 6371000 * haversine_distances([point_a, point_b])[0, 1]
+    else:
+        return 1.0  # Assume projected coordinates are in meters
+
+
+def _calculate_scalebar_position(xlim, ylim, location, scale_width, height_fraction, unit_position):
+    """Calculate x,y position for scalebar based on location parameter."""
+    total_width = xlim[1] - xlim[0]
+    total_height = ylim[1] - ylim[0]
+    margin = 0.05
+    
+    # Vertical position
+    if 'lower' in location:
+        y_pos = ylim[0] + total_height * margin
+    else:  # upper
+        y_pos = ylim[1] - total_height * (margin + 2 * height_fraction + 0.05)
+    
+    # Horizontal position
+    if 'left' in location:
+        x_start = xlim[0] + total_width * margin
+    else:  # right
+        extra_space = total_width * 0.08 if unit_position == 'right' else 0
+        x_start = xlim[1] - total_width * margin - scale_width - extra_space
+    
+    return x_start, y_pos
+
+
+def _draw_scalebar_segments(ax, x_start, y_pos, bar_height, segment_widths, segments_km,
+                          alternating_colors, bar_color, alt_color, fontsize, label_offset,
+                          total_height, unit_type):
+    """Draw the scalebar segments and numeric labels."""
+    current_x = x_start
+    cumulative_distance = 0
+    
+    for i, (width, segment_km) in enumerate(zip(segment_widths, segments_km)):
+        # Determine colors
+        if alternating_colors:
+            top_color = bar_color if i % 2 == 0 else alt_color
+            bottom_color = alt_color if i % 2 == 0 else bar_color
+        else:
+            top_color = bottom_color = bar_color
+        
+        # Draw rectangles
+        for row, color in enumerate([bottom_color, top_color]):
+            rect = Rectangle(
+                (current_x, y_pos + row * bar_height),
+                width, bar_height,
+                facecolor=color, edgecolor='black', linewidth=1.0
+            )
+            ax.add_patch(rect)
+        
+        # Draw tick mark
+        ax.plot([current_x, current_x], [y_pos, y_pos + 2 * bar_height],
+                color='black', linewidth=1)
+        
+        # Add numeric label
+        label_text = _format_distance_label(cumulative_distance, unit_type)
+        label_y = y_pos + 2 * bar_height + total_height * label_offset
+        ax.text(current_x, label_y, label_text, ha='center', va='bottom',
+                color='0.3', fontsize=fontsize)
+        
+        current_x += width
+        cumulative_distance += segment_km
+    
+    # Final tick mark and label
+    ax.plot([current_x, current_x], [y_pos, y_pos + 2 * bar_height],
+            color='black', linewidth=1)
+    
+    final_label = _format_distance_label(cumulative_distance, unit_type)
+    ax.text(current_x, y_pos + 2 * bar_height + total_height * label_offset,
+            final_label, ha='center', va='bottom', color='0.3', fontsize=fontsize)
+
+
+def _format_distance_label(distance_km, unit_type):
+    """Format distance label, showing integers when possible."""
+    if unit_type == 'm':
+        distance = distance_km * 1000
+        return f"{int(distance)}" if distance == int(distance) else f"{distance:.0f}"
+    else:
+        return f"{int(distance_km)}" if distance_km == int(distance_km) else f"{distance_km:.1f}"
+
+
+def _add_unit_label(ax, x_start, y_pos, scale_width, unit_label, unit_position,
+                   spacing, total_width, total_height, fontsize):
+    """Add the unit label (e.g., 'Kilometers') in specified position."""
+    if unit_position == 'right':
+        unit_x = x_start + scale_width + total_width * spacing
+        unit_y = y_pos
+        ax.text(unit_x, unit_y, unit_label, ha='left', va='bottom', fontsize=fontsize)
+    else:  # bottom
+        unit_x = x_start + scale_width
+        unit_y = y_pos - total_height * spacing
+        ax.text(unit_x, unit_y, unit_label, ha='right', va='top', fontsize=fontsize)
