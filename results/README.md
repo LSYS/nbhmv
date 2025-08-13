@@ -60,7 +60,7 @@
 
 <table>
   <tr>
-    <td><img src="./figures/supplementary/outflow-moulmein-wpsm.png" width="400"/></td>
+    <td><img src="./figures/supplementary/outflow-malcolm-wpsm.png" width="400"/></td>
     <td><img src="./figures/supplementary/outflow-toa_payoh_central-wpsm.png" width="400"/></td>
   </tr>
 </table>
