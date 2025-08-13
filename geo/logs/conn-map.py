@@ -505,12 +505,6 @@ save_mpl_fig(f"{SAVEPATH}/outflow-{'_'.join(SELECTED_AREA.split(' '))}-wpsm")
 # %% [markdown]
 # ### toa payoh central
 
-# %%
-import matplotlib
-
-# %%
-matplotlib.__version__
-
 # %% code_folding=[]
 # Plot toa payoh central
 SELECTED_AREA = "toa payoh central"
