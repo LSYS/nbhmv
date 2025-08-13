@@ -1,0 +1,277 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  adjacency_filter
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_ncentral_adjacency_filter.txt
+  log type:  text
+ opened on:   4 Aug 2025, 19:27:23
+
+. 
+. set more off
+
+. 
+. local x mismatch_race
+
+. 
+. *~~~~~~~~~~~~~~~~~~~~~~~~
+. * Estimate specifications
+. *~~~~~~~~~~~~~~~~~~~~~~~~
+. eststo clear
+
+. forvalues i = 1/5 {
+  2.         eststo: qui reghdfe y c.`x'##i.ncentral_d if contiguous==0, absorb(\$s`i') vce($se)
+  3.                 * Add indicators for baseline 
+.                 estadd local timeFE     "\multicolumn{1}{c}{\checkmark}"
+  4.                 estadd local censusPA   "\multicolumn{1}{c}{\checkmark}"
+  5.                 * Add sample sizes report
+.                 mat femat = e(dof_table)
+  6.                 local days = femat[1,1]
+  7.                 estadd local days "\multicolumn{1}{c}{$ `days' $}"              
+  8.                 local clusters: display %9.0fc `e(N_clust1)'
+  9.                 estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"              
+ 10.                 local nobs: display %9.0fc `e(N)'
+ 11.                 estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"    
+ 12.                 * Test mismatch + mismatch*ncentral = 0 [total effect outside central]
+.                 qui test `x' + `x'#1.ncentral_d = 0
+ 13.                 estadd local pval = string(round(`r(p)', 0.001))
+ 14.                 * Add indicators for additional controls
+.                 if `i'==2 {
+ 15.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"                                
+ 16.                 }
+ 17.                 else if `i'==3 {
+ 18.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"        
+ 19.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"        
+ 20.                 }
+ 21.                 else if `i'==4 {
+ 22.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"        
+ 23.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"                                
+ 24.                         estadd local rain               "\multicolumn{1}{c}{\checkmark}"                                
+ 25.                 }
+ 26.                 else if `i'==5 {
+ 27.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"        
+ 28.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"                                
+ 29.                         estadd local rain               "\multicolumn{1}{c}{\checkmark}"                        
+ 30.                         estadd local POI                "\multicolumn{1}{c}{\checkmark}"                        
+ 31.                 }
+ 32. }
+(est1 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,586 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,300,524 $}"
+
+added macro:
+               e(pval) : ".866"
+(est2 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,505 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,170,264 $}"
+
+added macro:
+               e(pval) : "0"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+(est3 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,505 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,170,264 $}"
+
+added macro:
+               e(pval) : "0"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+(est4 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,505 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,170,264 $}"
+
+added macro:
+               e(pval) : "0"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(rain) : "\multicolumn{1}{c}{\checkmark}"
+(est5 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,505 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,170,264 $}"
+
+added macro:
+               e(pval) : ".043"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(rain) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+                e(POI) : "\multicolumn{1}{c}{\checkmark}"
+
+. 
+. *~~~~~~~~~~~~~~
+. * Plot coefplot
+. *~~~~~~~~~~~~~~
+. local MSIZE vlarge
+
+. local YLABSIZE medlarge
+
+. local XLABSIZE medlarge
+
+. local LEGEND_SIZE medlarge
+
+. 
+. #delimit;
+delimiter now ;
+. coefplot (est1, msymbol(O)  msize(`MSIZE') mlwidth($MLWIDTH) )
+>                  (est2, msymbol(Oh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
+>                  (est3, msymbol(dh) msize(`MSIZE') mlwidth($MLWIDTH) offset())
+>                  (est4, msymbol(th) msize(`MSIZE') mlwidth($MLWIDTH) offset()) 
+>                  (est5, msymbol(sh) msize(`MSIZE') mlwidth($MLWIDTH) offset()),
+>                         keep(*mismatch_race*)
+>                  level(90)
+>                  ciopts(recast(rcap) lwidth($CIWIDTH))  
+>                  asequation 
+>                  xlabel(-.6(.3).9, labsize(`XLABSIZE') )
+>                  xscale(range(-.4 1.2))
+>                  ylabel(, angle(horizontal) labsize(`YLABSIZE'))
+>                  rename(mismatch_race = "{bf: Ethnic mismatch}"
+>                                 1.ncentral_d#c.mismatch_race = "x {bf:Non-central dest.}"
+>                                 )
+>                  legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
+>                                 label(6 "{bf:+ Businesses}")     label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
+>                                 col(1) ring(0) bplacement(se) size(`LEGEND_SIZE')
+>                                 )
+>                 scheme(lean2)
+>                 plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0))       
+>                 graphregion(color(white) margin(0 0 0 0)) 
+>                 xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
+>                 ;
+
+.                 savefig, path($graphsavedir/pxor-race-ncentral-adjacency-filter) format($graphformats);
+Graph saved as ../results/figures//pxor-race-ncentral-adjacency-filter.png
+(file ../results/figures//pxor-race-ncentral-adjacency-filter.pdf written in PDF format)
+Graph saved as ../results/figures//pxor-race-ncentral-adjacency-filter.pdf
+Graph saved as ../results/figures//pxor-race-ncentral-adjacency-filter.eps
+
+. #delimit cr
+delimiter now cr
+. 
+. *~~~~~~~~~~~~~~~~~
+. * Make LaTex Table
+. *~~~~~~~~~~~~~~~~~
+. #delimit;
+delimiter now ;
+. esttab using $tabsavedir/pxor-race-ncentral-adjacency-filter-frag.tex, 
+>         b(%9.4fc)
+>         se(%9.4fc)
+>         star (* 0.1 ** 0.05 *** 0.01)
+>         obslast
+>         noomitted        
+>         nobase noobs
+>         nonumbers nolines nogaps noeqlines nodepvars
+>         nomtitle
+>         varwidth(20)
+>         modelwidth(8)
+>         drop(_cons)
+>         coeflabel($coeff_labels)
+>         scalar(
+>                 "timeFE Day fixed effects"
+>                 "censusPA Census area-by-day fixed effects"
+>                 "demo Demographics"
+>                 "business Businesses"
+>                 "rain Neighborhood-specific rainfall"
+>                 "POI Places of interest"
+>                 "pval $ p$-val: $\hat{\beta}$ + $\hat{\gamma} = 0 $"
+>                 "r2 R$^2$" 
+>                 "days Days"
+>                 "clusters Clusters"
+>                 "nobs Observations") 
+>         alignment(D{.}{.}{-1})  
+>         substitute(\_ _)
+>         fragment replace
+>         compress;
+(note: file ../results/tables//pxor-race-ncentral-adjacency-filter-frag.tex not found)
+(output written to ../results/tables//pxor-race-ncentral-adjacency-filter-frag.tex)
+
+.                 #delimit cr
+delimiter now cr
+. beep 
+
+. 
+. log close adjacency_filter
+      name:  adjacency_filter
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_ncentral_adjacency_filter.txt
+  log type:  text
+ closed on:   4 Aug 2025, 20:49:08
+------------------------------------------------------------------------------------------------------------------------------------------------------

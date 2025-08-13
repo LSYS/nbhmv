@@ -1,0 +1,209 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  eudist
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//eudist_wpsm.txt
+  log type:  text
+ opened on:   2 Aug 2025, 16:23:57
+
+. 
+. set more off
+
+. 
+. local x eudist
+
+. 
+. *~~~~~~~~~~~~~~~~~~~~~~~~
+. * Estimate specifications
+. *~~~~~~~~~~~~~~~~~~~~~~~~
+. eststo clear
+
+. forvalues i = 1/5 {
+  2.         eststo: qui reghdfe y `x', absorb(\$s`i') vce($se)
+  3.                 * Add indicators for baseline 
+.                 estadd local timeFE     "\multicolumn{1}{c}{\checkmark}"
+  4.                 estadd local censusPA   "\multicolumn{1}{c}{\checkmark}"
+  5.                 * Add sample sizes report
+.                 mat femat = e(dof_table)
+  6.                 local days = femat[1,1]
+  7.                 estadd local days "\multicolumn{1}{c}{$ `days' $}"              
+  8.                 local clusters: display %9.0fc `e(N_clust1)'
+  9.                 estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"              
+ 10.                 local nobs: display %9.0fc `e(N)'
+ 11.                 estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"    
+ 12.                 * Add indicators for additional controls
+.                 if `i'==2 {
+ 13.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"                                
+ 14.                 }
+ 15.                 else if `i'==3 {
+ 16.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"        
+ 17.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"        
+ 18.                 }
+ 19.                 else if `i'==4 {
+ 20.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"        
+ 21.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"                                
+ 22.                         estadd local rain               "\multicolumn{1}{c}{\checkmark}"                                
+ 23.                 }
+ 24.                 else if `i'==5 {
+ 25.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"        
+ 26.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"                                
+ 27.                         estadd local rain               "\multicolumn{1}{c}{\checkmark}"                        
+ 28.                         estadd local POI                "\multicolumn{1}{c}{\checkmark}"                        
+ 29.                 }
+ 30. }
+(est1 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,439 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,321,467 $}"
+(est2 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+(est3 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+(est4 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(rain) : "\multicolumn{1}{c}{\checkmark}"
+(est5 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(rain) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+                e(POI) : "\multicolumn{1}{c}{\checkmark}"
+
+. 
+. *~~~~~~~~~~~~~~~~~
+. * Make LaTex Table
+. *~~~~~~~~~~~~~~~~~
+. #delimit;
+delimiter now ;
+. esttab using $tabsavedir/eudist-wpsm-frag.tex, 
+>         b(%9.4fc)
+>         se(%9.4fc)
+>         star (* 0.1 ** 0.05 *** 0.01)
+>         obslast
+>         noomitted        
+>         nobase noobs
+>         nonumbers nolines nogaps noeqlines nodepvars
+>         nomtitle
+>         varwidth(20)
+>         modelwidth(8)
+>         drop(_cons)
+>         coeflabel($coeff_labels)
+>         scalar(
+>                 "timeFE Day fixed effects"
+>                 "censusPA Census area-by-day fixed effects"
+>                 "demo Demographics"
+>                 "business Businesses"
+>                 "rain Neighborhood-specific rainfall"
+>                 "POI Places of interest"
+>                 "r2 R$^2$" 
+>                 "days Days"
+>                 "clusters Clusters"
+>                 "nobs Observations") 
+>         alignment(D{.}{.}{-1})  
+>         substitute(\_ _)
+>         fragment replace
+>         compress;
+(output written to ../results/tables//eudist-wpsm-frag.tex)
+
+.                 #delimit cr
+delimiter now cr
+. beep 
+
+. 
+. log close eudist
+      name:  eudist
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//eudist_wpsm.txt
+  log type:  text
+ closed on:   2 Aug 2025, 16:33:53
+------------------------------------------------------------------------------------------------------------------------------------------------------

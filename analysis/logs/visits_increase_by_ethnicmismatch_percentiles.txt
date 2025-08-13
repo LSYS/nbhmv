@@ -1,0 +1,94 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  counterfactual
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//visits_increase_by_ethnicmismatch_percentiles.txt
+  log type:  text
+ opened on:  12 Aug 2025, 10:06:04
+
+. 
+. local ethnic_est = -0.184 // (-0.184) from Table 2. Effect of ethnic mismatch on movement
+
+. 
+. local FILENAME mismatch_eip
+
+. local FILEPATH ./code/policy/out
+
+. 
+. cap erase `FILEPATH'/`FILENAME'.dta
+
+. 
+. 
+. set more off
+
+. 
+. preserve
+
+. 
+. tictoc tic 99
+------------------------------------------------------------------------------------------------------------------------------------------------------
+----------- Time log -----------
+Start time: 12 Aug 2025 10:06:14
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. qui bysort origin dest: gen dup = cond(_N==1,0,_n)
+
+. drop if dup > 1
+(2028577 observations deleted)
+
+. count
+75390
+
+. 
+. forvalues cutoff = 0/100 {
+  2.         qui centile mismatch_race, centile(`cutoff')
+  3. 
+.         * Compute increase in visits from percentile reduction in mismatch
+.         local _x = 100*`ethnic_est'*-`r(c_1)' 
+  4.         // dis as result "p""`cutoff'"":" `r(c_1)' `_x'
+. 
+.         * Store estimate(s)
+.         tempfile temp
+  5.         qui save "`temp'", replace
+  6. 
+.         cap use "`FILEPATH'/`FILENAME'.dta", clear
+  7.         if _rc!=0 { /* Init empty dataset */
+  8.                 clear
+  9.                 gen int spec_id = .
+ 10.                 gen double increase_visits = .
+ 11.                 gen double centile_val = .
+ 12.         }
+ 13. 
+.         * update dataset size
+.         local n = 1 + _N
+ 14.         qui set obs `n'
+ 15.         qui replace spec_id = `cutoff' if _n==`n'
+ 16.         qui replace increase_visits = `_x' if _n==`n'
+ 17.         qui replace centile_val = `r(c_1)' if _n==`n'
+ 18. 
+.         qui save "`FILEPATH'/`FILENAME'.dta", replace
+ 19.         use `temp', clear
+ 20. 
+.         noisily _dots `cutoff' 0
+ 21. }
+----+--- 1 ---+--- 2 ---+--- 3 ---+--- 4 ---+--- 5 
+..................................................    50
+..................................................   100
+
+. 
+. tictoc toc 99
+------------------------------------------------------------------------------------------------------------------------------------------------------
+----------- Time log -----------
+Start time: 12 Aug 2025 10:06:13
+End time: 12 Aug 2025 10:11:41
+Elapsed seconds:       328
+Elapsed minutes:         5
+Elapsed hours:       .09
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. restore
+
+. log close counterfactual
+      name:  counterfactual
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//visits_increase_by_ethnicmismatch_percentiles.txt
+  log type:  text
+ closed on:  12 Aug 2025, 10:14:36
+------------------------------------------------------------------------------------------------------------------------------------------------------
