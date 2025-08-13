@@ -1,13 +1,20 @@
-`do` files for results using different percentile cutoffs will take hourrs (~24hrs for `./code/cutoffs/cutoffs_pxor_wpsm.do`).
+# Analyses
+
+`main.do` runs all `do` scripts in [`./code`](https://github.com/LSYS/nbhmv/tree/main/analysis/code).
 
 ## Structure
 ```
 .
 ├── code
+│  ├── additional_specifications
+│  ├── adjacency_filter
 │  ├── ado
 │  ├── cutoffs
+│  ├── dow
+│  ├── exc_majorempcenters
 │  ├── init
 │  ├── mismatch
+│  ├── mismatch_top25p
 │  └── policy
 ├── logs
 ├── cd-panel.csv
@@ -15,6 +22,7 @@
 └── readme.md
 ```
 
+![Build dependency graph](../assets/analysis.png)
 
 ## Runtime Warnings ⚠️
 - `do` files for results using different percentile cutoffs will take hours to complete

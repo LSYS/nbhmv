@@ -1,0 +1,112 @@
+%%{init: {"flowchart": {"htmlLabels": true}}}%%
+graph LR
+    %% Raw Data
+    DATA("../build/cd-panel.csv")
+    
+    %% Custom Utilities
+    UTILS["./code/ado/<br>(Custom Utilities)</br>"]
+    
+    %% Initialization
+    INIT_ENV["./code/init/set_environment.do"]
+    INIT_GLOB["./code/init/set_globals.do"]
+    INIT_PREAMBLE["./code/init/data_preamble.do"]
+    
+    %% Core Analysis
+    CORE_INCOME["<b>Income Mismatch</b><br/>- code/mismatch/<br/>pxor_wpsm.do, pxor_wpsm_r2p_p2r.do,<br/>pxor_wpsm_ncentral.do"]
+    CORE_RACE["<b>Ethnic Mismatch</b><br/>- code/mismatch/<br/>pxor_race.do, pxor_race_asymmetry.do,<br/>pxor_race_ncentral.do"]
+    
+    %% Robustness Checks
+    ALT_SPEC["<b>make_robust</b><br/>-code/additional_specifications/<br/>eudist_wpsm.do, pxor_race_loglog.do,<br/>pxor_wpsm_race.do, pxor_wpsm_race_decomp.do,<br/>wpsm.do, cny_wpsm.do"]
+    
+    TOP25P["<b>make_top25p</b><br/>- code/mismatch_top25p/<br/>top25p_pxor_wpsm.do, top25p_pxor_wpsm_r2p_p2r.do,<br/>top25p_pxor_wpsm_ncentral.do,<br/>top25p_exc_majorempcenters_pxor_wpsm_ncentral.do"]
+    
+    EXC_EMP["<b>make_exc_emp</b><br/>- code/exc_majorempcenters/<br/>exc_majorempcenters_pxor_wpsm.do,<br/>exc_majorempcenters_pxor_wpsm_r2p_p2r.do,<br/>exc_majorempcenters_pxor_wpsm_ncentral.do,<br/>exc_majorempcenters_pxor_race.do,<br/>exc_majorempcenters_pxor_race_asymmetry.do,<br/>exc_majorempcenters_pxor_race_ncentral.do"]
+    
+    DOW_ANALYSIS["<b>make_dow</b><br/>- code/dow/<br/>dow_pxor_wpsm.do, dow_pxor_wpsm_r2p_p2r.do,<br/>dow_pxor_wpsm_ncentral.do, dow_pxor_race.do,<br/>dow_pxor_race_asymmetry.do, dow_pxor_race_ncentral.do"]
+    
+    ADJ_FILTER["<b>make_adj_filter</b><br/>- code/adjacency_filter/<br/>adjfilter_pxor_wpsm.do, adjfilter_pxor_wpsm_r2p_p2r.do,<br/>adjfilter_pxor_wpsm_ncentral.do, adjfilter_pxor_race.do,<br/>adjfilter_pxor_race_asymmetry.do, adjfilter_pxor_race_ncentral.do"]
+    
+    %% Cutoffs Analysis
+    CUT_ANALYSIS["<b>Cutoffs Analysis</b><br/>- code/cutoffs/<br/>cutoffs_pxor_wpsm.do, cutoffs_pxor_wpsm_p2r_r2p.do,<br/>cutoffs_pxor_wpsm_ncentral.do"]
+    
+    CUT_SETTINGS["graph_settings.do - code/cutoffs/"]
+    
+    CUT_GRAPHS["<b>Plot Cutoffs</b><br/>- code/cutoffs/<br/>graph_cutoffs_pxor_wpsm.do,<br/>graph_cutoffs_pxor_wpsm_p2r_r2p.do,<br/>graph_cutoffs_pxor_wpsm_ncentral.do"]
+    
+    CUT_DATA("<b>Cutoffs Data</b> - code/cutoffs/out/<br/>mismatch-wpsm.dta, mismatch-wpsm-p2r-r2p.dta,<br/>mismatch-wpsm-ncentral.dta")
+    
+    %% Policy Analysis
+    POL_SIMULATIONS["<b>Policy Simulations</b><br/>- code/policy/<br/>visits_increase_by_ethnicmismatch_percentiles.do,<br/>visits_increase_by_ethnicmismatch_c2m_percentiles.do"]
+    
+    POL_DATA("<b>Policy Data</b> - code/policy/out/<br/>mismatch_eip.dta, mismatch_c2m_eip.dta")
+    
+    POL_GRAPHS["<b>Plot Simulations</b><br/>- code/policy/<br/>graph.do"]
+    
+    %% Master Control
+    MAIN["./main.do"]
+    
+    %% Final Outputs
+    OUTPUTS_TABLES("../results/tables/<br>LaTeX table fragments")
+    OUTPUTS_GRAPHS("../results/figures/ <br>(PDF/PNG/EPS)")
+    OUTPUTS_LOGS("./logs/<br>Log files")
+    
+    %% Dependencies
+    DATA --> INIT_PREAMBLE
+    
+    UTILS --> INIT_ENV
+    UTILS --> INIT_GLOB
+    
+    INIT_ENV --> MAIN
+    INIT_GLOB --> MAIN
+    INIT_PREAMBLE --> MAIN
+
+    %% Core analysis first
+    MAIN --> CORE_RACE
+    MAIN --> CORE_INCOME
+    MAIN --> POL_SIMULATIONS
+    MAIN --> CUT_ANALYSIS
+
+    %% Cutoffs flow
+    CORE_INCOME -.-> CUT_ANALYSIS
+    CUT_ANALYSIS --> CUT_DATA
+    CUT_DATA --> CUT_GRAPHS
+    CUT_SETTINGS --> CUT_GRAPHS
+    
+    %% Policy flow
+    CORE_RACE -.-> POL_SIMULATIONS
+    POL_SIMULATIONS --> POL_DATA
+    POL_DATA --> POL_GRAPHS
+        
+    %% Robustness checks after
+    MAIN --> ADJ_FILTER
+    MAIN --> EXC_EMP
+    MAIN --> DOW_ANALYSIS
+    MAIN --> TOP25P
+    MAIN --> ALT_SPEC
+
+    %% Outputs
+    CORE_INCOME --> OUTPUTS_TABLES
+    CORE_RACE --> OUTPUTS_TABLES
+    ALT_SPEC --> OUTPUTS_TABLES
+    TOP25P --> OUTPUTS_TABLES
+    EXC_EMP --> OUTPUTS_TABLES
+    DOW_ANALYSIS --> OUTPUTS_TABLES
+    ADJ_FILTER --> OUTPUTS_TABLES
+
+    CUT_GRAPHS --> OUTPUTS_GRAPHS
+    POL_GRAPHS --> OUTPUTS_GRAPHS
+    CORE_INCOME --> OUTPUTS_GRAPHS
+    CORE_RACE --> OUTPUTS_GRAPHS
+    ALT_SPEC --> OUTPUTS_GRAPHS
+    TOP25P --> OUTPUTS_GRAPHS
+
+    %% Styling
+    classDef dataFiles fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#000
+    classDef doFiles fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px,color:#000
+    classDef utilities fill:#f5f5f5,stroke:#616161,stroke-width:2px,color:#000
+    classDef outputs fill:#e8eaf6,stroke:#3f51b5,stroke-width:3px,color:#000
+
+    class DATA,CUT_DATA,POL_DATA dataFiles
+    class CORE_INCOME,CORE_RACE,ALT_SPEC,TOP25P,EXC_EMP,DOW_ANALYSIS,ADJ_FILTER,CUT_ANALYSIS,POL_SIMULATIONS,MAIN,CUT_GRAPHS,POL_GRAPHS doFiles
+    class UTILS,INIT_ENV,INIT_GLOB,INIT_PREAMBLE,CUT_SETTINGS utilities
+    class OUTPUTS_TABLES,OUTPUTS_GRAPHS,OUTPUTS_LOGS outputs
