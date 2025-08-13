@@ -42,6 +42,10 @@
   </tr>
 </table>
 
+### Figure 3 (new?)
+![Figure 8](./figures/supplementary/lower-vs-higher-ptiles.png)
+
+
 ### Figure 4
 
 <table>
@@ -56,8 +60,8 @@
 
 <table>
   <tr>
-    <td><img src="./figures/xx" width="400"/></td>
-    <td><img src="./figures/xx" width="400"/></td>
+    <td><img src="./figures/supplementary/outflow-moulmein-wpsm.png" width="400"/></td>
+    <td><img src="./figures/supplementary/outflow-toa_payoh_central-wpsm.png" width="400"/></td>
   </tr>
 </table>
 
@@ -114,21 +118,30 @@
 
 <table>
   <tr>
+    <td><img src="./figures/top25p-pxor-wpsm.png" width="400"/></td>
+    <td><img src="./figures/top25p-pxor-wpsm-r2p-p2r.png" width="400"/></td>
+  </tr>
+</table>
+
+### Figure D2
+![Figure D2](./figures/top25-pxor-wpsm-ncentral.png)
+
+### Figure E1
+
+<table>
+  <tr>
     <td><img src="./figures/mismatch-baseline-ncentral.png" width="400"/></td>
     <td><img src="./figures/mismatchxncentral_d-interacted-ncentral.png" width="400"/></td>
   </tr>
 </table>
 
-### Figure D2
-![Figure D2](./figures/pxor-race-loglog.png)
-
-### Figure D3
+### Figure E2
 ![Figure D3](./figures/pxor-race-ncentral.png)
 
-### Figure E1
+### Figure F1
 ![Figure E1](./figures/sorted-single-mismatch.png)
 
-### Figure E2
+### Figure F2
 
 <table>
   <tr>
@@ -137,11 +150,11 @@
   </tr>
 </table>
 
-### Figure E3
+### Figure F3
 
 <table>
   <tr>
-    <td><img src="./figures/sorted-mismatch.png" width="400"/></td>
-    <td><img src="./figures/sorted-mismatchxncentral_d.png" width="400"/></td>
+    <td><img src="./figures/sorted-mismatch-baseline-ncentral.png" width="400"/></td>
+    <td><img src="./figures/sorted-mismatchxncentral_d-interacted-ncentral.png" width="400"/></td>
   </tr>
 </table>
