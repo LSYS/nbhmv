@@ -76,6 +76,7 @@ kiwisolver==1.4.8
 lark==1.2.2
 legendgram==0.0.3
 lesscpy==0.15.1
+libpysal==4.13.0
 locket==1.0.0
 lxml==6.0.0
 mapclassify==2.8.1
