@@ -124,7 +124,7 @@
 </table>
 
 ### Figure D2
-![Figure D2](./figures/top25-pxor-wpsm-ncentral.png)
+![Figure D2](./figures/top25p-pxor-wpsm-ncentral.png)
 
 ### Figure E1
 
