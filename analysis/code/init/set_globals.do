@@ -110,35 +110,9 @@ global REFLINE_WIDTH thick
 assert_macros "graphsavedir tabsavedir coeff_labels"
 
 // Check variable group macros
-assert_macros "dist popden demo rain landarea poi business se"
+assert_macros "dist popden demo rain landarea poi business se exc_emp"
 
 // Check specification macros
 assert_macros "s1 s2 s3 s4 s5"
 
-*======================================
-* Linking scripts to exhibits numbering
-*======================================
-// program define make_fig4a
-//     do code/mismatch/pxor_wpsm.do
-// end
-
-// program define make_fig4b
-//     do code/mismatch/pxor_wpsm_r2p_p2r.do
-// end
-
-// program define make_fig6a
-// 	do code/mismatch/pxor_race.do
-// end
-
-// program define make_fig6b
-//     do code/mismatch/pxor_race_asymmetry.do
-// end
-
-// program define make_fig7
-// 	do code/mismatch/pxor_wpsm_ncentral.do
-// end
-
-// program define make_fig8
-// 	do code/cutoffs/cutoffs_pxor_wpsm.do
-// 	do code/cutoffs/graph_cutoffs_pxor_wpsm.do
-// end 
+assert_macros "MSIZE MLWIDTH CIWIDTH YLABSIZE XLABSIZE LEGEND_SIZE REFLINE_WIDTH"

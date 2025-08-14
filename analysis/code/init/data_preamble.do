@@ -25,23 +25,8 @@ label var woy "Week of year"
 gen wkend = (dow > 5)
 label var wkend "==1 if weekend"
 
-gen cny_fri_sun = (date>=td(24jan2020)) & (date<=td(26jan2020))
-label var cny_fri_sun "==1 for CNY2020 Fri-Sun"
-
-gen cny_thu_sat = ( date>=td(23jan2020) & date<=td(25jan2020) )
-label var cny_thu_sat "==1 for CNY2020 Thu-Sat"
-
 gen cny_sat_sun = ( date>=td(25jan2020) & date<=td(26jan2020) )
 label var cny_sat_sun "==1 for CNY2020 weekend (Sat-Sun)"
-
-gen cny_fri_sat = ( date>=td(24jan2020) & date<=td(25jan2020) )
-label var cny_fri_sat "==1 for CNY2020 Fri-Sat"
-
-gen cny_fri = date==td(24jan2020)
-label var cny_fri "==1 for CNY2020 Fri"
-
-gen cny = ( date>=td(24jan2020) & date<=td(27jan2020) )
-label var cny "==1 for CNY2020 Fri-Mon"
 
 *=====================
 * Geographic Variables
@@ -121,35 +106,6 @@ rename rain_home rain_origin
 label var rain_origin "Rainfall (mm) in origin subzone-date"
 label var rain_dest "Rainfall (mm) in destination subzone-date"
 
-*==================
-* Housing Variables
-*==================
-forval i = 3/5 {
-	rename rm`i'_home rm`i'_origin 
-	label var rm`i'_origin "%residents living in `i'-room flats in origin subzone"
-	label var rm`i'_dest "%residents living in `i'-room flats in destination subzone"
-}
-
-ren rm12_home rm12_origin 
-label var rm12_origin "%residents living in 1/2-room flats in origin subzone"
-label var rm12_dest "%residents living in 1/2-room flats in destination subzone"
-
-ren private_home private_origin 
-label var private_origin "%residents living in private house in origin subzone"
-label var private_dest "%residents living in private house in destination subzone"
-
-label var rm12_rental_pct_home "%house units that are 1to2 room public rentals in origin subzone"
-label var rm12_rental_pct_dest "%house units that are 1to2 room public rentals in destination subzone"
-label var rental_pct_home "%house units that are public rentals in origin subzone"
-label var rental_pct_dest "%house units that are public rentals in destination subzone"
-
-*=======================================
-* Scale housing variables to percentages
-*=======================================
-foreach var of varlist rm12_* private_* {
-	replace `var' = `var'/100
-}
-
 *===============
 * Race Variables
 *===============
@@ -159,9 +115,9 @@ label var notchinese_o "Proportion non-Chinese in origin"
 gen notchinese_d = (100 - chinese_d)/100
 label var notchinese_d "Proportion non-Chinese in destination"
 
-*=================
-* Income Variables
-*=================
+*=======================
+* Income/proce Variables
+*=======================
 replace wpsm_home = wpsm_home/1000
 replace wpsm_dest = wpsm_dest/1000
 
@@ -185,24 +141,6 @@ label var y "Log OD inflow"
 * MAIN SEGREGATION/MISMATCH MEASURES
 *===================================
 
-*==================================
-* Poverty Mismatch (1-2 room flats)
-*==================================
-gen mismatch_rm12_p2r = rm12_origin * (1 - rm12_dest)
-label var mismatch_rm12_p2r "Poor→Rich poverty mismatch (1-2 room flats)"
-
-gen mismatch_rm12_r2p = rm12_dest * (1 - rm12_origin)
-label var mismatch_rm12_r2p "Rich→Poor poverty mismatch (1-2 room flats)"
-
-gen mismatch_rm12 = mismatch_rm12_p2r + mismatch_rm12_r2p
-label var mismatch_rm12 "Mismatch in poverty b/w origin and destination"
-
-*==================================
-* Wealth Mismatch (private housing)
-*==================================
-gen mismatch_pri = (private_origin) * (1 - private_dest) + (private_dest) * (1 - private_origin)
-label var mismatch_pri "Mismatch in wealth b/w origin and destination"
-
 *=====================
 * Race/Ethnic Mismatch
 *=====================
@@ -216,12 +154,6 @@ gen mismatch_race = mismatch_race_m2c + mismatch_race_c2m
 label var mismatch_race "Mismatch in race b/w origin and destination"
 
 gen lmismatch_race = ln(mismatch_race)
-
-*========================
-* Public Rentals Mismatch
-*========================
-gen mismatch_pubrentals = (rental_pct_home) * (1 - rental_pct_dest) + (rental_pct_dest) * (1 - rental_pct_home)
-label var mismatch_pubrentals "Mismatch in HDB public rentals b/w origin and destination"
 
 *==================================
 * Income Mismatch (25th percentile)

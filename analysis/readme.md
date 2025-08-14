@@ -84,7 +84,6 @@
 │     ├── visits_increase_by_ethnicmismatch_c2m_percentiles.do
 │     └── visits_increase_by_ethnicmismatch_percentiles.do
 ├── logs
-├── cd-panel.csv
 ├── main.do
 └── readme.md
 ```
