@@ -82,12 +82,12 @@ diagram: ## Make dependency diagram (mermaid)
 # 	mmdc -i $(DIAGRAM_BUILD).mmd -o $(DIAGRAM_BUILD).png -s 10
 # 	mmdc -i $(DIAGRAM_GEO).mmd -o $(DIAGRAM_GEO).svg
 # 	mmdc -i $(DIAGRAM_GEO).mmd -o $(DIAGRAM_GEO).png -s 10
-# 	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_BUILD).mmd -o $(DIAGRAM_BUILD).svg
-# 	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_BUILD).mmd -o $(DIAGRAM_BUILD).png -s 10
-# 	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_GEO).mmd -o $(DIAGRAM_GEO).svg
-# 	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_GEO).mmd -o $(DIAGRAM_GEO).png -s 10
+	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_BUILD).mmd -o $(DIAGRAM_BUILD).svg
+	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_BUILD).mmd -o $(DIAGRAM_BUILD).png -s 10
+	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_GEO).mmd -o $(DIAGRAM_GEO).svg
+	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_GEO).mmd -o $(DIAGRAM_GEO).png -s 10
 	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_ANALYSIS).mmd -o $(DIAGRAM_ANALYSIS).svg
-	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome mmdc -i $(DIAGRAM_ANALYSIS).mmd -o $(DIAGRAM_ANALYSIS).png -s 10
+	PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrmoe mmdc -i $(DIAGRAM_ANALYSIS).mmd -o $(DIAGRAM_ANALYSIS).png -s 10
 
 ########################################################################
 # 'Freeze' current venv packages
