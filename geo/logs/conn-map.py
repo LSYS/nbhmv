@@ -280,7 +280,7 @@ SCALEBAR_OPTS = dict(
     segments=[1, 1, 2, 2],
     unit_position="right",
     label_offset=0.005,
-    unit_label_spacing=0.003,
+    unit_label_spacing=0.005,
     fontsize=10,
     unit_fontsize=11,
 )
@@ -601,7 +601,7 @@ for i, (color, break_val) in enumerate(zip(colors, breaks)):
 legend_elements.append(
     mpatches.Patch(
         facecolor=MISSKWDS.get("color", "lightgray"),
-        hatch="//////",
+        hatch="///",
         alpha=0.5,
         edgecolor=MISSKWDS.get("facecolor", "lightgray"),
         linewidth=0.5,
@@ -625,6 +625,8 @@ legend = ax.legend(
     columnspacing=1,
     labelspacing=0.4,
     handletextpad=0.5,
+    handlelength=3,
+    handleheight=1.,
 )
 legend.get_title().set_fontweight("bold")
 legend._legend_box.align = "left"

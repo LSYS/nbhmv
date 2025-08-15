@@ -36,7 +36,7 @@ sns.set_theme(context="notebook", style="white", font_scale=1.2, palette="bright
 # from palettable import *
 from palettable import colorbrewer
 
-from utilities import add_north_arrow, add_scalebar, save_mpl_fig
+from utilities import add_north_arrow, add_segmented_scalebar, save_mpl_fig
 
 FP_SUBZONE_SHP2014 = "input/master-plan-2014-subzone-boundary-no-sea/master-plan-2014-subzone-boundary-no-sea-shp.zip"
 FP_PANEL = "input/cd-panel-labels.parquet"
@@ -139,14 +139,14 @@ axins, kw = make_axes(
     shrink=0.40,
     aspect=8,
     pad=0.12,
-    anchor=(1.05, 0),
+    anchor=(1.09, 1.15),
 )
 cbar = fig.colorbar(sm, cax=axins, **kw)
 cbar.set_ticks([0, split, 50, 75, 100])
 cbar.set_ticklabels([0, 25, 50, 75, 100])
-cbar.ax.tick_params(labelsize=12)
+cbar.ax.tick_params(labelsize=12, length=0)
 cbar.ax.set_title(
-    "Neighborhood house price percentile",
+    "Housing price percentile",
     fontsize=12,
     pad=6,
     loc="center",
@@ -169,8 +169,9 @@ right_center = left_x + (split / 100 + 1) * width * 0.5  # Center of 25-100% ran
 # Add bracket annotations using figure.add_artist
 from matplotlib.lines import Line2D
 
-TO_START_Y_POS = -0.05
-TO_BOTTOM_Y_POS = -0.065
+TO_START_Y_POS = .7
+TO_BOTTOM_Y_POS = TO_START_Y_POS - .015
+# TO_BOTTOM_Y_POS = -0.065
 # Left bracket (0-25%) - shape: |_____|
 # Left vertical line (down from colorbar)
 line1 = Line2D(
@@ -240,8 +241,8 @@ fig.add_artist(line6)
 # Add text labels
 fig.text(
     left_center,
-    bottom_y + (TO_BOTTOM_Y_POS * 1.1),
-    "Bottom 25%",
+    bottom_y* .95 + TO_BOTTOM_Y_POS,
+    "Bottom 25%\n(Lower-priced, $LP$)",
     ha="center",
     va="top",
     fontsize=10,
@@ -251,8 +252,8 @@ fig.text(
 
 fig.text(
     right_center,
-    bottom_y + (TO_BOTTOM_Y_POS * 1.1),
-    "Top 75%",
+    bottom_y* .95 + TO_BOTTOM_Y_POS,
+    "Top 75%\n(Higher-priced, $HP$)",
     ha="center",
     va="top",
     fontsize=10,
@@ -263,10 +264,18 @@ fig.text(
 # axis settings
 ax.set_xlim(103.683, 103.992)
 ax.set_ylim(1.255, 1.460)
-add_north_arrow(ax=ax, x=103.98, y=1.445, fontsize=25)
-add_scalebar(ax=ax, location="lower left", fontsize=25)
+add_north_arrow(ax=ax, x=103.69, y=1.447, fontsize=25)
+add_segmented_scalebar(
+    ax, 
+    height_fraction=0.01,
+    location="lower right",
+    segments=[1,1,1,2,2,2],
+    unit_position="right",
+    label_offset=0.005,
+    unit_label_spacing=0.005,
+    fontsize=11,
+    unit_fontsize=12,
+)
 plt.tight_layout()
 ax.set_axis_off()
 save_mpl_fig("../results/figures/supplementary/lower-vs-higher-ptiles")
-
-# %%

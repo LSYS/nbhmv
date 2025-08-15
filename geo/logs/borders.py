@@ -21,7 +21,7 @@ import numpy as np
 import pandas as pd
 import contextily as cx
 
-from utilities import add_north_arrow, add_scalebar, save_mpl_fig
+from utilities import add_north_arrow, add_segmented_scalebar, save_mpl_fig
 
 SAVEPATH = "../results/figures/supplementary/"
 
@@ -47,6 +47,18 @@ LINEWIDTH = 3
 MAPPROVIDER = cx.providers.CartoDB.PositronNoLabels
 BASEMAP_OPTS = dict(crs=regions2014.crs, source=MAPPROVIDER, attribution="", zorder=0)
 
+SCALEBAR_OPTS = dict(
+    height_fraction=0.012,
+    location="lower right",
+    segments=[2,2,2,4,4,4],
+    unit_position="right",
+    label_offset=0.005,
+    unit_label_spacing=0.005,
+    fontsize=14,
+    unit_fontsize=15,
+)
+NORTH_ARROW_OPTS = dict(x=104.08, y=1.46, fontsize=25)
+
 # %%
 _, ax = plt.subplots(figsize=(12, 12))
 
@@ -61,8 +73,8 @@ regions2014.plot(
 )
 
 cx.add_basemap(**BASEMAP_OPTS, ax=ax)
-add_north_arrow(ax=ax, x=104.1, y=1.46, fontsize=30)
-add_scalebar(ax=ax, fontsize=20)
+add_north_arrow(ax=ax, **NORTH_ARROW_OPTS)
+add_segmented_scalebar(ax, **SCALEBAR_OPTS)
 plt.tight_layout()
 plt.margins(0, 0)
 plt.axis("off")
@@ -86,8 +98,8 @@ zones.plot(
 )
 
 cx.add_basemap(**BASEMAP_OPTS, ax=ax)
-add_north_arrow(ax=ax, x=104.1, y=1.46, fontsize=30)
-add_scalebar(ax=ax, fontsize=20)
+add_north_arrow(ax=ax, **NORTH_ARROW_OPTS)
+add_segmented_scalebar(ax, **SCALEBAR_OPTS)
 plt.tight_layout()
 plt.margins(0, 0)
 plt.axis("off")
@@ -111,8 +123,8 @@ subzones.plot(
 )
 
 cx.add_basemap(**BASEMAP_OPTS, ax=ax)
-add_north_arrow(ax=ax, x=104.1, y=1.46, fontsize=30)
-add_scalebar(ax=ax, fontsize=20)
+add_north_arrow(ax=ax, **NORTH_ARROW_OPTS)
+add_segmented_scalebar(ax, **SCALEBAR_OPTS)
 plt.tight_layout()
 plt.margins(0, 0)
 plt.axis("off")
@@ -174,8 +186,8 @@ subzones.plot(
 )
 
 cx.add_basemap(**BASEMAP_OPTS, ax=ax)
-add_north_arrow(ax=ax, x=104.1, y=1.46, fontsize=30)
-add_scalebar(ax=ax, fontsize=20)
+add_north_arrow(ax=ax, **NORTH_ARROW_OPTS)
+add_segmented_scalebar(ax, **SCALEBAR_OPTS)
 plt.tight_layout()
 plt.margins(0, 0)
 plt.axis("off")

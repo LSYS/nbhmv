@@ -28,7 +28,7 @@ FP_HDBRESALE = "input/hdb_saledata_with_geodata.csv.gz"
 import warnings
 
 warnings.filterwarnings("ignore")
-from utilities import custom_cmap, add_north_arrow, add_scalebar, save_mpl_fig
+from utilities import custom_cmap, add_north_arrow, add_segmented_scalebar, save_mpl_fig
 
 from mapclassify import Quantiles
 
@@ -179,8 +179,8 @@ for i, (color, break_val) in enumerate(zip(colors, breaks)):
 legend = ax.legend(
     handles=legend_elements,
     title="Price per sqm (SGD)",
-    title_fontsize=19,
-    fontsize=19,
+    title_fontsize=23,
+    fontsize=23,
     loc="upper left",
     bbox_to_anchor=(0.0, 1),
     frameon=True,
@@ -192,6 +192,7 @@ legend = ax.legend(
     borderpad=1,
     columnspacing=1,
     handletextpad=0.5,
+    labelspacing=0.3,
 )
 
 legend.get_title().set_fontweight("bold")
@@ -201,8 +202,19 @@ for text in legend.get_texts():
 
 ax.set_ylim(1.235, 1.470774832084755)
 add_north_arrow(ax=ax, x=103.99, y=1.46, fontsize=30)
-add_scalebar(ax=ax, fontsize=20)
+add_segmented_scalebar(
+    ax, 
+    height_fraction=0.012,
+    location="lower right",
+    segments=[1,1,1,2,2,2],
+    unit_position="right",
+    label_offset=0.005,
+    unit_label_spacing=0.005,
+    fontsize=14,
+    unit_fontsize=15,
+)
 plt.tight_layout()
+plt.margins(0, 0)
 plt.axis("off")
 save_mpl_fig("../results/figures/supplementary/choropleth-price")
 

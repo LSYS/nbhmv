@@ -29,7 +29,7 @@ FP_INC = "input/resident-working-persons-aged-15-years-over-by-planning-area-gro
 FP_REALIS = "input/realis_with_postal_code_complete.csv.gz"
 FP_HDBRESALE = "input/hdb_saledata_with_geodata.csv.gz"
 FP_PA_SHP2014 = "input/master-plan-2014-planning-area-boundary-no-sea/master-plan-2014-planning-area-boundary-no-sea-kml.zip"
-from utilities import add_north_arrow, add_scalebar, save_mpl_fig, cat_to_num
+from utilities import add_north_arrow, add_segmented_scalebar, save_mpl_fig, cat_to_num
 
 # %% [markdown]
 # ## Prep files
@@ -296,10 +296,8 @@ cmap = cm.get_cmap("Reds")
 colors = [cmap(i / 4) for i in range(4)]
 
 # Format income ranges
-
-
 def format_income(value):
-    return f"${value/1000:.1f}k"
+    return f"{value/1000:.1f}k"
 
 
 # Compose legend
@@ -330,7 +328,7 @@ legend_elements.append(
         1,
         1,
         facecolor="gray",
-        hatch="+++",
+        hatch="++",
         edgecolor="white",
         linewidth=0.1,
         label="No data",
@@ -340,9 +338,9 @@ legend_elements.append(
 # Create the legend with horizontal bars
 legend = ax.legend(
     handles=legend_elements,
-    title="Monthly Income (SGD)",
-    title_fontsize=14,
-    fontsize=14,
+    title="Monthly Income",
+    title_fontsize=19,
+    fontsize=19,
     loc="upper left",
     bbox_to_anchor=(0.0, 1),
     frameon=True,
@@ -354,9 +352,9 @@ legend = ax.legend(
     borderpad=1,
     columnspacing=1,
     handlelength=2,
-    handleheight=1,
+    handleheight=.8,
     handletextpad=0.5,
-    labelspacing=0.3,
+    labelspacing=0.1,
 )
 
 legend.get_title().set_fontweight("bold")
@@ -364,9 +362,19 @@ legend.get_frame().set_linewidth(1.5)
 for text in legend.get_texts():
     text.set_color(".3")
 
-add_north_arrow(ax=ax, x=103.99, y=1.46, fontsize=30)
-add_scalebar(ax=ax, fontsize=20)
+add_north_arrow(ax=ax, x=103.97, y=1.46, fontsize=30)
 ax.set_ylim(1.235, 1.470774832084755)
+add_segmented_scalebar(
+    ax, 
+    height_fraction=0.015,
+    location="lower right",
+    segments=[1,1,1,2,2,2],
+    unit_position="right",
+    label_offset=0.005,
+    unit_label_spacing=0.005,
+    fontsize=15,
+    unit_fontsize=16,
+)
 plt.axis("off")
 plt.tight_layout()
 plt.margins(0, 0)
