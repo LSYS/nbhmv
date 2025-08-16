@@ -1,11 +1,6 @@
 cap log close exc_emp
 log using $logsavedir/exc_majorempcenters_pxor_race_asymmetry.txt, replace text name(exc_emp)
 
-// drop if inlist(origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
-// drop if inlist(dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
-// local condition (!inlist(origin, 8, 37, 50, 57, 150, 157, 201, 190) & !inlist(dest, 8, 37, 50, 57, 150, 157, 201, 190) )
-local condition !inlist(dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
-
 set more off
 local x1 mismatch_race_m2c 
 local x2 mismatch_race_c2m

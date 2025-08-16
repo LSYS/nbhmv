@@ -66,7 +66,7 @@ coefplot (est1, msymbol(O)  msize(`MSIZE') mlwidth($MLWIDTH) )
 		 xlabel(-.08(.04).08, labsize($XLABSIZE) )
 		 xscale(range(-.1 .1))
 		 ylabel(, angle(horizontal) labsize(`YLABSIZE'))
-		 rename(1.`x' = "{bf: Income mismatch}"
+		 rename(1.`x' = "{bf: Price mismatch}"
 		 		1.`x'#1.ncentral_d = "x {bf:Non-central dest.}"
 		 		)
 		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 

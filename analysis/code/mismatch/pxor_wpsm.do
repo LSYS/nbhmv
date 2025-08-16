@@ -59,8 +59,7 @@ coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
 		 xscale(range(-.03 .045))
 		 ylabel(, angle(vertical) labsize($YLABSIZE))
 		 rename(
-		 	mismatch_p25 = "{bf:Income mismatch}"
-		 	mismatch_p75 = "{bf:Income mismatch} (p75)"
+		 	mismatch_p25 = "{bf:Price mismatch}"
 		 )
 		 legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}")
 				label(6 "{bf:+ Businesses}") 	 label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")

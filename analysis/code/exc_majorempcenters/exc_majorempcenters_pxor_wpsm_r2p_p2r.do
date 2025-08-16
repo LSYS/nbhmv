@@ -4,10 +4,6 @@ log using $logsavedir/exc_majorempcenters_pxor_wpsm_r2p_p2r.txt, replace text na
 set more off
 local x1 mismatch_p25_p2r
 local x2 mismatch_p25_r2p
-// local x1 mismatch_p75_p2r
-// local x2 mismatch_p75_r2p
-// local x1 mismatch_p80_p2r
-// local x2 mismatch_p80_r2p
 
 *~~~~~~~~~~~~~~~~~~~~~~~~
 * Estimate specifications
