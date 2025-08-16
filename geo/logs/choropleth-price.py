@@ -203,10 +203,10 @@ for text in legend.get_texts():
 ax.set_ylim(1.235, 1.470774832084755)
 add_north_arrow(ax=ax, x=103.99, y=1.46, fontsize=30)
 add_segmented_scalebar(
-    ax, 
+    ax,
     height_fraction=0.012,
     location="lower right",
-    segments=[1,1,1,2,2,2],
+    segments=[1, 1, 1, 2, 2, 2],
     unit_position="right",
     label_offset=0.005,
     unit_label_spacing=0.005,

@@ -40,6 +40,7 @@ NOTEBOOKS := \
     ./lower-vs-higher-ptiles.ipynb \
     ./cbd.ipynb \
     ./conn-map.ipynb \
+    ./descriptives.ipynb \
     ./ping-variation.ipynb
 
 .PHONY: lint-notebooks
@@ -66,10 +67,18 @@ analysis: ## Run all notebooks with output versions (-o)
 	    borders.ipynb \
 	    lower-vs-higher-ptiles.ipynb \
 	    cbd.ipynb \
+	    descriptives.ipynb \
 	    conn-map.ipynb \
 	    ping-variation.ipynb
 	mv *-out.ipynb logs/
-
+.PHONY: analysis
+analysis: ## Run all notebooks with output versions (-o)
+	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
+	. $(ACTIVATE_PATH) && \
+	runpynb -s -o \
+	    descriptives.ipynb \
+	    conn-map.ipynb 
+	mv *-out.ipynb logs/
 ########################################################################
 # Symlink
 # Link assets into input/

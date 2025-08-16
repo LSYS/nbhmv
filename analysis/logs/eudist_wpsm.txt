@@ -2,7 +2,7 @@
       name:  eudist
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//eudist_wpsm.txt
   log type:  text
- opened on:   2 Aug 2025, 16:23:57
+ opened on:  16 Aug 2025, 08:03:56
 
 . 
 . set more off
@@ -17,7 +17,7 @@
 . eststo clear
 
 . forvalues i = 1/5 {
-  2.         eststo: qui reghdfe y `x', absorb(\$s`i') vce($se)
+  2.         eststo: reghdfe y `x', absorb(\$s`i') vce($se)
   3.                 * Add indicators for baseline 
 .                 estadd local timeFE     "\multicolumn{1}{c}{\checkmark}"
   4.                 estadd local censusPA   "\multicolumn{1}{c}{\checkmark}"
@@ -49,6 +49,43 @@
  28.                         estadd local POI                "\multicolumn{1}{c}{\checkmark}"                        
  29.                 }
  30. }
+(dropped 2 singleton observations)
+(MWFE estimator converged in 22 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,321,467
+Absorbing 3 HDFE groups                           F(   1,   1438) =      72.41
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7344
+                                                  Adj R-squared   =     0.7329
+                                                  Within R-sq.    =     0.0046
+Number of clusters (odid)    =      1,439         Root MSE        =     0.5398
+
+                                (Std. Err. adjusted for 1439 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      eudist |   8.638575   1.015161     8.51   0.000     6.647221    10.62993
+       _cons |  -1.108892    .008318  -133.31   0.000    -1.125209   -1.092575
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
 (est1 stored)
 
 added macro:
@@ -65,6 +102,52 @@ added macro:
 
 added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,321,467 $}"
+(dropped 2 singleton observations)
+(MWFE estimator converged in 25 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,228,385
+Absorbing 4 HDFE groups                           F(   1,   1433) =      40.92
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7356
+                                                  Adj R-squared   =     0.7338
+                                                  Within R-sq.    =     0.0019
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5258
+
+                                (Std. Err. adjusted for 1434 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      eudist |   6.079483   .9503419     6.40   0.000     4.215273    7.943693
+       _cons |  -1.092405   .0078391  -139.35   0.000    -1.107782   -1.077028
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
 (est2 stored)
 
 added macro:
@@ -84,6 +167,56 @@ added macro:
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
+(dropped 2 singleton observations)
+(MWFE estimator converged in 25 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,228,385
+Absorbing 5 HDFE groups                           F(   1,   1433) =      37.80
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7359
+                                                  Adj R-squared   =     0.7341
+                                                  Within R-sq.    =     0.0018
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5255
+
+                                (Std. Err. adjusted for 1434 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      eudist |   5.828644   .9480562     6.15   0.000     3.968917    7.688371
+       _cons |  -1.091038   .0078596  -138.82   0.000    -1.106456    -1.07562
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+     date#c.manufacturing |        91           0          91    ?|
+      date#c.construction |        91           0          91    ?|
+          date#c.services |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
 (est3 stored)
 
 added macro:
@@ -106,6 +239,59 @@ added macro:
 
 added macro:
            e(business) : "\multicolumn{1}{c}{\checkmark}"
+(dropped 2 singleton observations)
+(MWFE estimator converged in 30 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,228,385
+Absorbing 6 HDFE groups                           F(   1,   1433) =      37.58
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7360
+                                                  Adj R-squared   =     0.7341
+                                                  Within R-sq.    =     0.0018
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5254
+
+                                (Std. Err. adjusted for 1434 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      eudist |   5.818189   .9491155     6.13   0.000     3.956384    7.679994
+       _cons |  -1.090981   .0078671  -138.68   0.000    -1.106413   -1.075549
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+     date#c.manufacturing |        91           0          91    ?|
+      date#c.construction |        91           0          91    ?|
+          date#c.services |        91           0          91    ?|
+                     date |        91          91           0    ?|
+         date#c.rain_dest |        91          30          61    ?|
+       date#c.rain_origin |        91          30          61    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
 (est4 stored)
 
 added macro:
@@ -131,6 +317,72 @@ added macro:
 
 added macro:
                e(rain) : "\multicolumn{1}{c}{\checkmark}"
+(dropped 2 singleton observations)
+(MWFE estimator converged in 34 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,228,385
+Absorbing 7 HDFE groups                           F(   1,   1433) =      44.44
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7377
+                                                  Adj R-squared   =     0.7356
+                                                  Within R-sq.    =     0.0020
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5240
+
+                                (Std. Err. adjusted for 1434 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      eudist |   6.311518   .9467662     6.67   0.000     4.454322    8.168714
+       _cons |   -1.09367   .0078348  -139.59   0.000    -1.109039   -1.078301
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+     date#c.manufacturing |        91           0          91    ?|
+      date#c.construction |        91           0          91    ?|
+          date#c.services |        91           0          91    ?|
+                     date |        91          91           0    ?|
+         date#c.rain_dest |        91          30          61    ?|
+       date#c.rain_origin |        91          30          61    ?|
+                     date |        91          91           0    ?|
+         date#c.libraries |        91           0          91    ?|
+      date#c.supermarkets |        91           0          91    ?|
+             date#c.parks |        91           0          91    ?|
+        date#c.preschools |        91           0          91    ?|
+          date#c.schzones |        91           0          91    ?|
+       date#c.silverzones |        91           0          91    ?|
+  date#c.sport_facilities |        91           0          91    ?|
+           date#c.transit |        91           0          91    ?|
+              date#c.tour |        91           0          91    ?|
+           date#c.schools |        91           0          91    ?|
+           date#c.hawkers |        91           0          91    ?|
+    date#c.shopping_malls |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
 (est5 stored)
 
 added macro:
@@ -205,5 +457,5 @@ delimiter now cr
       name:  eudist
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//eudist_wpsm.txt
   log type:  text
- closed on:   2 Aug 2025, 16:33:53
+ closed on:  16 Aug 2025, 08:07:58
 ------------------------------------------------------------------------------------------------------------------------------------------------------

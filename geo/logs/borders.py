@@ -50,7 +50,7 @@ BASEMAP_OPTS = dict(crs=regions2014.crs, source=MAPPROVIDER, attribution="", zor
 SCALEBAR_OPTS = dict(
     height_fraction=0.012,
     location="lower right",
-    segments=[2,2,2,4,4,4],
+    segments=[2, 2, 2, 4, 4, 4],
     unit_position="right",
     label_offset=0.005,
     unit_label_spacing=0.005,

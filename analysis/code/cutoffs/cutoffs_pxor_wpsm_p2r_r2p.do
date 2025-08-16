@@ -1,5 +1,5 @@
 cap log close cutoffs
-log using $logsavedir/cutoffs_pxor_wpsm.txt, replace text name(cutoffs)
+log using $logsavedir/cutoffs_pxor_wpsm_p2r_r2p.txt, replace text name(cutoffs)
 
 set more off
 
@@ -7,7 +7,7 @@ preserve
 
 local LOW_RANGE = 1
 local UPP_RANGE = 99
-local FILENAME mismatch-wpsm
+local FILENAME mismatch-wpsm-p2r-r2p
 local FILEPATH ./code/cutoffs/out
 
 * del exisiting file

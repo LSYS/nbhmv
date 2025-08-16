@@ -8,30 +8,11 @@ display "`myLog'"
 * =========================================================
 * Init
 * =========================================================
-global SCRATCH 0  // if 1, read only 5000 rows (for faster proofing/debugging)
-// global READ "yes" // (RE)READ data
 
-// dis "$READ"
-// if "$READ" == "yes" {
-// 	dis "yrs"
-// }
-
-// if ("$READ" == "yes") {
-// 	do code/init/set_environment.do
-// }
-// tictoc tic 1
-
-// do code/init/set_globals.do
-
-// if ("$READ" == "yes") {
-// 	do code/init/data_preamble.do
-// }
-// aa
-
-// do code/init/set_environment.do
-// tictoc tic 1
-// do code/init/set_globals.do
-// do code/init/data_preamble.do
+do code/init/set_environment.do
+tictoc tic 1
+do code/init/set_globals.do
+do code/init/data_preamble.do
 
 *======================================
 * Linking scripts to exhibits numbering
@@ -299,10 +280,9 @@ end
 // make_tabH1
 // make_tabH2
 
-
 * Cutoffs
 // make_fig8
-// make_fig9
+make_tabE1
 // make_figE1
 
 * =========================================================

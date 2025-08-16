@@ -2,7 +2,7 @@
       name:  top25p
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//top25p_pxor_wpsm_ncentral.txt
   log type:  text
- opened on:   8 Aug 2025, 01:19:53
+ opened on:  15 Aug 2025, 20:27:50
 
 . 
 . set more off
@@ -490,7 +490,7 @@ delimiter now ;
 >                  xlabel(-.08(.04).08, labsize($XLABSIZE) )
 >                  xscale(range(-.1 .1))
 >                  ylabel(, angle(horizontal) labsize(`YLABSIZE'))
->                  rename(1.`x' = "{bf: Income mismatch}"
+>                  rename(1.`x' = "{bf: Price mismatch}"
 >                                 1.`x'#1.ncentral_d = "x {bf:Non-central dest.}"
 >                                 )
 >                  legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}") 
@@ -547,7 +547,6 @@ delimiter now ;
 >         substitute(\_ _)
 >         fragment replace
 >         compress;
-(note: file ../results/tables//top25p-pxor-wpsm-ncentral-frag.tex not found)
 (output written to ../results/tables//top25p-pxor-wpsm-ncentral-frag.tex)
 
 .                 #delimit cr
@@ -557,5 +556,5 @@ delimiter now cr
       name:  top25p
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//top25p_pxor_wpsm_ncentral.txt
   log type:  text
- closed on:   8 Aug 2025, 02:21:40
+ closed on:  15 Aug 2025, 20:38:56
 ------------------------------------------------------------------------------------------------------------------------------------------------------

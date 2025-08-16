@@ -2,7 +2,7 @@
       name:  adjacency_filter
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//adjfilter_pxor_wpsm_ncentral.txt
   log type:  text
- opened on:   7 Aug 2025, 09:50:38
+ opened on:  15 Aug 2025, 08:54:07
 
 . 
 . set more off
@@ -546,7 +546,6 @@ delimiter now ;
 >         substitute(\_ _)
 >         fragment replace
 >         compress;
-(note: file ../results/tables//adjfilter-pxor-wpsm-ncentral-frag.tex not found)
 (output written to ../results/tables//adjfilter-pxor-wpsm-ncentral-frag.tex)
 
 .                 #delimit cr
@@ -556,5 +555,5 @@ delimiter now cr
       name:  adjacency_filter
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//adjfilter_pxor_wpsm_ncentral.txt
   log type:  text
- closed on:   7 Aug 2025, 10:49:19
+ closed on:  15 Aug 2025, 09:48:28
 ------------------------------------------------------------------------------------------------------------------------------------------------------

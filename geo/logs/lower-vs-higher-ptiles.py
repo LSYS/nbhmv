@@ -169,8 +169,8 @@ right_center = left_x + (split / 100 + 1) * width * 0.5  # Center of 25-100% ran
 # Add bracket annotations using figure.add_artist
 from matplotlib.lines import Line2D
 
-TO_START_Y_POS = .7
-TO_BOTTOM_Y_POS = TO_START_Y_POS - .015
+TO_START_Y_POS = 0.7
+TO_BOTTOM_Y_POS = TO_START_Y_POS - 0.015
 # TO_BOTTOM_Y_POS = -0.065
 # Left bracket (0-25%) - shape: |_____|
 # Left vertical line (down from colorbar)
@@ -241,7 +241,7 @@ fig.add_artist(line6)
 # Add text labels
 fig.text(
     left_center,
-    bottom_y* .95 + TO_BOTTOM_Y_POS,
+    bottom_y * 0.95 + TO_BOTTOM_Y_POS,
     "Bottom 25%\n(Lower-priced, $LP$)",
     ha="center",
     va="top",
@@ -252,7 +252,7 @@ fig.text(
 
 fig.text(
     right_center,
-    bottom_y* .95 + TO_BOTTOM_Y_POS,
+    bottom_y * 0.95 + TO_BOTTOM_Y_POS,
     "Top 75%\n(Higher-priced, $HP$)",
     ha="center",
     va="top",
@@ -266,10 +266,10 @@ ax.set_xlim(103.683, 103.992)
 ax.set_ylim(1.255, 1.460)
 add_north_arrow(ax=ax, x=103.69, y=1.447, fontsize=25)
 add_segmented_scalebar(
-    ax, 
+    ax,
     height_fraction=0.01,
     location="lower right",
-    segments=[1,1,1,2,2,2],
+    segments=[1, 1, 1, 2, 2, 2],
     unit_position="right",
     label_offset=0.005,
     unit_label_spacing=0.005,

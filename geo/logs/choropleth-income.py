@@ -296,6 +296,8 @@ cmap = cm.get_cmap("Reds")
 colors = [cmap(i / 4) for i in range(4)]
 
 # Format income ranges
+
+
 def format_income(value):
     return f"{value/1000:.1f}k"
 
@@ -352,7 +354,7 @@ legend = ax.legend(
     borderpad=1,
     columnspacing=1,
     handlelength=2,
-    handleheight=.8,
+    handleheight=0.8,
     handletextpad=0.5,
     labelspacing=0.1,
 )
@@ -365,10 +367,10 @@ for text in legend.get_texts():
 add_north_arrow(ax=ax, x=103.97, y=1.46, fontsize=30)
 ax.set_ylim(1.235, 1.470774832084755)
 add_segmented_scalebar(
-    ax, 
+    ax,
     height_fraction=0.015,
     location="lower right",
-    segments=[1,1,1,2,2,2],
+    segments=[1, 1, 1, 2, 2, 2],
     unit_position="right",
     label_offset=0.005,
     unit_label_spacing=0.005,

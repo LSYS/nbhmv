@@ -2,7 +2,7 @@
       name:  exc_emp
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//exc_majorempcenters_pxor_wpsm.txt
   log type:  text
- opened on:  11 Aug 2025, 23:55:31
+ opened on:  15 Aug 2025, 05:36:38
 
 . 
 . // drop if inlist(origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
@@ -498,5 +498,5 @@ delimiter now cr
       name:  exc_emp
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//exc_majorempcenters_pxor_wpsm.txt
   log type:  text
- closed on:  12 Aug 2025, 00:34:06
+ closed on:  15 Aug 2025, 06:21:13
 ------------------------------------------------------------------------------------------------------------------------------------------------------
