@@ -29,18 +29,20 @@ forvalues cutoff = `LOW_RANGE'/`UPP_RANGE' {
 
 	* Generate mismatch measure based on new cutoff
 	tempvar mismatch_`cutoff'_p2r mismatch_`cutoff'_r2p mismatch_`cutoff'
-	gen `mismatch_`cutoff'_p2r' = `p`cutoff'_wpsm_home' * (1 - `p`cutoff'_wpsm_dest')
-	gen `mismatch_`cutoff'_r2p' = `p`cutoff'_wpsm_dest' * (1 - `p`cutoff'_wpsm_home')
-
-	cap gen mismatch = `mismatch_`cutoff'_p2r' + `mismatch_`cutoff'_r2p'
+	cap gen mismatch_p2r = `p`cutoff'_wpsm_home' * (1 - `p`cutoff'_wpsm_dest')
 	if _rc!=0 {
-		replace mismatch = `mismatch_`cutoff'_p2r' + `mismatch_`cutoff'_r2p'
+		replace mismatch_p2r = `p`cutoff'_wpsm_home' * (1 - `p`cutoff'_wpsm_dest')
 	}
+	 cap gen mismatch_r2p = `p`cutoff'_wpsm_dest' * (1 - `p`cutoff'_wpsm_home')
+	if _rc!=0 {
+		replace mismatch_r2p = `p`cutoff'_wpsm_dest' * (1 - `p`cutoff'_wpsm_home')
+	}
+	
 	* Run regression
-	qui reghdfe y mismatch, absorb($s5) vce($se)
+	qui reghdfe y mismatch_p2r mismatch_r2p, absorb($s5) vce($se)
 
 	* Store estimate(s)
-	storespecs mismatch, spec_name(p`cutoff') file(`FILEPATH'/`FILENAME')
+	storespecs mismatch_p2r mismatch_r2p, spec_name(p`cutoff') file(`FILEPATH'/`FILENAME')
 }
 }
 
