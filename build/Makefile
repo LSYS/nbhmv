@@ -12,28 +12,22 @@ endif
 ########################################################################
 # Make data in pipeline
 ########################################################################
-# .PHONY: data
-# data: ## Run all notebooks in sequence with output versions (-o)
-# 	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
-# 	. $(ACTIVATE_PATH) && \
-# 	runpynb -s -o \
-# 	  0-get-subzones-from-records.ipynb \
-# 	  1-get-IDs.ipynb \
-# 	  2-get-devicehome.ipynb \
-# 	  3-get-movementcount.ipynb \
-# 	  4-postal-to-2014subzonename.ipynb \
-# 	  5-compile-POI-count.ipynb \
-# 	  6a-clean-housetype.ipynb \
-# 	  6b-map-weather.ipynb \
-# 	  7-merge.ipynb
-# 	mv *-out.ipynb logs/
 .PHONY: data
 data: ## Run all notebooks in sequence with output versions (-o)
 	@echo "==> Executing notebooks with runpynb in $(VENVPATH)"
 	. $(ACTIVATE_PATH) && \
 	runpynb -s -o \
+	  0-get-subzones-from-records.ipynb \
+	  1-get-IDs.ipynb \
+	  2-get-devicehome.ipynb \
+	  3-get-movementcount.ipynb \
+	  4-postal-to-2014subzonename.ipynb \
+	  5-compile-POI-count.ipynb \
+	  6a-clean-housetype.ipynb \
+	  6b-map-weather.ipynb \
 	  7-merge.ipynb
 	mv *-out.ipynb logs/
+
 ########################################################################
 # Jupytext sync to .py
 ########################################################################
