@@ -11,9 +11,9 @@ forval cutoff = 15/35 {
 		replace areapos = .2 if p`cutoff'==1
 	}
 	
-	cap gen areaneg = -.1 if p`cutoff'==1
+	cap gen areaneg = -.11 if p`cutoff'==1
 	if _rc!=0 {
-		replace areaneg = -.1 if p`cutoff'==1
+		replace areaneg = -.11 if p`cutoff'==1
 	}
 }
 
@@ -30,6 +30,7 @@ foreach y in mismatch_p2r mismatch_r2p {
 			lpattern(solid) lcolor(`COEF_LINE_COLOR') lwidth(medthick)
 			xlab(0(25)100, labsize(`XLAB_SIZE'))
 			ylab(-.1(.1).2, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
+			yscale(range(-.11 .2))
 			xtitle("Percentile used for cutoff", size(`XTITLE_SIZE') )
 			ytitle("")
 			legend(order(8 "Main estimate" 3 "Point estimates"  4 "95% CI" 6 "90% CI" ) 
@@ -69,7 +70,7 @@ foreach y in mismatch_p2r mismatch_r2p {
 	#delimit cr
 	savefig, path($graphsavedir/`y') format($graphformats)
 }
-
+aa
 *~~~~~~~~~~~~
 * Plot sorted
 *~~~~~~~~~~~~
