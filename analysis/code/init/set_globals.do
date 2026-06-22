@@ -1,6 +1,8 @@
 global graphsavedir ../results/figures/
-global graphformats png pdf eps
 global tabsavedir ../results/tables/
+if "${STRICT_TAG}" != "" global graphsavedir ../results/figures/strict-${STRICT_TAG}/
+if "${STRICT_TAG}" != "" global tabsavedir ../results/tables/strict-${STRICT_TAG}/
+global graphformats png pdf eps
 global logsavedir ./logs/
 
 global dist ///

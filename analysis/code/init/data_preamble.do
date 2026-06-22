@@ -7,7 +7,9 @@
 // 	import delimited ../build/cd-panel.csv
 // 	// import delimited cd-panel.csv
 // }
-import delimited ../build/cd-panel.csv
+local _tag "${STRICT_TAG}"
+if "`_tag'" == "" import delimited "../build/cd-panel.csv"
+if "`_tag'" != "" import delimited "../build/cd-panel-strict-`_tag'.csv"
 *===============
 * Time Variables  
 *===============
