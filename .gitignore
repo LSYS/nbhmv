@@ -1,3 +1,4 @@
+secrets.yml
 venv*
 Copy*.ipynb
 *-out.ipynb
