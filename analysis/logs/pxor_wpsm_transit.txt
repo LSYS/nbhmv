@@ -1,0 +1,504 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  mismatch
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_transit.txt
+  log type:  text
+ opened on:  23 Jun 2026, 18:25:29
+
+. 
+. set more off
+
+. local x mismatch_p25
+
+. 
+. *~~~~~~~~~~~~~~~~~~~~~~~~
+. * Estimate specifications
+. *~~~~~~~~~~~~~~~~~~~~~~~~
+. eststo clear
+
+. forvalues i = 1/5 {
+  2.         eststo: reghdfe y `x', absorb(\$s`i' $transit_fe) vce($se)
+  3.                 * Add indicators for baseline
+.                 estadd local timeFE     "\multicolumn{1}{c}{\checkmark}"
+  4.                 estadd local censusPA   "\multicolumn{1}{c}{\checkmark}"
+  5.                 * Add sample sizes report
+.                 mat femat = e(dof_table)
+  6.                 local days = femat[1,1]
+  7.                 estadd local days "\multicolumn{1}{c}{$ `days' $}"
+  8.                 local clusters: display %9.0fc `e(N_clust1)'
+  9.                 estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"
+ 10.                 local nobs: display %9.0fc `e(N)'
+ 11.                 estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"
+ 12.                 * Add indicators for additional controls
+.                 if `i'==2 {
+ 13.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"
+ 14.                 }
+ 15.                 else if `i'==3 {
+ 16.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"
+ 17.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"
+ 18.                 }
+ 19.                 else if `i'==4 {
+ 20.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"
+ 21.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"
+ 22.                         estadd local rain               "\multicolumn{1}{c}{\checkmark}"
+ 23.                 }
+ 24.                 else if `i'==5 {
+ 25.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"
+ 26.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"
+ 27.                         estadd local rain               "\multicolumn{1}{c}{\checkmark}"
+ 28.                         estadd local POI                "\multicolumn{1}{c}{\checkmark}"
+ 29.                 }
+ 30. }
+(dropped 4 singleton observations)
+(MWFE estimator converged in 21 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,294,790
+Absorbing 4 HDFE groups                           F(   1,   1438) =       4.33
+Statistics robust to heteroskedasticity           Prob > F        =     0.0377
+                                                  R-squared       =     0.7321
+                                                  Adj R-squared   =     0.7305
+                                                  Within R-sq.    =     0.0002
+Number of clusters (odid)    =      1,439         Root MSE        =     0.5415
+
+                                (Std. Err. adjusted for 1439 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+mismatch_p25 |   .0171423   .0082411     2.08   0.038     .0009764    .0333082
+       _cons |  -1.064976   .0067866  -156.92   0.000    -1.078289   -1.051663
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3453          91        3362     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+   date#c.ln_transit_time |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+(est1 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,439 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,294,790 $}"
+(dropped 4 singleton observations)
+(MWFE estimator converged in 24 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,203,303
+Absorbing 5 HDFE groups                           F(   1,   1433) =       2.58
+Statistics robust to heteroskedasticity           Prob > F        =     0.1088
+                                                  R-squared       =     0.7340
+                                                  Adj R-squared   =     0.7322
+                                                  Within R-sq.    =     0.0001
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5266
+
+                                (Std. Err. adjusted for 1434 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+mismatch_p25 |   .0133813   .0083387     1.60   0.109    -.0029761    .0297387
+       _cons |  -1.064968   .0067351  -158.12   0.000     -1.07818   -1.051757
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3453          91        3362     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+   date#c.ln_transit_time |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+(est2 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,203,303 $}"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+(dropped 4 singleton observations)
+(MWFE estimator converged in 24 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,203,303
+Absorbing 6 HDFE groups                           F(   1,   1433) =       2.17
+Statistics robust to heteroskedasticity           Prob > F        =     0.1406
+                                                  R-squared       =     0.7344
+                                                  Adj R-squared   =     0.7325
+                                                  Within R-sq.    =     0.0001
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5263
+
+                                (Std. Err. adjusted for 1434 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+mismatch_p25 |   .0124023   .0084109     1.47   0.141    -.0040966    .0289012
+       _cons |   -1.06462   .0067419  -157.91   0.000    -1.077845   -1.051395
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3453          91        3362     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+     date#c.manufacturing |        91           0          91    ?|
+      date#c.construction |        91           0          91    ?|
+          date#c.services |        91           0          91    ?|
+                     date |        91          91           0    ?|
+   date#c.ln_transit_time |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+(est3 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,203,303 $}"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+(dropped 4 singleton observations)
+(MWFE estimator converged in 30 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,203,303
+Absorbing 7 HDFE groups                           F(   1,   1433) =       2.15
+Statistics robust to heteroskedasticity           Prob > F        =     0.1430
+                                                  R-squared       =     0.7345
+                                                  Adj R-squared   =     0.7325
+                                                  Within R-sq.    =     0.0001
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5262
+
+                                (Std. Err. adjusted for 1434 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+mismatch_p25 |   .0123323   .0084148     1.47   0.143    -.0041744    .0288389
+       _cons |  -1.064595   .0067444  -157.85   0.000    -1.077825   -1.051365
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3453          91        3362     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+     date#c.manufacturing |        91           0          91    ?|
+      date#c.construction |        91           0          91    ?|
+          date#c.services |        91           0          91    ?|
+                     date |        91          91           0    ?|
+         date#c.rain_dest |        91          30          61    ?|
+       date#c.rain_origin |        91          30          61    ?|
+                     date |        91          91           0    ?|
+   date#c.ln_transit_time |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+(est4 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,203,303 $}"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(rain) : "\multicolumn{1}{c}{\checkmark}"
+(dropped 4 singleton observations)
+(MWFE estimator converged in 33 iterations)
+
+HDFE Linear regression                            Number of obs   =  1,203,303
+Absorbing 8 HDFE groups                           F(   1,   1433) =       6.14
+Statistics robust to heteroskedasticity           Prob > F        =     0.0133
+                                                  R-squared       =     0.7362
+                                                  Adj R-squared   =     0.7340
+                                                  Within R-sq.    =     0.0003
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5248
+
+                                (Std. Err. adjusted for 1434 clusters in odid)
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+mismatch_p25 |   .0209746   .0084654     2.48   0.013     .0043688    .0375804
+       _cons |  -1.067669   .0066945  -159.48   0.000    -1.080801   -1.054536
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3453          91        3362     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+     date#c.manufacturing |        91           0          91    ?|
+      date#c.construction |        91           0          91    ?|
+          date#c.services |        91           0          91    ?|
+                     date |        91          91           0    ?|
+         date#c.rain_dest |        91          30          61    ?|
+       date#c.rain_origin |        91          30          61    ?|
+                     date |        91          91           0    ?|
+         date#c.libraries |        91           0          91    ?|
+      date#c.supermarkets |        91           0          91    ?|
+             date#c.parks |        91           0          91    ?|
+        date#c.preschools |        91           0          91    ?|
+          date#c.schzones |        91           0          91    ?|
+       date#c.silverzones |        91           0          91    ?|
+  date#c.sport_facilities |        91           0          91    ?|
+           date#c.transit |        91           0          91    ?|
+              date#c.tour |        91           0          91    ?|
+           date#c.schools |        91           0          91    ?|
+           date#c.hawkers |        91           0          91    ?|
+    date#c.shopping_malls |        91           0          91    ?|
+                     date |        91          91           0    ?|
+   date#c.ln_transit_time |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+(est5 stored)
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,203,303 $}"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(rain) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+                e(POI) : "\multicolumn{1}{c}{\checkmark}"
+
+. 
+. *~~~~~~~~~~~~~~
+. * Plot coefplot
+. *~~~~~~~~~~~~~~
+. #delimit;
+delimiter now ;
+. coefplot (est1, msymbol(O)  msize($MSIZE) mlwidth($MLWIDTH) )
+>                  (est2, msymbol(Oh) msize($MSIZE) mlwidth($MLWIDTH) offset())
+>                  (est3, msymbol(dh) msize($MSIZE) mlwidth($MLWIDTH) offset())
+>                  (est4, msymbol(th) msize($MSIZE) mlwidth($MLWIDTH) offset())
+>                  (est5, msymbol(sh) msize($MSIZE) mlwidth($MLWIDTH) offset()),
+>                         keep(`x')
+>                  level(90)
+>                  ciopts(recast(rcap) lwidth($CIWIDTH))
+>                  asequation
+>                  xlabel(-.02(.02).04, labsize($XLABSIZE) )
+>                  xscale(range(-.03 .045))
+>                  ylabel(, angle(vertical) labsize($YLABSIZE))
+>                  rename(
+>                         mismatch_p25 = "{bf:Price mismatch}"
+>                  )
+>                  legend(label(2 "{bf:Baseline}") label(4 "{bf:+ Demographics}")
+>                                 label(6 "{bf:+ Businesses}")     label(8 "{bf:+ Rainfall}") label(10 "{bf:+ POIs}")
+>                                 col(1) ring(0) bplacement(sw) size($LEGEND_SIZE)
+>                                 region(lwidth(none))
+>                                 )
+>                 scheme(lean2)
+>                 plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0))
+>                 graphregion(color(white) margin(0 0 0 0))
+>                 xline(0, lpattern(longdash) lcolor(red*1.3) lwidth($REFLINE_WIDTH))
+>                 ;
+
+. savefig, path($graphsavedir/pxor-wpsm) format($graphformats);
+Graph saved as ../results/figures/transit//pxor-wpsm.png
+(file ../results/figures/transit//pxor-wpsm.pdf written in PDF format)
+Graph saved as ../results/figures/transit//pxor-wpsm.pdf
+Graph saved as ../results/figures/transit//pxor-wpsm.eps
+
+. *~~~~~~~~~~~~~~~~~~~~~~~~~~
+> * Make LaTex Table Fragment
+> *~~~~~~~~~~~~~~~~~~~~~~~~~~
+> #delimit;
+. esttab using $tabsavedir/pxor-wpsm-frag.tex,
+>         b(%9.4fc)
+>         se(%9.4fc)
+>         star (* 0.1 ** 0.05 *** 0.01)
+>         obslast
+>         noomitted
+>         nobase noobs
+>         nonumbers nolines nogaps noeqlines nodepvars
+>         nomtitle
+>         varwidth(20)
+>         modelwidth(8)
+>         drop(_cons)
+>         coeflabel($coeff_labels)
+>         scalar(
+>                 "timeFE Day fixed effects"
+>                 "censusPA Census area-by-day fixed effects"
+>                 "demo Demographics"
+>                 "business Businesses"
+>                 "rain Neighborhood-specific rainfall"
+>                 "POI Places of interest"
+>                 "r2 R$^2$"
+>                 "days Days"
+>                 "clusters Clusters"
+>                 "nobs Observations")
+>         alignment(D{.}{.}{-1})
+>         substitute(\_ _)
+>         fragment replace
+>         compress;
+(output written to ../results/tables/transit//pxor-wpsm-frag.tex)
+
+. #delimit cr
+delimiter now cr
+. 
+. log close mismatch
+      name:  mismatch
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_transit.txt
+  log type:  text
+ closed on:  23 Jun 2026, 18:33:50
+------------------------------------------------------------------------------------------------------------------------------------------------------

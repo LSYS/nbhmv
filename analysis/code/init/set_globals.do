@@ -7,6 +7,8 @@ global dist ///
     centroid_distance ///
     contiguous
 
+global transit_fe i.date##c.(ln_transit_time)
+
 global popden ///
     lnpop_origin ///
     lnpop_dest ///
@@ -110,7 +112,7 @@ global REFLINE_WIDTH thick
 assert_macros "graphsavedir tabsavedir coeff_labels"
 
 // Check variable group macros
-assert_macros "dist popden demo rain landarea poi business se exc_emp"
+assert_macros "dist transit_fe popden demo rain landarea poi business se exc_emp"
 
 // Check specification macros
 assert_macros "s1 s2 s3 s4 s5"

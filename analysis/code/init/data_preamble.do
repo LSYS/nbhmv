@@ -78,6 +78,18 @@ label var contiguous "==1 if area and destination is contiguous"
 label var area_o "Land area of origin subzone (km2)"
 label var area_d "Land area of destination subzone (km2)"
 
+*========================
+* Get transit time
+*========================
+preserve
+    import delimited using "../build/intermediate-output/transit_time_panel.csv", clear
+    tempfile transit_tt
+    save `transit_tt'
+restore
+merge m:1 origin dest using `transit_tt', keep(master match) nogen
+label var transit_time_sec "OneMap public-transit travel time (sec, OD pair)"
+label var ln_transit_time  "Log OneMap public-transit travel time"
+
 *=====================
 * Population Variables
 *=====================
