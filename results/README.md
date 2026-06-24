@@ -26,7 +26,7 @@
 <table>
   <tr>
     <td rowspan="2" width="55%">
-      <img src="./figures/supplementary/choropleth-price.png" width="100%"/><br>
+      <img src="./figures/supplementary/lower-vs-higher-ptiles.png" width="100%"/><br>
       <b>House prices</b>
     </td>
     <td width="45%">
@@ -41,9 +41,6 @@
     </td>
   </tr>
 </table>
-
-### Figure 3 (new?)
-![Figure 8](./figures/supplementary/lower-vs-higher-ptiles.png)
 
 
 ### Figure 4
