@@ -16,6 +16,8 @@ preserve
 tictoc tic 99
 qui bysort origin dest: gen dup = cond(_N==1,0,_n)
 drop if dup > 1
+* restrict counterfactual to HDB-dominated pairs (>50% HDB)
+keep if private_home < 50 & private_dest < 50
 count
 
 forvalues cutoff = 0/100 {
