@@ -1,0 +1,684 @@
+--------------------------------------------------------------------------------------------------------------------------
+      name:  ncdir
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_r2p_p2r_ncentral.txt
+  log type:  text
+ opened on:  14 Jul 2026, 14:44:59
+
+. set more off
+
+. 
+. eststo clear
+
+. forvalues i = 1/5 {
+  2.         eststo p`i': reghdfe y i.mismatch_p25_p2r##i.ncentral_d ///
+>                                i.mismatch_p25_r2p##i.ncentral_d, ///
+>                                absorb(\$s`i') vce($se)
+  3.                 estadd local timeFE     "\multicolumn{1}{c}{\checkmark}"
+  4.                 estadd local censusPA   "\multicolumn{1}{c}{\checkmark}"
+  5.                 mat femat = e(dof_table)
+  6.                 local days = femat[1,1]
+  7.                 estadd local days "\multicolumn{1}{c}{$ `days' $}"
+  8.                 local clusters: display %9.0fc `e(N_clust1)'
+  9.                 estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"
+ 10.                 local nobs: display %9.0fc `e(N)'
+ 11.                 estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"
+ 12.                 di as txt "  LP->HP, non-central net effect:"
+ 13.                 lincom 1.mismatch_p25_p2r + 1.mismatch_p25_p2r#1.ncentral_d
+ 14.                 qui test 1.mismatch_p25_p2r + 1.mismatch_p25_p2r#1.ncentral_d = 0
+ 15.                 estadd local pval_p2r = string(round(`r(p)', 0.001))
+ 16.                 di as txt "  HP->LP, non-central net effect:"
+ 17.                 lincom 1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d
+ 18.                 qui test 1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
+ 19.                 estadd local pval_r2p = string(round(`r(p)', 0.001))
+ 20.                 if `i'==2 {
+ 21.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"
+ 22.                 }
+ 23.                 else if `i'==3 {
+ 24.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"
+ 25.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"
+ 26.                 }
+ 27.                 else if `i'==4 {
+ 28.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"
+ 29.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"
+ 30.                         estadd local rain               "\multicolumn{1}{c}{\checkmark}"
+ 31.                 }
+ 32.                 else if `i'==5 {
+ 33.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"
+ 34.                         estadd local business   "\multicolumn{1}{c}{\checkmark}"
+ 35.                         estadd local rain               "\multicolumn{1}{c}{\checkmark}"
+ 36.                         estadd local POI                "\multicolumn{1}{c}{\checkmark}"
+ 37.                 }
+ 38. }
+(dropped 2 singleton observations)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
+> -09)
+(MWFE estimator converged in 24 iterations)
+note: 1.ncentral_d omitted because of collinearity
+
+HDFE Linear regression                            Number of obs   =  1,321,467
+Absorbing 3 HDFE groups                           F(   4,   1438) =      21.23
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7337
+                                                  Adj R-squared   =     0.7322
+                                                  Within R-sq.    =     0.0022
+Number of clusters (odid)    =      1,439         Root MSE        =     0.5404
+
+                                               (Std. Err. adjusted for 1439 clusters in odid)
+---------------------------------------------------------------------------------------------
+                            |               Robust
+                          y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+----------------------------+----------------------------------------------------------------
+         1.mismatch_p25_p2r |    .088376   .0135154     6.54   0.000     .0618639     .114888
+               1.ncentral_d |          0  (omitted)
+                            |
+mismatch_p25_p2r#ncentral_d |
+                       1 1  |  -.0494309   .0227503    -2.17   0.030    -.0940581   -.0048036
+                            |
+         1.mismatch_p25_r2p |  -.0571793   .0143013    -4.00   0.000     -.085233   -.0291256
+                            |
+mismatch_p25_r2p#ncentral_d |
+                       1 1  |   .0335583   .0192813     1.74   0.082    -.0042642    .0713807
+                            |
+                      _cons |  -1.064834   .0067161  -158.55   0.000    -1.078008   -1.051659
+---------------------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,439 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,321,467 $}"
+  LP->HP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_p2r + 1.mismatch_p25_p2r#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0389451   .0181644     2.14   0.032     .0033135    .0745768
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_p2r) : ".032"
+  HP->LP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   -.023621   .0123436    -1.91   0.056    -.0478344    .0005924
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_r2p) : ".056"
+(dropped 2 singleton observations)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
+> -09)
+(MWFE estimator converged in 26 iterations)
+note: 1.ncentral_d omitted because of collinearity
+
+HDFE Linear regression                            Number of obs   =  1,228,385
+Absorbing 4 HDFE groups                           F(   4,   1433) =      13.59
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7354
+                                                  Adj R-squared   =     0.7336
+                                                  Within R-sq.    =     0.0015
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5259
+
+                                               (Std. Err. adjusted for 1434 clusters in odid)
+---------------------------------------------------------------------------------------------
+                            |               Robust
+                          y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+----------------------------+----------------------------------------------------------------
+         1.mismatch_p25_p2r |   .0742295   .0134742     5.51   0.000     .0477982    .1006607
+               1.ncentral_d |          0  (omitted)
+                            |
+mismatch_p25_p2r#ncentral_d |
+                       1 1  |  -.0512341   .0219875    -2.33   0.020    -.0943654   -.0081029
+                            |
+         1.mismatch_p25_r2p |   -.041425   .0138519    -2.99   0.003    -.0685972   -.0142529
+                            |
+mismatch_p25_r2p#ncentral_d |
+                       1 1  |    .022926   .0192403     1.19   0.234    -.0148162    .0606681
+                            |
+                      _cons |  -1.064941      .0067  -158.95   0.000    -1.078083   -1.051798
+---------------------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
+  LP->HP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_p2r + 1.mismatch_p25_p2r#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0229953   .0176147     1.31   0.192     -.011558    .0575487
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_p2r) : ".192"
+  HP->LP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |  -.0184991   .0127641    -1.45   0.147    -.0435375    .0065393
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_r2p) : ".147"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+(dropped 2 singleton observations)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
+> -09)
+(MWFE estimator converged in 26 iterations)
+note: 1.ncentral_d omitted because of collinearity
+
+HDFE Linear regression                            Number of obs   =  1,228,385
+Absorbing 5 HDFE groups                           F(   4,   1433) =      15.17
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7359
+                                                  Adj R-squared   =     0.7340
+                                                  Within R-sq.    =     0.0016
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5255
+
+                                               (Std. Err. adjusted for 1434 clusters in odid)
+---------------------------------------------------------------------------------------------
+                            |               Robust
+                          y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+----------------------------+----------------------------------------------------------------
+         1.mismatch_p25_p2r |   .0754975   .0134722     5.60   0.000     .0490703    .1019248
+               1.ncentral_d |          0  (omitted)
+                            |
+mismatch_p25_p2r#ncentral_d |
+                       1 1  |  -.0514975   .0219412    -2.35   0.019    -.0945379   -.0084572
+                            |
+         1.mismatch_p25_r2p |  -.0508412    .014378    -3.54   0.000    -.0790455    -.022637
+                            |
+mismatch_p25_r2p#ncentral_d |
+                       1 1  |   .0298226    .019444     1.53   0.125    -.0083192    .0679644
+                            |
+                      _cons |  -1.064482   .0067088  -158.67   0.000    -1.077642   -1.051322
+---------------------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+     date#c.manufacturing |        91           0          91    ?|
+      date#c.construction |        91           0          91    ?|
+          date#c.services |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
+  LP->HP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_p2r + 1.mismatch_p25_p2r#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |       .024   .0175255     1.37   0.171    -.0103783    .0583783
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_p2r) : ".171"
+  HP->LP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |  -.0210186    .012801    -1.64   0.101    -.0461294    .0040921
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_r2p) : ".101"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+(dropped 2 singleton observations)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
+> -09)
+(MWFE estimator converged in 32 iterations)
+note: 1.ncentral_d omitted because of collinearity
+
+HDFE Linear regression                            Number of obs   =  1,228,385
+Absorbing 6 HDFE groups                           F(   4,   1433) =      15.05
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7359
+                                                  Adj R-squared   =     0.7341
+                                                  Within R-sq.    =     0.0016
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5255
+
+                                               (Std. Err. adjusted for 1434 clusters in odid)
+---------------------------------------------------------------------------------------------
+                            |               Robust
+                          y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+----------------------------+----------------------------------------------------------------
+         1.mismatch_p25_p2r |   .0751351   .0134885     5.57   0.000     .0486758    .1015943
+               1.ncentral_d |          0  (omitted)
+                            |
+mismatch_p25_p2r#ncentral_d |
+                       1 1  |  -.0515522   .0219377    -2.35   0.019    -.0945856   -.0085188
+                            |
+         1.mismatch_p25_r2p |  -.0515544   .0143962    -3.58   0.000    -.0797943   -.0233146
+                            |
+mismatch_p25_r2p#ncentral_d |
+                       1 1  |   .0311594   .0194426     1.60   0.109    -.0069796    .0692984
+                            |
+                      _cons |   -1.06448   .0067114  -158.61   0.000    -1.077646   -1.051315
+---------------------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+     date#c.manufacturing |        91           0          91    ?|
+      date#c.construction |        91           0          91    ?|
+          date#c.services |        91           0          91    ?|
+                     date |        91          91           0    ?|
+         date#c.rain_dest |        91          30          61    ?|
+       date#c.rain_origin |        91          30          61    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
+  LP->HP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_p2r + 1.mismatch_p25_p2r#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0235829   .0174994     1.35   0.178    -.0107444    .0579102
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_p2r) : ".178"
+  HP->LP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   -.020395   .0127884    -1.59   0.111    -.0454811    .0046911
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_r2p) : ".111"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(rain) : "\multicolumn{1}{c}{\checkmark}"
+(dropped 2 singleton observations)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
+> -09)
+(MWFE estimator converged in 37 iterations)
+note: 1.ncentral_d omitted because of collinearity
+
+HDFE Linear regression                            Number of obs   =  1,228,385
+Absorbing 7 HDFE groups                           F(   4,   1433) =       7.96
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7375
+                                                  Adj R-squared   =     0.7353
+                                                  Within R-sq.    =     0.0011
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5242
+
+                                               (Std. Err. adjusted for 1434 clusters in odid)
+---------------------------------------------------------------------------------------------
+                            |               Robust
+                          y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+----------------------------+----------------------------------------------------------------
+         1.mismatch_p25_p2r |   .0677352   .0134179     5.05   0.000     .0414144     .094056
+               1.ncentral_d |          0  (omitted)
+                            |
+mismatch_p25_p2r#ncentral_d |
+                       1 1  |  -.0577041   .0218983    -2.64   0.009    -.1006603   -.0147478
+                            |
+         1.mismatch_p25_r2p |  -.0271044   .0146234    -1.85   0.064    -.0557901    .0015812
+                            |
+mismatch_p25_r2p#ncentral_d |
+                       1 1  |   .0312983   .0204047     1.53   0.125    -.0087279    .0713245
+                            |
+                      _cons |  -1.067076   .0067015  -159.23   0.000    -1.080221    -1.05393
+---------------------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------------------+
+              Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------------------+---------------------------------------|
+                     date |        91           0          91     |
+ date#c.centroid_distance |        91           0          91    ?|
+        date#c.contiguous |        91           0          91    ?|
+      date#c.lnpop_origin |        91           0          91    ?|
+        date#c.lnpop_dest |        91           0          91    ?|
+   date#c.lndevice_origin |        91           0          91    ?|
+     date#c.lndevice_dest |        91           0          91    ?|
+            date#c.area_o |        91           0          91    ?|
+            date#c.area_d |        91           0          91    ?|
+           date#pa_origin |      3455          91        3364     |
+             date#pa_dest |      3458          91        3367    ?|
+                     date |        91          91           0    ?|
+          date#c.age_20_o |        91           0          91    ?|
+          date#c.age_20_d |        91           0          91    ?|
+        date#c.age20_40_o |        91           0          91    ?|
+        date#c.age20_40_d |        91           0          91    ?|
+          date#c.age65__o |        91           0          91    ?|
+          date#c.age65__d |        91           0          91    ?|
+         date#c.females_o |        91           0          91    ?|
+         date#c.females_d |        91           0          91    ?|
+                     date |        91          91           0    ?|
+     date#c.manufacturing |        91           0          91    ?|
+      date#c.construction |        91           0          91    ?|
+          date#c.services |        91           0          91    ?|
+                     date |        91          91           0    ?|
+         date#c.rain_dest |        91          30          61    ?|
+       date#c.rain_origin |        91          30          61    ?|
+                     date |        91          91           0    ?|
+         date#c.libraries |        91           0          91    ?|
+      date#c.supermarkets |        91           0          91    ?|
+             date#c.parks |        91           0          91    ?|
+        date#c.preschools |        91           0          91    ?|
+          date#c.schzones |        91           0          91    ?|
+       date#c.silverzones |        91           0          91    ?|
+  date#c.sport_facilities |        91           0          91    ?|
+           date#c.transit |        91           0          91    ?|
+              date#c.tour |        91           0          91    ?|
+           date#c.schools |        91           0          91    ?|
+           date#c.hawkers |        91           0          91    ?|
+    date#c.shopping_malls |        91           0          91    ?|
+------------------------------------------------------------------+
+? = number of redundant parameters may be higher
+
+added macro:
+             e(timeFE) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(censusPA) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(days) : "\multicolumn{1}{c}{$ 91 $}"
+
+added macro:
+           e(clusters) : "\multicolumn{1}{c}{$     1,434 $}"
+
+added macro:
+               e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
+  LP->HP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_p2r + 1.mismatch_p25_p2r#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0100311    .017465     0.57   0.566    -.0242285    .0442907
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_p2r) : ".566"
+  HP->LP, non-central net effect:
+
+ ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
+
+------------------------------------------------------------------------------
+           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0041939   .0139224     0.30   0.763    -.0231166    .0315043
+------------------------------------------------------------------------------
+
+added macro:
+           e(pval_r2p) : ".763"
+
+added macro:
+               e(demo) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+           e(business) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+               e(rain) : "\multicolumn{1}{c}{\checkmark}"
+
+added macro:
+                e(POI) : "\multicolumn{1}{c}{\checkmark}"
+
+. 
+. *~~~~~~~~~~~~~~
+. * Plot coefplot
+. *~~~~~~~~~~~~~~
+. #delimit ;
+delimiter now ;
+. coefplot (p1, msymbol(O)  msize(vlarge) mlwidth(vvthin))
+>          (p2, msymbol(Oh) msize(vlarge) mlwidth(vvthin))
+>          (p3, msymbol(dh) msize(vlarge) mlwidth(vvthin))
+>          (p4, msymbol(th) msize(vlarge) mlwidth(vvthin))
+>          (p5, msymbol(sh) msize(vlarge) mlwidth(vvthin)),
+>         keep(1.mismatch_p25_p2r 1.mismatch_p25_p2r#1.ncentral_d
+>              1.mismatch_p25_r2p 1.mismatch_p25_r2p#1.ncentral_d)
+>         order(1.mismatch_p25_p2r 1.mismatch_p25_p2r#1.ncentral_d
+>               1.mismatch_p25_r2p 1.mismatch_p25_r2p#1.ncentral_d)
+>         level(90)
+>         ciopts(recast(rcap) lwidth(medthick))
+>         xlabel(-.08(.04).08, labsize(medlarge))
+>         xscale(range(-.1 .1))
+>         ylabel(, angle(horizontal) labsize(medlarge))
+>         rename(1.mismatch_p25_p2r = "{bf:LP {&rarr} HP}"
+>                1.mismatch_p25_p2r#1.ncentral_d = "{bf:LP {&rarr} HP} x {bf:Non-central dest.}"
+>                1.mismatch_p25_r2p = "{bf:HP {&rarr} LP}"
+>                1.mismatch_p25_r2p#1.ncentral_d = "{bf:HP {&rarr} LP} x {bf:Non-central dest.}")
+>         legend(label(2 "Baseline") label(4 "+ Demographics")
+>                label(6 "+ Businesses") label(8 "+ Rainfall") label(10 "+ POIs")
+>                col(1) ring(0) bplacement(sw) size(small) symysize(*.6) rowgap(*.5) region(fcolor(white) lcolor(white)))
+>         scheme(lean2)
+>         plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0))
+>         graphregion(color(white) margin(0 0 0 0))
+>         xline(0, lpattern(longdash) lcolor(red*1.3) lwidth(thick))
+>         ;
+
+. savefig, path($graphsavedir/pxor-wpsm-r2p-p2r-ncentral) format($graphformats);
+Graph saved as ../results/figures//pxor-wpsm-r2p-p2r-ncentral.png
+(file ../results/figures//pxor-wpsm-r2p-p2r-ncentral.pdf written in PDF format)
+Graph saved as ../results/figures//pxor-wpsm-r2p-p2r-ncentral.pdf
+Graph saved as ../results/figures//pxor-wpsm-r2p-p2r-ncentral.eps
+
+. #delimit cr
+delimiter now cr
+. 
+. *~~~~~~~~~~~~~~~~~~~~~~~~~~
+. * Make LaTex Table Fragment
+. *~~~~~~~~~~~~~~~~~~~~~~~~~~
+. #delimit ;
+delimiter now ;
+. esttab p1 p2 p3 p4 p5 using $tabsavedir/pxor-wpsm-r2p-p2r-ncentral-frag.tex,
+>         b(%9.4fc)
+>         se(%9.4fc)
+>         star (* 0.1 ** 0.05 *** 0.01)
+>         obslast
+>         noomitted nobase noobs
+>         nonumbers nolines nogaps noeqlines nodepvars
+>         nomtitle
+>         varwidth(20)
+>         modelwidth(8)
+>         keep(1.mismatch_p25_p2r 1.mismatch_p25_p2r#1.ncentral_d
+>              1.mismatch_p25_r2p 1.mismatch_p25_r2p#1.ncentral_d)
+>         order(1.mismatch_p25_p2r 1.mismatch_p25_p2r#1.ncentral_d
+>               1.mismatch_p25_r2p 1.mismatch_p25_r2p#1.ncentral_d)
+>         coeflabel($coeff_labels)
+>         scalar(
+>                 "timeFE Day fixed effects"
+>                 "censusPA Census area-by-day fixed effects"
+>                 "demo Demographics"
+>                 "business Businesses"
+>                 "rain Neighborhood-specific rainfall"
+>                 "POI Places of interest"
+>                 "pval_p2r $ p $-val: net (LP $\rightarrow$ HP) = 0"
+>                 "pval_r2p $ p $-val: net (HP $\rightarrow$ LP) = 0"
+>                 "r2 R$^2$"
+>                 "days Days"
+>                 "clusters Clusters"
+>                 "nobs Observations")
+>         alignment(D{.}{.}{-1})
+>         substitute(\_ _)
+>         fragment replace
+>         compress;
+(output written to ../results/tables//pxor-wpsm-r2p-p2r-ncentral-frag.tex)
+
+. #delimit cr
+delimiter now cr
+. 
+. log close ncdir
+      name:  ncdir
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_r2p_p2r_ncentral.txt
+  log type:  text
+ closed on:  14 Jul 2026, 14:58:02
+--------------------------------------------------------------------------------------------------------------------------
