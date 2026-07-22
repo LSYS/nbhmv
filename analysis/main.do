@@ -43,18 +43,26 @@ end
 
 cap program drop make_fig7
 program define make_fig7
-	/* Also makes Tab C2 */
+	/* A: price, B: ethnic. Also makes Tab C2 & the ethnic-by-geography table */
 	do code/mismatch/pxor_wpsm_ncentral.do
+	do code/mismatch/pxor_race_ncentral.do
 end
 
 cap program drop make_fig8
 program define make_fig8
+	/* A: price, B: ethnic (directional). Also makes Tabs C4 & C5 */
+	do code/mismatch/pxor_wpsm_r2p_p2r_ncentral.do
+	do code/mismatch/pxor_race_asymmetry_ncentral.do
+end
+
+cap program drop make_fig9a
+program define make_fig9a
 	do code/cutoffs/cutoffs_pxor_wpsm.do
 	do code/cutoffs/graph_cutoffs_pxor_wpsm.do
 end
 
-cap program drop make_fig9
-program define make_fig9
+cap program drop make_fig9bc
+program define make_fig9bc
 	do code/cutoffs/cutoffs_pxor_wpsm_p2r_r2p.do
 	do code/cutoffs/graph_cutoffs_pxor_wpsm_p2r_r2p.do
 end
@@ -96,7 +104,6 @@ cap program drop make_robust
 program define make_robust
 	make_tabE1
 	make_tabE2
-	make_tabE3
 	make_tabE4
 end
 
@@ -104,6 +111,12 @@ cap program drop make_figE1
 program define make_figE1
 	do code/cutoffs/cutoffs_pxor_wpsm_ncentral.do
 	do code/cutoffs/graph_cutoffs_pxor_wpsm_ncentral.do
+end
+
+cap program drop make_figE2
+program define make_figE2
+	do code/cutoffs/cutoffs_pxor_wpsm_p2r_r2p_ncentral.do
+	do code/cutoffs/graph_cutoffs_pxor_wpsm_p2r_r2p_ncentral.do
 end
 
 cap program drop make_tabE1
@@ -114,12 +127,6 @@ end
 cap program drop make_tabE2
 program define make_tabE2
 	do code/additional_specifications/pxor_race_loglog.do
-end
-
-cap program drop make_tabE3
-program define make_tabE3
-	/* Also makes Fig E2 */
-	do code/mismatch/pxor_race_ncentral.do
 end
 
 cap program drop make_tabE4
@@ -269,6 +276,7 @@ end
 // make_fig6b
 
 // make_fig7
+// make_fig8
 // make_fig10
 
 // make_robust
@@ -281,9 +289,11 @@ end
 // make_tabH2
 
 * Cutoffs
-// make_fig8
-make_tabE1
+// make_fig9a
+// make_fig9bc
+// make_tabE1
 // make_figE1
+make_figE2
 
 * =========================================================
 * Nbh flows and mismatch
