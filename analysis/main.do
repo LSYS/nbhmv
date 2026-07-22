@@ -31,7 +31,7 @@ end
 
 cap program drop make_fig6a
 program define make_fig6a
-	/* Also makes Tab 2 */
+	/* Also makes Tab 3 */
 	do code/mismatch/pxor_race.do
 end
 
@@ -43,14 +43,14 @@ end
 
 cap program drop make_fig7
 program define make_fig7
-	/* A: price, B: ethnic. Also makes Tab C2 & the ethnic-by-geography table */
+	/* A: price, B: ethnic. Also makes Tabs C2 & C4 */
 	do code/mismatch/pxor_wpsm_ncentral.do
 	do code/mismatch/pxor_race_ncentral.do
 end
 
 cap program drop make_fig8
 program define make_fig8
-	/* A: price, B: ethnic (directional). Also makes Tabs C4 & C5 */
+	/* A: price, B: ethnic (directional). Also makes Tabs C5 & C6 */
 	do code/mismatch/pxor_wpsm_r2p_p2r_ncentral.do
 	do code/mismatch/pxor_race_asymmetry_ncentral.do
 end
