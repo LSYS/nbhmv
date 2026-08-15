@@ -2,7 +2,7 @@
       name:  mismatch
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_asymmetry_transit.txt
   log type:  text
- opened on:  23 Jun 2026, 19:13:11
+ opened on:  15 Aug 2026, 22:09:03
 
 . 
 . set more off
@@ -529,5 +529,5 @@ delimiter now cr
       name:  mismatch
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_asymmetry_transit.txt
   log type:  text
- closed on:  23 Jun 2026, 19:48:43
+ closed on:  15 Aug 2026, 23:13:06
 ------------------------------------------------------------------------------------------------------------------------------------------------------

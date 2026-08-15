@@ -2,7 +2,7 @@
       name:  mismatch
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_transit.txt
   log type:  text
- opened on:  23 Jun 2026, 18:25:29
+ opened on:  15 Aug 2026, 20:47:45
 
 . 
 . set more off
@@ -52,20 +52,20 @@
 (MWFE estimator converged in 21 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,294,790
-Absorbing 4 HDFE groups                           F(   1,   1438) =       4.33
-Statistics robust to heteroskedasticity           Prob > F        =     0.0377
-                                                  R-squared       =     0.7321
-                                                  Adj R-squared   =     0.7305
-                                                  Within R-sq.    =     0.0002
-Number of clusters (odid)    =      1,439         Root MSE        =     0.5415
+Absorbing 4 HDFE groups                           F(   1,   1438) =      20.66
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7323
+                                                  Adj R-squared   =     0.7307
+                                                  Within R-sq.    =     0.0009
+Number of clusters (odid)    =      1,439         Root MSE        =     0.5413
 
                                 (Std. Err. adjusted for 1439 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0171423   .0082411     2.08   0.038     .0009764    .0333082
-       _cons |  -1.064976   .0067866  -156.92   0.000    -1.078289   -1.051663
+mismatch_p25 |    .036337   .0079935     4.55   0.000     .0206569    .0520171
+       _cons |  -1.073305   .0067678  -158.59   0.000    -1.086581   -1.060029
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -107,20 +107,20 @@ added macro:
 (MWFE estimator converged in 24 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,203,303
-Absorbing 5 HDFE groups                           F(   1,   1433) =       2.58
-Statistics robust to heteroskedasticity           Prob > F        =     0.1088
-                                                  R-squared       =     0.7340
-                                                  Adj R-squared   =     0.7322
-                                                  Within R-sq.    =     0.0001
-Number of clusters (odid)    =      1,434         Root MSE        =     0.5266
+Absorbing 5 HDFE groups                           F(   1,   1433) =      12.31
+Statistics robust to heteroskedasticity           Prob > F        =     0.0005
+                                                  R-squared       =     0.7341
+                                                  Adj R-squared   =     0.7323
+                                                  Within R-sq.    =     0.0005
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5265
 
                                 (Std. Err. adjusted for 1434 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0133813   .0083387     1.60   0.109    -.0029761    .0297387
-       _cons |  -1.064968   .0067351  -158.12   0.000     -1.07818   -1.051757
+mismatch_p25 |   .0273983   .0078084     3.51   0.000     .0120812    .0427153
+       _cons |  -1.071177   .0066557  -160.94   0.000    -1.084233   -1.058121
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -174,20 +174,20 @@ added macro:
 (MWFE estimator converged in 24 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,203,303
-Absorbing 6 HDFE groups                           F(   1,   1433) =       2.17
-Statistics robust to heteroskedasticity           Prob > F        =     0.1406
-                                                  R-squared       =     0.7344
-                                                  Adj R-squared   =     0.7325
-                                                  Within R-sq.    =     0.0001
-Number of clusters (odid)    =      1,434         Root MSE        =     0.5263
+Absorbing 6 HDFE groups                           F(   1,   1433) =      11.82
+Statistics robust to heteroskedasticity           Prob > F        =     0.0006
+                                                  R-squared       =     0.7345
+                                                  Adj R-squared   =     0.7326
+                                                  Within R-sq.    =     0.0005
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5261
 
                                 (Std. Err. adjusted for 1434 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0124023   .0084109     1.47   0.141    -.0040966    .0289012
-       _cons |   -1.06462   .0067419  -157.91   0.000    -1.077845   -1.051395
+mismatch_p25 |   .0269372   .0078337     3.44   0.001     .0115704     .042304
+       _cons |  -1.070992   .0066592  -160.83   0.000    -1.084055    -1.05793
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -248,20 +248,20 @@ added macro:
 (MWFE estimator converged in 30 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,203,303
-Absorbing 7 HDFE groups                           F(   1,   1433) =       2.15
-Statistics robust to heteroskedasticity           Prob > F        =     0.1430
-                                                  R-squared       =     0.7345
-                                                  Adj R-squared   =     0.7325
-                                                  Within R-sq.    =     0.0001
-Number of clusters (odid)    =      1,434         Root MSE        =     0.5262
+Absorbing 7 HDFE groups                           F(   1,   1433) =      11.77
+Statistics robust to heteroskedasticity           Prob > F        =     0.0006
+                                                  R-squared       =     0.7346
+                                                  Adj R-squared   =     0.7327
+                                                  Within R-sq.    =     0.0005
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5261
 
                                 (Std. Err. adjusted for 1434 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0123323   .0084148     1.47   0.143    -.0041744    .0288389
-       _cons |  -1.064595   .0067444  -157.85   0.000    -1.077825   -1.051365
+mismatch_p25 |   .0268853   .0078369     3.43   0.001     .0115123    .0422584
+       _cons |  -1.070972   .0066606  -160.79   0.000    -1.084037   -1.057906
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -325,23 +325,23 @@ added macro:
 added macro:
                e(rain) : "\multicolumn{1}{c}{\checkmark}"
 (dropped 4 singleton observations)
-(MWFE estimator converged in 33 iterations)
+(MWFE estimator converged in 32 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,203,303
-Absorbing 8 HDFE groups                           F(   1,   1433) =       6.14
-Statistics robust to heteroskedasticity           Prob > F        =     0.0133
-                                                  R-squared       =     0.7362
-                                                  Adj R-squared   =     0.7340
-                                                  Within R-sq.    =     0.0003
-Number of clusters (odid)    =      1,434         Root MSE        =     0.5248
+Absorbing 8 HDFE groups                           F(   1,   1433) =      15.15
+Statistics robust to heteroskedasticity           Prob > F        =     0.0001
+                                                  R-squared       =     0.7363
+                                                  Adj R-squared   =     0.7341
+                                                  Within R-sq.    =     0.0007
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5247
 
                                 (Std. Err. adjusted for 1434 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0209746   .0084654     2.48   0.013     .0043688    .0375804
-       _cons |  -1.067669   .0066945  -159.48   0.000    -1.080801   -1.054536
+mismatch_p25 |   .0304839   .0078326     3.89   0.000     .0151194    .0458485
+       _cons |  -1.072412   .0066242  -161.89   0.000    -1.085406   -1.059418
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -500,5 +500,5 @@ delimiter now cr
       name:  mismatch
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_transit.txt
   log type:  text
- closed on:  23 Jun 2026, 18:33:50
+ closed on:  15 Aug 2026, 20:59:55
 ------------------------------------------------------------------------------------------------------------------------------------------------------

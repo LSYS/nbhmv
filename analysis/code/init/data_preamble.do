@@ -136,11 +136,14 @@ replace wpsm_dest = wpsm_dest/1000
 gen eudist = abs(wpsm_home/1000 - wpsm_dest/1000)
 label var eudist "Euclidean distance in income (PSM) between origin and destination"
 
-foreach var of varlist wpsm_home wpsm_dest {
-	qui su `var', d
-	gen p25_`var' = (`var' < `r(p25)') if ~missing(`var')
-	gen p75_`var' = (`var' < `r(p75)') if ~missing(`var')
-}
+make_price_tiers, percentile(25) origin(wpsm_home) dest(wpsm_dest) ///
+                  genorigin(p25_wpsm_home) gendest(p25_wpsm_dest)
+di as txt "p25 cutoff = " as result %9.4f r(cutoff) ///
+          as txt " over " as result r(n_nbh) as txt " priced neighborhoods"
+
+make_price_tiers, percentile(75) origin(wpsm_home) dest(wpsm_dest) ///
+                  genorigin(p75_wpsm_home) gendest(p75_wpsm_dest)
+di as txt "p75 cutoff = " as result %9.4f r(cutoff)
 label var p25_wpsm_home "==1 if origin income below 25th percentile"
 label var p25_wpsm_dest "==1 if destination income below 25th percentile"
 label var p75_wpsm_home "==1 if origin income below 75th percentile"
