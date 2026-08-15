@@ -2,7 +2,7 @@
       name:  mismatch
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_asymmetry.txt
   log type:  text
- opened on:  22 Jun 2026, 19:57:22
+ opened on:  15 Aug 2026, 17:58:26
 
 . 
 . set more off
@@ -510,7 +510,6 @@ delimiter now ;
 >         substitute(\_ _)
 >         fragment replace
 >         compress;
-(note: file ../results/tables/strict-ms50//pxor-race-asymmetry-frag.tex not found)
 (output written to ../results/tables/strict-ms50//pxor-race-asymmetry-frag.tex)
 
 .                 #delimit cr
@@ -520,5 +519,5 @@ delimiter now cr
       name:  mismatch
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_asymmetry.txt
   log type:  text
- closed on:  22 Jun 2026, 20:30:36
+ closed on:  15 Aug 2026, 18:32:04
 ------------------------------------------------------------------------------------------------------------------------------------------------------

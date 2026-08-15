@@ -2,7 +2,7 @@
       name:  mismatch
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race.txt
   log type:  text
- opened on:  22 Jun 2026, 19:34:03
+ opened on:  15 Aug 2026, 17:32:46
 
 . 
 . set more off
@@ -484,7 +484,6 @@ delimiter now ;
 >         substitute(\_ _)
 >         fragment replace
 >         compress;
-(note: file ../results/tables/strict-ms50//pxor-race-frag.tex not found)
 (output written to ../results/tables/strict-ms50//pxor-race-frag.tex)
 
 .                 #delimit cr
@@ -494,5 +493,5 @@ delimiter now cr
       name:  mismatch
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race.txt
   log type:  text
- closed on:  22 Jun 2026, 19:57:22
+ closed on:  15 Aug 2026, 17:58:26
 ------------------------------------------------------------------------------------------------------------------------------------------------------

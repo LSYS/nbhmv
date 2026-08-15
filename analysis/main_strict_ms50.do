@@ -9,7 +9,6 @@ tictoc tic 1
 do code/init/set_globals.do
 do code/init/data_preamble.do
 
-* Headline tables and figures only.
 do code/mismatch/pxor_wpsm.do
 do code/mismatch/pxor_wpsm_r2p_p2r.do
 do code/mismatch/pxor_race.do
