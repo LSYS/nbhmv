@@ -111,7 +111,7 @@ foreach sample in wkday wkend {
 			"business Businesses"
 			"rain Neighborhood-specific rainfall"
 			"POI Places of interest"
-			"pval $ p $-val: (Mnr $\rightarrow$ Maj) $\neq$ (Maj $\rightarrow$ Mnr)"
+			"pval $ p $-val: (Mnr $\rightarrow$ Maj) + (Maj $\rightarrow$ Mnr) = 0"
 			"r2 R$^2$" 
 			"days Days"
 			"clusters Clusters"

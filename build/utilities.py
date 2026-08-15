@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib.colors import LinearSegmentedColormap
-from matplotlib.patches import Rectangle
+from matplotlib.patches import Polygon, Rectangle
 from matplotlib.pyplot import Axes
 from matplotlib_scalebar.scalebar import ScaleBar
 from shapely.ops import nearest_points
@@ -599,6 +599,84 @@ def add_north_arrow(
     return None
 
 
+def add_north_arrow_2tone(
+    ax: Axes,
+    x_frac: float = 0.055,
+    top_frac: float = 0.94,
+    height_frac: float = 0.12,
+    width_frac: float = 0.034,
+    color: str = "0.15",
+    fontsize: int = 10,
+) -> None:
+    """Add a two-tone cartographic north arrow to a north-up map.
+
+    Draws a kite-shaped marker with a dark west half and a light east half, and
+    an "N" above the tip. Position and size are given as fractions of the axes,
+    so it renders correctly in any CRS (projected or geographic) and at any
+    zoom, unlike ``add_north_arrow``, whose offsets are in lat/long degrees.
+
+    Parameters
+    ----------
+    ax : Axes
+        Matplotlib Axes, assumed north-up.
+    x_frac : float, default 0.055
+        Horizontal centre of the arrow, as a fraction of axes width from the left.
+    top_frac : float, default 0.94
+        Vertical position of the tip, as a fraction of axes height from the bottom.
+    height_frac : float, default 0.12
+        Arrow height as a fraction of axes height.
+    width_frac : float, default 0.034
+        Arrow width as a fraction of axes width.
+    color : str, default "0.15"
+        Colour of the dark (west) half, the outline, and the "N".
+    fontsize : int, default 10
+        Font size of the "N".
+
+    Returns
+    -------
+    None
+    """
+    x_min, x_max = ax.get_xlim()
+    y_min, y_max = ax.get_ylim()
+    width = x_max - x_min
+    height = y_max - y_min
+    cx = x_min + width * x_frac
+    tip = y_min + height * top_frac
+    tail = tip - height * height_frac
+    barb = tail + (tip - tail) * 0.34
+    half_width = width * width_frac / 2
+    ax.add_patch(
+        Polygon(
+            [(cx, tip), (cx - half_width, barb), (cx, tail)],
+            facecolor=color,
+            edgecolor=color,
+            linewidth=0.6,
+            zorder=6,
+        )
+    )
+    ax.add_patch(
+        Polygon(
+            [(cx, tip), (cx + half_width, barb), (cx, tail)],
+            facecolor="white",
+            edgecolor=color,
+            linewidth=0.6,
+            zorder=6,
+        )
+    )
+    ax.text(
+        cx,
+        tip + height * 0.01,
+        "N",
+        ha="center",
+        va="bottom",
+        fontsize=fontsize,
+        fontweight="bold",
+        color=color,
+        zorder=6,
+    )
+    return None
+
+
 ryb_hex_colors = [
     # Reds
     "#830022",
@@ -723,6 +801,7 @@ def add_segmented_scalebar(
     unit_position: str = "bottom",
     unit_label_spacing: float = 0.02,
     map_crs: str = "geographic",
+    unit_label: Optional[str] = None,
 ) -> None:
     """
     Add a segmented scalebar to a matplotlib map with custom segment sizes.
@@ -763,6 +842,9 @@ def add_segmented_scalebar(
         Spacing between unit label and scalebar (fraction of axes dimension)
     map_crs : {'geographic', 'projected'}, default 'geographic'
         Coordinate system: 'geographic' for lat/lon, 'projected' for meters
+    unit_label : str, optional
+        Text for the unit label. If None (default), the full word from
+        unit_type ("Kilometers"/"Meters"). Pass e.g. "km" for the short form.
 
     Returns
     -------
@@ -784,7 +866,8 @@ def add_segmented_scalebar(
 
     # Set up units and convert to consistent internal format (km)
     unit_labels = {"km": "Kilometers", "m": "Meters"}
-    unit_label = unit_labels[unit_type]
+    if unit_label is None:
+        unit_label = unit_labels[unit_type]
 
     if unit_type == "m":
         segments_km = [seg / 1000 for seg in segments]

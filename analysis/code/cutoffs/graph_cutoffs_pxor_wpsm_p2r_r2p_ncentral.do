@@ -30,14 +30,17 @@ foreach y in mismatch_p2r mismatch_p2rxncentral_d mismatch_r2p mismatch_r2pxncen
 		local YSTEP = .2
 	}
 
+	local YTOP  = `YHI' + .02
+	local YBAND = `YTOP' - .12*(`YTOP' - `YLO')
+
 	*=============================
 	* Plot unsorted
 	*=============================
 	cap drop areapos areaneg
 	forval cutoff = 15/35 {
-		cap gen areapos = `YHI' if p`cutoff'==1
+		cap gen areapos = `YBAND' if p`cutoff'==1
 		if _rc!=0 {
-			replace areapos = `YHI' if p`cutoff'==1
+			replace areapos = `YBAND' if p`cutoff'==1
 		}
 
 		cap gen areaneg = `YLO' if p`cutoff'==1
@@ -58,7 +61,7 @@ foreach y in mismatch_p2r mismatch_p2rxncentral_d mismatch_r2p mismatch_r2pxncen
 			lpattern(solid) lcolor(`COEF_LINE_COLOR') lwidth(medthick)
 			xlab(0(25)100, labsize(`XLAB_SIZE'))
 			ylab(`YLO'(`YSTEP')`YHI', noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
-			yscale(range(`YLO' `=`YHI'+.02'))
+			yscale(range(`YLO' `YTOP'))
 			xtitle("Percentile used for cutoff", size(`XTITLE_SIZE') )
 			ytitle("")
 			legend(order(8 "Main estimate" 3 "Point estimates"  4 "95% CI" 6 "90% CI" )
@@ -91,7 +94,7 @@ foreach y in mismatch_p2r mismatch_p2rxncentral_d mismatch_r2p mismatch_r2pxncen
 			symbol(Oh) color(maroon) mlwidth(medium) msize(large)
 		)
 		/* 10/N Draw vert ref line for 25th percentile */
-		(scatteri `YLO' 25 `YHI' 25, recast(line) lpattern(dash) lcolor(gs10))
+		(scatteri `YLO' 25 `YBAND' 25, recast(line) lpattern(dash) lcolor(gs10))
 		/* 11/N Draw horizontal ref line for 25th percentile */
 		(scatteri `mainbeta' 0 `mainbeta' 100, recast(line) lwidth(thick) lcolor(maroon))
 	;

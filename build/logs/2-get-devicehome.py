@@ -36,52 +36,6 @@ DEVICE_ID_DICT_PATH = os.path.join(
 )
 
 # %% [markdown]
-# #### Replicate datadump with (integer) IDs
-
-# %%
-# from tqdm.notebook import tqdm
-# import time
-# from utilities import get_date, get_subzone_name
-
-# if False:
-
-#     # Get device ID dict DEVICE_ID_DICT_PATH
-#     devices = (dd.read_csv(DEVICE_ID_DICT_PATH, compression="gzip")).compute()
-#     devices = dict(zip(devices["hashid"], devices["xid"]))
-
-#     # Get area ID dict
-#     subzones = pd.read_csv(SUBZONE_PATH)
-#     subzones = dict(zip(subzones["subzone"].str.lower(), subzones["areaid"]))
-
-#     file_lists = tuple(walk_through_files(RECORDS_PATH, "csv.gz", returnboth=True))
-
-#     # Create alternate datadump
-#     for filepath, filename in tqdm(file_lists):
-#         # open file
-#         _date = get_date(filename)
-#         # https://stackoverflow.com/questions/19801727/convert-datetime-to-unix-timestamp-and-convert-it-back-in-python
-#         _date = time.mktime(_date.timetuple())
-#         _subzone = get_subzone_name(filename)
-
-#         df = (
-#             pd.read_csv(
-#                 os.path.join(filepath, filename),
-#                 compression="gzip",
-#                 names=["device", "ios"],
-#             )
-#             .assign(date=_date)
-#             .assign(area_id=subzones[_subzone])
-#             #           .assign(device=lambda x: [devices[device] for device in x['device']])
-#             .assign(device=lambda x: [devices[device] for device in x["device"]])
-#             .rename(columns={"device": "device_xid"})
-#             .astype(
-#                 {"area_id": "int", "device_xid": "int", "ios": "int", "date": "int"}
-#             )
-#         ).to_csv(
-#             os.path.join(ALTERNATE_DUMP_PATH, filename), index=False, compression="gzip"
-#         )
-
-# %% [markdown]
 # #### Get max count
 
 # %%

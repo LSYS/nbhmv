@@ -9,10 +9,10 @@ display "`myLog'"
 * Init
 * =========================================================
 
-do code/init/set_environment.do
+// do code/init/set_environment.do
 tictoc tic 1
 do code/init/set_globals.do
-do code/init/data_preamble.do
+// do code/init/data_preamble.do
 
 *======================================
 * Linking scripts to exhibits numbering
@@ -135,7 +135,9 @@ program define make_tabE4
 end
 
 cap program drop make_exc_emp
+make_tabE4
 program define make_exc_emp
+make_tabE4
 	make_tabE5
 	make_tabE6
 	make_tabE7
@@ -266,9 +268,20 @@ program define make_tabH2
 	do code/additional_specifications/cny_wpsm.do
 end
 
+cap program drop make_tab1
+program define make_tab1
+	/* Descriptives for Tab 1. Hand-copied into the ms static/description.tex */
+	cap log close desc
+	log using $logsavedir/data_descriptives.txt, replace text name(desc)
+	do code/init/data_descriptives.do
+	log close desc
+end
+
 * =========================================================
 * Nbh flows and mismatch
 * =========================================================
+// make_tab1     /* seconds; su output lands in logs/data_descriptives.txt */
+
 // make_fig4a
 // make_fig4b
 
@@ -282,18 +295,25 @@ end
 // make_robust
 // make_top25p
 // make_exc_emp
-// make_dow
-// make_adj_filter
+// make_tabE4
+// make_dow   /* all 6; the last 3 are ethnic and cannot change */
+// make_tabE11_E12
+// make_tabE13_E14
+// make_tabE15_E16
+// make_adj_filter   /* all 6; the last 3 are ethnic and cannot change */
+// make_tabE23
+// make_tabE24
+// make_tabE25
 
 // make_tabH1
 // make_tabH2
 
-* Cutoffs
-// make_fig9a
-// make_fig9bc
+* Cutoffs   -- VERY LONG. Measured: Fig 9a ~26h, Fig 9b/c 28h. Main text first.
+// make_fig9a     /* done 2026-08-13 */
+// make_fig9bc    /* done 2026-08-15 */
 // make_tabE1
-// make_figE1
-make_figE2
+make_figE1        /* Fig E.1 + Fig F.3a, expect ~28h */
+// make_figE2     /* Fig E.4a-d + Fig F.4a-d, expect ~30h; uncomment to chain */
 
 * =========================================================
 * Nbh flows and mismatch

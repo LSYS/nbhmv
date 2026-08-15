@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  ncdir
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_asymmetry_ncentral.txt
   log type:  text
- opened on:  14 Jul 2026, 14:58:02
+ opened on:  10 Aug 2026, 17:41:08
 
 . set more off
 
@@ -50,8 +50,7 @@
  37.                 }
  38. }
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 58 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
@@ -139,8 +138,7 @@ added macro:
 added macro:
            e(pval_m2c) : ".044"
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 75 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
@@ -240,8 +238,7 @@ added macro:
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 71 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
@@ -348,8 +345,7 @@ added macro:
 added macro:
            e(business) : "\multicolumn{1}{c}{\checkmark}"
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 86 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
@@ -462,8 +458,7 @@ added macro:
 added macro:
                e(rain) : "\multicolumn{1}{c}{\checkmark}"
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 82 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
@@ -680,5 +675,5 @@ delimiter now cr
       name:  ncdir
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_asymmetry_ncentral.txt
   log type:  text
- closed on:  14 Jul 2026, 15:32:27
---------------------------------------------------------------------------------------------------------------------------
+ closed on:  10 Aug 2026, 19:04:00
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

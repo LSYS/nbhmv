@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  ncdir
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_r2p_p2r_ncentral.txt
   log type:  text
- opened on:  14 Jul 2026, 14:44:59
+ opened on:  10 Aug 2026, 17:06:23
 
 . set more off
 
@@ -50,36 +50,35 @@
  37.                 }
  38. }
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 24 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,321,467
-Absorbing 3 HDFE groups                           F(   4,   1438) =      21.23
+Absorbing 3 HDFE groups                           F(   4,   1438) =      34.94
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.7337
-                                                  Adj R-squared   =     0.7322
-                                                  Within R-sq.    =     0.0022
-Number of clusters (odid)    =      1,439         Root MSE        =     0.5404
+                                                  R-squared       =     0.7341
+                                                  Adj R-squared   =     0.7325
+                                                  Within R-sq.    =     0.0034
+Number of clusters (odid)    =      1,439         Root MSE        =     0.5401
 
                                                (Std. Err. adjusted for 1439 clusters in odid)
 ---------------------------------------------------------------------------------------------
                             |               Robust
                           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ----------------------------+----------------------------------------------------------------
-         1.mismatch_p25_p2r |    .088376   .0135154     6.54   0.000     .0618639     .114888
+         1.mismatch_p25_p2r |   .0972688   .0113078     8.60   0.000     .0750873    .1194503
                1.ncentral_d |          0  (omitted)
                             |
 mismatch_p25_p2r#ncentral_d |
-                       1 1  |  -.0494309   .0227503    -2.17   0.030    -.0940581   -.0048036
+                       1 1  |   -.056387   .0177927    -3.17   0.002    -.0912894   -.0214846
                             |
-         1.mismatch_p25_r2p |  -.0571793   .0143013    -4.00   0.000     -.085233   -.0291256
+         1.mismatch_p25_r2p |  -.0765096   .0152722    -5.01   0.000    -.1064678   -.0465515
                             |
 mismatch_p25_r2p#ncentral_d |
-                       1 1  |   .0335583   .0192813     1.74   0.082    -.0042642    .0713807
+                       1 1  |   .0670614   .0205087     3.27   0.001     .0268313    .1072914
                             |
-                      _cons |  -1.064834   .0067161  -158.55   0.000    -1.078008   -1.051659
+                      _cons |   -1.07515   .0066594  -161.45   0.000    -1.088213   -1.062086
 ---------------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -121,11 +120,11 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |   .0389451   .0181644     2.14   0.032     .0033135    .0745768
+         (1) |   .0408818   .0147266     2.78   0.006     .0119938    .0697698
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_p2r) : ".032"
+           e(pval_p2r) : ".006"
   HP->LP, non-central net effect:
 
  ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
@@ -133,42 +132,41 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |   -.023621   .0123436    -1.91   0.056    -.0478344    .0005924
+         (1) |  -.0094482   .0126654    -0.75   0.456    -.0342928    .0153963
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_r2p) : ".056"
+           e(pval_r2p) : ".456"
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 26 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,228,385
-Absorbing 4 HDFE groups                           F(   4,   1433) =      13.59
+Absorbing 4 HDFE groups                           F(   4,   1433) =      22.81
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.7354
-                                                  Adj R-squared   =     0.7336
-                                                  Within R-sq.    =     0.0015
-Number of clusters (odid)    =      1,434         Root MSE        =     0.5259
+                                                  R-squared       =     0.7357
+                                                  Adj R-squared   =     0.7339
+                                                  Within R-sq.    =     0.0023
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5257
 
                                                (Std. Err. adjusted for 1434 clusters in odid)
 ---------------------------------------------------------------------------------------------
                             |               Robust
                           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ----------------------------+----------------------------------------------------------------
-         1.mismatch_p25_p2r |   .0742295   .0134742     5.51   0.000     .0477982    .1006607
+         1.mismatch_p25_p2r |   .0812386   .0114467     7.10   0.000     .0587845    .1036927
                1.ncentral_d |          0  (omitted)
                             |
 mismatch_p25_p2r#ncentral_d |
-                       1 1  |  -.0512341   .0219875    -2.33   0.020    -.0943654   -.0081029
+                       1 1  |  -.0498462   .0173842    -2.87   0.004    -.0839475    -.015745
                             |
-         1.mismatch_p25_r2p |   -.041425   .0138519    -2.99   0.003    -.0685972   -.0142529
+         1.mismatch_p25_r2p |  -.0562809   .0152683    -3.69   0.000    -.0862315   -.0263304
                             |
 mismatch_p25_r2p#ncentral_d |
-                       1 1  |    .022926   .0192403     1.19   0.234    -.0148162    .0606681
+                       1 1  |   .0430912    .020278     2.13   0.034     .0033133     .082869
                             |
-                      _cons |  -1.064941      .0067  -158.95   0.000    -1.078083   -1.051798
+                      _cons |  -1.073232   .0065693  -163.37   0.000    -1.086119   -1.060346
 ---------------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -219,11 +217,11 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |   .0229953   .0176147     1.31   0.192     -.011558    .0575487
+         (1) |   .0313923   .0142018     2.21   0.027     .0035339    .0592508
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_p2r) : ".192"
+           e(pval_p2r) : ".027"
   HP->LP, non-central net effect:
 
  ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
@@ -231,45 +229,44 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |  -.0184991   .0127641    -1.45   0.147    -.0435375    .0065393
+         (1) |  -.0131898   .0126591    -1.04   0.298    -.0380222    .0116426
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_r2p) : ".147"
+           e(pval_r2p) : ".298"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 26 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,228,385
-Absorbing 5 HDFE groups                           F(   4,   1433) =      15.17
+Absorbing 5 HDFE groups                           F(   4,   1433) =      23.74
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.7359
-                                                  Adj R-squared   =     0.7340
-                                                  Within R-sq.    =     0.0016
-Number of clusters (odid)    =      1,434         Root MSE        =     0.5255
+                                                  R-squared       =     0.7361
+                                                  Adj R-squared   =     0.7342
+                                                  Within R-sq.    =     0.0024
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5253
 
                                                (Std. Err. adjusted for 1434 clusters in odid)
 ---------------------------------------------------------------------------------------------
                             |               Robust
                           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ----------------------------+----------------------------------------------------------------
-         1.mismatch_p25_p2r |   .0754975   .0134722     5.60   0.000     .0490703    .1019248
+         1.mismatch_p25_p2r |   .0822366   .0114476     7.18   0.000     .0597808    .1046925
                1.ncentral_d |          0  (omitted)
                             |
 mismatch_p25_p2r#ncentral_d |
-                       1 1  |  -.0514975   .0219412    -2.35   0.019    -.0945379   -.0084572
+                       1 1  |  -.0502799   .0173526    -2.90   0.004    -.0843192   -.0162407
                             |
-         1.mismatch_p25_r2p |  -.0508412    .014378    -3.54   0.000    -.0790455    -.022637
+         1.mismatch_p25_r2p |   -.063361    .015881    -3.99   0.000    -.0945135   -.0322084
                             |
 mismatch_p25_r2p#ncentral_d |
-                       1 1  |   .0298226    .019444     1.53   0.125    -.0083192    .0679644
+                       1 1  |   .0481001    .020608     2.33   0.020     .0076751    .0885251
                             |
-                      _cons |  -1.064482   .0067088  -158.67   0.000    -1.077642   -1.051322
+                      _cons |  -1.073068   .0065769  -163.16   0.000    -1.085969   -1.060167
 ---------------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -324,11 +321,11 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |       .024   .0175255     1.37   0.171    -.0103783    .0583783
+         (1) |   .0319567   .0141405     2.26   0.024     .0042183     .059695
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_p2r) : ".171"
+           e(pval_p2r) : ".024"
   HP->LP, non-central net effect:
 
  ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
@@ -336,11 +333,11 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |  -.0210186    .012801    -1.64   0.101    -.0461294    .0040921
+         (1) |  -.0152609   .0126595    -1.21   0.228     -.040094    .0095722
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_r2p) : ".101"
+           e(pval_r2p) : ".228"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -348,36 +345,35 @@ added macro:
 added macro:
            e(business) : "\multicolumn{1}{c}{\checkmark}"
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 32 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,228,385
-Absorbing 6 HDFE groups                           F(   4,   1433) =      15.05
+Absorbing 6 HDFE groups                           F(   4,   1433) =      23.71
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.7359
-                                                  Adj R-squared   =     0.7341
-                                                  Within R-sq.    =     0.0016
-Number of clusters (odid)    =      1,434         Root MSE        =     0.5255
+                                                  R-squared       =     0.7362
+                                                  Adj R-squared   =     0.7343
+                                                  Within R-sq.    =     0.0024
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5253
 
                                                (Std. Err. adjusted for 1434 clusters in odid)
 ---------------------------------------------------------------------------------------------
                             |               Robust
                           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ----------------------------+----------------------------------------------------------------
-         1.mismatch_p25_p2r |   .0751351   .0134885     5.57   0.000     .0486758    .1015943
+         1.mismatch_p25_p2r |   .0822696    .011464     7.18   0.000     .0597817    .1047575
                1.ncentral_d |          0  (omitted)
                             |
 mismatch_p25_p2r#ncentral_d |
-                       1 1  |  -.0515522   .0219377    -2.35   0.019    -.0945856   -.0085188
+                       1 1  |  -.0504264   .0173566    -2.91   0.004    -.0844734   -.0163794
                             |
-         1.mismatch_p25_r2p |  -.0515544   .0143962    -3.58   0.000    -.0797943   -.0233146
+         1.mismatch_p25_r2p |   -.064101   .0158758    -4.04   0.000    -.0952433   -.0329587
                             |
 mismatch_p25_r2p#ncentral_d |
-                       1 1  |   .0311594   .0194426     1.60   0.109    -.0069796    .0692984
+                       1 1  |   .0491732   .0205874     2.39   0.017     .0087884    .0895579
                             |
-                      _cons |   -1.06448   .0067114  -158.61   0.000    -1.077646   -1.051315
+                      _cons |  -1.073078   .0065782  -163.13   0.000    -1.085982   -1.060174
 ---------------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -435,11 +431,11 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |   .0235829   .0174994     1.35   0.178    -.0107444    .0579102
+         (1) |   .0318432   .0141383     2.25   0.024     .0041091    .0595772
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_p2r) : ".178"
+           e(pval_p2r) : ".024"
   HP->LP, non-central net effect:
 
  ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
@@ -447,11 +443,11 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |   -.020395   .0127884    -1.59   0.111    -.0454811    .0046911
+         (1) |  -.0149278   .0126484    -1.18   0.238    -.0397391    .0098835
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_r2p) : ".111"
+           e(pval_r2p) : ".238"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -462,36 +458,35 @@ added macro:
 added macro:
                e(rain) : "\multicolumn{1}{c}{\checkmark}"
 (dropped 2 singleton observations)
-note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e
-> -09)
+note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 37 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,228,385
-Absorbing 7 HDFE groups                           F(   4,   1433) =       7.96
+Absorbing 7 HDFE groups                           F(   4,   1433) =      15.50
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.7375
-                                                  Adj R-squared   =     0.7353
-                                                  Within R-sq.    =     0.0011
-Number of clusters (odid)    =      1,434         Root MSE        =     0.5242
+                                                  R-squared       =     0.7376
+                                                  Adj R-squared   =     0.7355
+                                                  Within R-sq.    =     0.0019
+Number of clusters (odid)    =      1,434         Root MSE        =     0.5240
 
                                                (Std. Err. adjusted for 1434 clusters in odid)
 ---------------------------------------------------------------------------------------------
                             |               Robust
                           y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ----------------------------+----------------------------------------------------------------
-         1.mismatch_p25_p2r |   .0677352   .0134179     5.05   0.000     .0414144     .094056
+         1.mismatch_p25_p2r |   .0756814   .0114878     6.59   0.000     .0531466    .0982161
                1.ncentral_d |          0  (omitted)
                             |
 mismatch_p25_p2r#ncentral_d |
-                       1 1  |  -.0577041   .0218983    -2.64   0.009    -.1006603   -.0147478
+                       1 1  |  -.0584809   .0172568    -3.39   0.001    -.0923322   -.0246297
                             |
-         1.mismatch_p25_r2p |  -.0271044   .0146234    -1.85   0.064    -.0557901    .0015812
+         1.mismatch_p25_r2p |  -.0412511   .0160611    -2.57   0.010     -.072757   -.0097453
                             |
 mismatch_p25_r2p#ncentral_d |
-                       1 1  |   .0312983   .0204047     1.53   0.125    -.0087279    .0713245
+                       1 1  |   .0488172   .0215044     2.27   0.023     .0066337    .0910007
                             |
-                      _cons |  -1.067076   .0067015  -159.23   0.000    -1.080221    -1.05393
+                      _cons |  -1.073338   .0065553  -163.74   0.000    -1.086197   -1.060479
 ---------------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -562,11 +557,11 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |   .0100311    .017465     0.57   0.566    -.0242285    .0442907
+         (1) |   .0172004    .014072     1.22   0.222    -.0104035    .0448044
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_p2r) : ".566"
+           e(pval_p2r) : ".222"
   HP->LP, non-central net effect:
 
  ( 1)  1.mismatch_p25_r2p + 1.mismatch_p25_r2p#1.ncentral_d = 0
@@ -574,11 +569,11 @@ added macro:
 ------------------------------------------------------------------------------
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         (1) |   .0041939   .0139224     0.30   0.763    -.0231166    .0315043
+         (1) |   .0075661   .0136407     0.55   0.579    -.0191919     .034324
 ------------------------------------------------------------------------------
 
 added macro:
-           e(pval_r2p) : ".763"
+           e(pval_r2p) : ".579"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -680,5 +675,5 @@ delimiter now cr
       name:  ncdir
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_r2p_p2r_ncentral.txt
   log type:  text
- closed on:  14 Jul 2026, 14:58:02
---------------------------------------------------------------------------------------------------------------------------
+ closed on:  10 Aug 2026, 17:41:08
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
