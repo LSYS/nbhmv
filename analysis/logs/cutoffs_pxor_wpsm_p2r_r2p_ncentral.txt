@@ -1,8 +1,8 @@
---------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  cutoffs
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm_p2r_r2p_ncentral.txt
   log type:  text
- opened on:  15 Jul 2026, 16:00:50
+ opened on:  18 Aug 2026, 10:52:19
 
 . 
 . set more off
@@ -11,7 +11,9 @@
 . preserve
 
 . 
-. local LOW_RANGE = 1
+. * RESUME MODE 2026-08-18: run stalled at iteration 72 with 1-71 already saved.
+. * Restore to `LOW_RANGE = 1' and uncomment the erase once 72-99 have completed.
+. local LOW_RANGE = 72
 
 . local UPP_RANGE = 99
 
@@ -20,128 +22,62 @@
 . local FILEPATH ./code/cutoffs/out
 
 . 
-. * del exisiting file
-. cap erase `FILEPATH'/`FILENAME'.dta
-
+. * del exisiting file  -- DISABLED while resuming, it would wipe iterations 1-71
+. * cap erase `FILEPATH'/`FILENAME'.dta
 . 
 . tictoc tic 99
---------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 15 Jul 2026 16:00:58
---------------------------------------------------------------------------------------------------------------------------
+Start time: 18 Aug 2026 10:52:27
+------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . 
+. price_tier_cache, origin(wpsm_home) dest(wpsm_dest) ///
+>                   percentiles(`LOW_RANGE'/`UPP_RANGE')
+price_tier_cache: cached 28 cutoffs over 216 priced neighborhoods
+
+. 
+. 
 . quietly {
-Working on 1 of range 1/99 
-Working on 2 of range 1/99 
-Working on 3 of range 1/99 
-Working on 4 of range 1/99 
-Working on 5 of range 1/99 
-Working on 6 of range 1/99 
-Working on 7 of range 1/99 
-Working on 8 of range 1/99 
-Working on 9 of range 1/99 
-Working on 10 of range 1/99 
-Working on 11 of range 1/99 
-Working on 12 of range 1/99 
-Working on 13 of range 1/99 
-Working on 14 of range 1/99 
-Working on 15 of range 1/99 
-Working on 16 of range 1/99 
-Working on 17 of range 1/99 
-Working on 18 of range 1/99 
-Working on 19 of range 1/99 
-Working on 20 of range 1/99 
-Working on 21 of range 1/99 
-Working on 22 of range 1/99 
-Working on 23 of range 1/99 
-Working on 24 of range 1/99 
-Working on 25 of range 1/99 
-Working on 26 of range 1/99 
-Working on 27 of range 1/99 
-Working on 28 of range 1/99 
-Working on 29 of range 1/99 
-Working on 30 of range 1/99 
-Working on 31 of range 1/99 
-Working on 32 of range 1/99 
-Working on 33 of range 1/99 
-Working on 34 of range 1/99 
-Working on 35 of range 1/99 
-Working on 36 of range 1/99 
-Working on 37 of range 1/99 
-Working on 38 of range 1/99 
-Working on 39 of range 1/99 
-Working on 40 of range 1/99 
-Working on 41 of range 1/99 
-Working on 42 of range 1/99 
-Working on 43 of range 1/99 
-Working on 44 of range 1/99 
-Working on 45 of range 1/99 
-Working on 46 of range 1/99 
-Working on 47 of range 1/99 
-Working on 48 of range 1/99 
-Working on 49 of range 1/99 
-Working on 50 of range 1/99 
-Working on 51 of range 1/99 
-Working on 52 of range 1/99 
-Working on 53 of range 1/99 
-Working on 54 of range 1/99 
-Working on 55 of range 1/99 
-Working on 56 of range 1/99 
-Working on 57 of range 1/99 
-Working on 58 of range 1/99 
-Working on 59 of range 1/99 
-Working on 60 of range 1/99 
-Working on 61 of range 1/99 
-Working on 62 of range 1/99 
-Working on 63 of range 1/99 
-Working on 64 of range 1/99 
-Working on 65 of range 1/99 
-Working on 66 of range 1/99 
-Working on 67 of range 1/99 
-Working on 68 of range 1/99 
-Working on 69 of range 1/99 
-Working on 70 of range 1/99 
-Working on 71 of range 1/99 
-Working on 72 of range 1/99 
-Working on 73 of range 1/99 
-Working on 74 of range 1/99 
-Working on 75 of range 1/99 
-Working on 76 of range 1/99 
-Working on 77 of range 1/99 
-Working on 78 of range 1/99 
-Working on 79 of range 1/99 
-Working on 80 of range 1/99 
-Working on 81 of range 1/99 
-Working on 82 of range 1/99 
-Working on 83 of range 1/99 
-Working on 84 of range 1/99 
-Working on 85 of range 1/99 
-Working on 86 of range 1/99 
-Working on 87 of range 1/99 
-Working on 88 of range 1/99 
-Working on 89 of range 1/99 
-Working on 90 of range 1/99 
-Working on 91 of range 1/99 
-Working on 92 of range 1/99 
-Working on 93 of range 1/99 
-Working on 94 of range 1/99 
-Working on 95 of range 1/99 
-Working on 96 of range 1/99 
-Working on 97 of range 1/99 
-Working on 98 of range 1/99 
-Working on 99 of range 1/99 
+Working on 72 of range 72/99 
+Working on 73 of range 72/99 
+Working on 74 of range 72/99 
+Working on 75 of range 72/99 
+Working on 76 of range 72/99 
+Working on 77 of range 72/99 
+Working on 78 of range 72/99 
+Working on 79 of range 72/99 
+Working on 80 of range 72/99 
+Working on 81 of range 72/99 
+Working on 82 of range 72/99 
+Working on 83 of range 72/99 
+Working on 84 of range 72/99 
+Working on 85 of range 72/99 
+Working on 86 of range 72/99 
+Working on 87 of range 72/99 
+Working on 88 of range 72/99 
+Working on 89 of range 72/99 
+Working on 90 of range 72/99 
+Working on 91 of range 72/99 
+Working on 92 of range 72/99 
+Working on 93 of range 72/99 
+Working on 94 of range 72/99 
+Working on 95 of range 72/99 
+Working on 96 of range 72/99 
+Working on 97 of range 72/99 
+Working on 98 of range 72/99 
+Working on 99 of range 72/99 
 
 . 
 . tictoc toc 99
---------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 15 Jul 2026 16:00:58
-End time: 16 Jul 2026 18:23:57
-Elapsed seconds:     94979
-Elapsed minutes:      1583
-Elapsed hours:     26.38
---------------------------------------------------------------------------------------------------------------------------
+Start time: 18 Aug 2026 10:52:27
+End time: 18 Aug 2026 16:22:47
+Elapsed seconds:     19820
+Elapsed minutes:       330
+Elapsed hours:      5.51
+------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . restore
 
@@ -149,5 +85,5 @@ Elapsed hours:     26.38
       name:  cutoffs
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm_p2r_r2p_ncentral.txt
   log type:  text
- closed on:  16 Jul 2026, 18:28:34
---------------------------------------------------------------------------------------------------------------------------
+ closed on:  18 Aug 2026, 16:25:37
+------------------------------------------------------------------------------------------------------------------------------------------------------

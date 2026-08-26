@@ -2,7 +2,7 @@
       name:  cutoffs
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm_ncentral.txt
   log type:  text
- opened on:  15 Aug 2026, 14:47:46
+ opened on:  16 Aug 2026, 00:04:50
 
 . 
 . set more off
@@ -27,14 +27,12 @@
 . tictoc tic 99
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 15 Aug 2026 14:47:54
+Start time: 16 Aug 2026 00:04:57
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . 
 . price_tier_cache, origin(wpsm_home) dest(wpsm_dest) ///
->                   percentiles(`LOW_RANGE'/`UPP_RANGE') verify
-price_tier_cache: verified at p1 (      3.4667)
-price_tier_cache: verified at p99 (     32.3027)
+>                   percentiles(`LOW_RANGE'/`UPP_RANGE')
 price_tier_cache: cached 99 cutoffs over 216 priced neighborhoods
 
 . 
@@ -51,3 +49,111 @@ Working on 8 of range 1/99
 Working on 9 of range 1/99 
 Working on 10 of range 1/99 
 Working on 11 of range 1/99 
+Working on 12 of range 1/99 
+Working on 13 of range 1/99 
+Working on 14 of range 1/99 
+Working on 15 of range 1/99 
+Working on 16 of range 1/99 
+Working on 17 of range 1/99 
+Working on 18 of range 1/99 
+Working on 19 of range 1/99 
+Working on 20 of range 1/99 
+Working on 21 of range 1/99 
+Working on 22 of range 1/99 
+Working on 23 of range 1/99 
+Working on 24 of range 1/99 
+Working on 25 of range 1/99 
+Working on 26 of range 1/99 
+Working on 27 of range 1/99 
+Working on 28 of range 1/99 
+Working on 29 of range 1/99 
+Working on 30 of range 1/99 
+Working on 31 of range 1/99 
+Working on 32 of range 1/99 
+Working on 33 of range 1/99 
+Working on 34 of range 1/99 
+Working on 35 of range 1/99 
+Working on 36 of range 1/99 
+Working on 37 of range 1/99 
+Working on 38 of range 1/99 
+Working on 39 of range 1/99 
+Working on 40 of range 1/99 
+Working on 41 of range 1/99 
+Working on 42 of range 1/99 
+Working on 43 of range 1/99 
+Working on 44 of range 1/99 
+Working on 45 of range 1/99 
+Working on 46 of range 1/99 
+Working on 47 of range 1/99 
+Working on 48 of range 1/99 
+Working on 49 of range 1/99 
+Working on 50 of range 1/99 
+Working on 51 of range 1/99 
+Working on 52 of range 1/99 
+Working on 53 of range 1/99 
+Working on 54 of range 1/99 
+Working on 55 of range 1/99 
+Working on 56 of range 1/99 
+Working on 57 of range 1/99 
+Working on 58 of range 1/99 
+Working on 59 of range 1/99 
+Working on 60 of range 1/99 
+Working on 61 of range 1/99 
+Working on 62 of range 1/99 
+Working on 63 of range 1/99 
+Working on 64 of range 1/99 
+Working on 65 of range 1/99 
+Working on 66 of range 1/99 
+Working on 67 of range 1/99 
+Working on 68 of range 1/99 
+Working on 69 of range 1/99 
+Working on 70 of range 1/99 
+Working on 71 of range 1/99 
+Working on 72 of range 1/99 
+Working on 73 of range 1/99 
+Working on 74 of range 1/99 
+Working on 75 of range 1/99 
+Working on 76 of range 1/99 
+Working on 77 of range 1/99 
+Working on 78 of range 1/99 
+Working on 79 of range 1/99 
+Working on 80 of range 1/99 
+Working on 81 of range 1/99 
+Working on 82 of range 1/99 
+Working on 83 of range 1/99 
+Working on 84 of range 1/99 
+Working on 85 of range 1/99 
+Working on 86 of range 1/99 
+Working on 87 of range 1/99 
+Working on 88 of range 1/99 
+Working on 89 of range 1/99 
+Working on 90 of range 1/99 
+Working on 91 of range 1/99 
+Working on 92 of range 1/99 
+Working on 93 of range 1/99 
+Working on 94 of range 1/99 
+Working on 95 of range 1/99 
+Working on 96 of range 1/99 
+Working on 97 of range 1/99 
+Working on 98 of range 1/99 
+Working on 99 of range 1/99 
+
+. 
+. tictoc toc 99
+------------------------------------------------------------------------------------------------------------------------------------------------------
+----------- Time log -----------
+Start time: 16 Aug 2026 00:04:57
+End time: 17 Aug 2026 00:55:00
+Elapsed seconds:     89402
+Elapsed minutes:      1490
+Elapsed hours:     24.83
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. restore
+
+. log close cutoffs
+      name:  cutoffs
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm_ncentral.txt
+  log type:  text
+ closed on:  17 Aug 2026, 00:59:08
+------------------------------------------------------------------------------------------------------------------------------------------------------

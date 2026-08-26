@@ -16,7 +16,7 @@ cap erase `FILEPATH'/`FILENAME'.dta
 tictoc tic 99
 
 price_tier_cache, origin(wpsm_home) dest(wpsm_dest) ///
-                  percentiles(`LOW_RANGE'/`UPP_RANGE') verify
+                  percentiles(`LOW_RANGE'/`UPP_RANGE')
 
 
 quietly {
