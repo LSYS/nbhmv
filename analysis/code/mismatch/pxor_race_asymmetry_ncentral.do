@@ -4,8 +4,8 @@ set more off
 
 eststo clear
 forvalues i = 1/5 {
-	eststo r`i': reghdfe y c.mismatch_race_c2m##i.ncentral_d ///
-	                       c.mismatch_race_m2c##i.ncentral_d, ///
+	eststo r`i': reghdfe y c.mismatch_race_m2c##i.ncentral_d ///
+	                       c.mismatch_race_c2m##i.ncentral_d, ///
 	                       absorb(\$s`i') vce($se)
 		estadd local timeFE 	"\multicolumn{1}{c}{\checkmark}"
 		estadd local censusPA 	"\multicolumn{1}{c}{\checkmark}"
@@ -53,14 +53,14 @@ coefplot (r1, msymbol(O)  msize(vlarge) mlwidth(vvthin))
          (r3, msymbol(dh) msize(vlarge) mlwidth(vvthin))
          (r4, msymbol(th) msize(vlarge) mlwidth(vvthin))
          (r5, msymbol(sh) msize(vlarge) mlwidth(vvthin)),
-        keep(mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m
-             mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c)
-        order(mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m
-              mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c)
+        keep(mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c
+             mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m)
+        order(mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c
+              mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m)
         level(90)
         ciopts(recast(rcap) lwidth(medthick))
         xlabel(-1(.5).5, labsize(medlarge))
-        xscale(range(-1.2 .6))
+        xscale(range(-1.2 .9))
         ylabel(, angle(horizontal) labsize(medlarge))
         rename(mismatch_race_c2m = "{bf:Maj {&rarr} Mnr}"
                1.ncentral_d#c.mismatch_race_c2m = "{bf:Maj {&rarr} Mnr} x {bf:Non-central dest.}"
@@ -68,7 +68,7 @@ coefplot (r1, msymbol(O)  msize(vlarge) mlwidth(vvthin))
                1.ncentral_d#c.mismatch_race_m2c = "{bf:Mnr {&rarr} Maj} x {bf:Non-central dest.}")
         legend(label(2 "Baseline") label(4 "+ Demographics")
                label(6 "+ Businesses") label(8 "+ Rainfall") label(10 "+ POIs")
-               col(1) ring(0) bplacement(sw) size(small) symysize(*.6) rowgap(*.5) region(fcolor(white) lcolor(white)))
+               col(1) ring(0) bplacement(se) size(small) symysize(*.6) rowgap(*.5) region(fcolor(white) lcolor(white)))
         scheme(lean2)
         plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0))
         graphregion(color(white) margin(0 0 0 0))
@@ -91,10 +91,10 @@ esttab r1 r2 r3 r4 r5 using $tabsavedir/pxor-race-asymmetry-ncentral-frag.tex,
 	nomtitle
 	varwidth(20)
 	modelwidth(8)
-	keep(mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m
-	     mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c)
-	order(mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m
-	      mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c)
+	keep(mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c
+	     mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m)
+	order(mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c
+	      mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m)
 	coeflabel($coeff_labels)
 	scalar(
 		"timeFE Day fixed effects"
@@ -103,8 +103,8 @@ esttab r1 r2 r3 r4 r5 using $tabsavedir/pxor-race-asymmetry-ncentral-frag.tex,
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
 		"POI Places of interest"
-		"pval_c2m $ p $-val: net (Maj $\rightarrow$ Mnr) = 0"
 		"pval_m2c $ p $-val: net (Mnr $\rightarrow$ Maj) = 0"
+		"pval_c2m $ p $-val: net (Maj $\rightarrow$ Mnr) = 0"
 		"r2 R$^2$"
 		"days Days"
 		"clusters Clusters"

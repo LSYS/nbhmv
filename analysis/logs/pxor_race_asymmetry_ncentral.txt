@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  ncdir
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_asymmetry_ncentral.txt
   log type:  text
- opened on:  10 Aug 2026, 17:41:08
+ opened on:  18 Aug 2026, 20:04:06
 
 . set more off
 
@@ -10,8 +10,8 @@
 . eststo clear
 
 . forvalues i = 1/5 {
-  2.         eststo r`i': reghdfe y c.mismatch_race_c2m##i.ncentral_d ///
->                                c.mismatch_race_m2c##i.ncentral_d, ///
+  2.         eststo r`i': reghdfe y c.mismatch_race_m2c##i.ncentral_d ///
+>                                c.mismatch_race_c2m##i.ncentral_d, ///
 >                                absorb(\$s`i') vce($se)
   3.                 estadd local timeFE     "\multicolumn{1}{c}{\checkmark}"
   4.                 estadd local censusPA   "\multicolumn{1}{c}{\checkmark}"
@@ -67,16 +67,16 @@ Number of clusters (odid)    =      1,592         Root MSE        =     0.5389
                                |               Robust
                              y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------------------+----------------------------------------------------------------
-             mismatch_race_c2m |  -.2639644   .0751356    -3.51   0.000    -.4113396   -.1165893
-                  1.ncentral_d |          0  (omitted)
-                               |
-ncentral_d#c.mismatch_race_c2m |
-                            1  |  -.4254652   .1898316    -2.24   0.025    -.7978117   -.0531188
-                               |
              mismatch_race_m2c |  -.1695456   .1168325    -1.45   0.147    -.3987074    .0596162
+                  1.ncentral_d |          0  (omitted)
                                |
 ncentral_d#c.mismatch_race_m2c |
                             1  |   .5018103   .1947766     2.58   0.010     .1197646     .883856
+                               |
+             mismatch_race_c2m |  -.2639644   .0751356    -3.51   0.000    -.4113396   -.1165893
+                               |
+ncentral_d#c.mismatch_race_c2m |
+                            1  |  -.4254652   .1898316    -2.24   0.025    -.7978117   -.0531188
                                |
                          _cons |  -.9860129   .0324094   -30.42   0.000    -1.049583   -.9224432
 ------------------------------------------------------------------------------------------------
@@ -155,16 +155,16 @@ Number of clusters (odid)    =      1,510         Root MSE        =     0.5263
                                |               Robust
                              y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------------------+----------------------------------------------------------------
-             mismatch_race_c2m |  -.1167803   .1115673    -1.05   0.295    -.3356237     .102063
-                  1.ncentral_d |          0  (omitted)
-                               |
-ncentral_d#c.mismatch_race_c2m |
-                            1  |  -.8397977   .2039026    -4.12   0.000     -1.23976   -.4398351
-                               |
              mismatch_race_m2c |  -.0240672   .1257506    -0.19   0.848    -.2707317    .2225973
+                  1.ncentral_d |          0  (omitted)
                                |
 ncentral_d#c.mismatch_race_m2c |
                             1  |  -.0761484   .1871947    -0.41   0.684    -.4433379    .2910411
+                               |
+             mismatch_race_c2m |  -.1167803   .1115673    -1.05   0.295    -.3356237     .102063
+                               |
+ncentral_d#c.mismatch_race_c2m |
+                            1  |  -.8397977   .2039026    -4.12   0.000     -1.23976   -.4398351
                                |
                          _cons |  -.9596069    .035923   -26.71   0.000    -1.030071   -.8891426
 ------------------------------------------------------------------------------------------------
@@ -255,16 +255,16 @@ Number of clusters (odid)    =      1,510         Root MSE        =     0.5260
                                |               Robust
                              y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------------------+----------------------------------------------------------------
-             mismatch_race_c2m |  -.1725752   .1126502    -1.53   0.126    -.3935428    .0483925
-                  1.ncentral_d |          0  (omitted)
-                               |
-ncentral_d#c.mismatch_race_c2m |
-                            1  |  -.7879466   .2057945    -3.83   0.000     -1.19162   -.3842729
-                               |
              mismatch_race_m2c |  -.0377545   .1255613    -0.30   0.764    -.2840477    .2085387
+                  1.ncentral_d |          0  (omitted)
                                |
 ncentral_d#c.mismatch_race_m2c |
                             1  |  -.0613183   .1868455    -0.33   0.743    -.4278226    .3051861
+                               |
+             mismatch_race_c2m |  -.1725752   .1126502    -1.53   0.126    -.3935428    .0483925
+                               |
+ncentral_d#c.mismatch_race_c2m |
+                            1  |  -.7879466   .2057945    -3.83   0.000     -1.19162   -.3842729
                                |
                          _cons |  -.9528082   .0359773   -26.48   0.000    -1.023379   -.8822375
 ------------------------------------------------------------------------------------------------
@@ -362,16 +362,16 @@ Number of clusters (odid)    =      1,510         Root MSE        =     0.5260
                                |               Robust
                              y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------------------+----------------------------------------------------------------
-             mismatch_race_c2m |  -.1750185   .1124513    -1.56   0.120    -.3955959     .045559
-                  1.ncentral_d |          0  (omitted)
-                               |
-ncentral_d#c.mismatch_race_c2m |
-                            1  |  -.7788028   .2059238    -3.78   0.000     -1.18273   -.3748756
-                               |
              mismatch_race_m2c |  -.0402805   .1251817    -0.32   0.748     -.285829    .2052681
+                  1.ncentral_d |          0  (omitted)
                                |
 ncentral_d#c.mismatch_race_m2c |
                             1  |  -.0585271   .1868053    -0.31   0.754    -.4249526    .3078985
+                               |
+             mismatch_race_c2m |  -.1750185   .1124513    -1.56   0.120    -.3955959     .045559
+                               |
+ncentral_d#c.mismatch_race_c2m |
+                            1  |  -.7788028   .2059238    -3.78   0.000     -1.18273   -.3748756
                                |
                          _cons |  -.9529137    .035981   -26.48   0.000    -1.023492   -.8823357
 ------------------------------------------------------------------------------------------------
@@ -475,16 +475,16 @@ Number of clusters (odid)    =      1,510         Root MSE        =     0.5248
                                |               Robust
                              y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------------------+----------------------------------------------------------------
-             mismatch_race_c2m |  -.1950471   .1249477    -1.56   0.119    -.4401368    .0500425
-                  1.ncentral_d |          0  (omitted)
-                               |
-ncentral_d#c.mismatch_race_c2m |
-                            1  |  -.4196205   .2264987    -1.85   0.064    -.8639062    .0246652
-                               |
              mismatch_race_m2c |  -.0544519   .1271915    -0.43   0.669    -.3039426    .1950389
+                  1.ncentral_d |          0  (omitted)
                                |
 ncentral_d#c.mismatch_race_m2c |
                             1  |   .0463089   .1906057     0.24   0.808    -.3275713    .4201891
+                               |
+             mismatch_race_c2m |  -.1950471   .1249477    -1.56   0.119    -.4401368    .0500425
+                               |
+ncentral_d#c.mismatch_race_c2m |
+                            1  |  -.4196205   .2264987    -1.85   0.064    -.8639062    .0246652
                                |
                          _cons |  -.9860129   .0387695   -25.43   0.000    -1.062061   -.9099652
 ------------------------------------------------------------------------------------------------
@@ -598,14 +598,14 @@ delimiter now ;
 >          (r3, msymbol(dh) msize(vlarge) mlwidth(vvthin))
 >          (r4, msymbol(th) msize(vlarge) mlwidth(vvthin))
 >          (r5, msymbol(sh) msize(vlarge) mlwidth(vvthin)),
->         keep(mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m
->              mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c)
->         order(mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m
->               mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c)
+>         keep(mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c
+>              mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m)
+>         order(mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c
+>               mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m)
 >         level(90)
 >         ciopts(recast(rcap) lwidth(medthick))
 >         xlabel(-1(.5).5, labsize(medlarge))
->         xscale(range(-1.2 .6))
+>         xscale(range(-1.2 .9))
 >         ylabel(, angle(horizontal) labsize(medlarge))
 >         rename(mismatch_race_c2m = "{bf:Maj {&rarr} Mnr}"
 >                1.ncentral_d#c.mismatch_race_c2m = "{bf:Maj {&rarr} Mnr} x {bf:Non-central dest.}"
@@ -613,7 +613,7 @@ delimiter now ;
 >                1.ncentral_d#c.mismatch_race_m2c = "{bf:Mnr {&rarr} Maj} x {bf:Non-central dest.}")
 >         legend(label(2 "Baseline") label(4 "+ Demographics")
 >                label(6 "+ Businesses") label(8 "+ Rainfall") label(10 "+ POIs")
->                col(1) ring(0) bplacement(sw) size(small) symysize(*.6) rowgap(*.5) region(fcolor(white) lcolor(white)))
+>                col(1) ring(0) bplacement(se) size(small) symysize(*.6) rowgap(*.5) region(fcolor(white) lcolor(white)))
 >         scheme(lean2)
 >         plotregion(lcolor(black) lwidth(medthin) margin(0 0 0 0))
 >         graphregion(color(white) margin(0 0 0 0))
@@ -644,10 +644,10 @@ delimiter now ;
 >         nomtitle
 >         varwidth(20)
 >         modelwidth(8)
->         keep(mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m
->              mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c)
->         order(mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m
->               mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c)
+>         keep(mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c
+>              mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m)
+>         order(mismatch_race_m2c 1.ncentral_d#c.mismatch_race_m2c
+>               mismatch_race_c2m 1.ncentral_d#c.mismatch_race_c2m)
 >         coeflabel($coeff_labels)
 >         scalar(
 >                 "timeFE Day fixed effects"
@@ -656,8 +656,8 @@ delimiter now ;
 >                 "business Businesses"
 >                 "rain Neighborhood-specific rainfall"
 >                 "POI Places of interest"
->                 "pval_c2m $ p $-val: net (Maj $\rightarrow$ Mnr) = 0"
 >                 "pval_m2c $ p $-val: net (Mnr $\rightarrow$ Maj) = 0"
+>                 "pval_c2m $ p $-val: net (Maj $\rightarrow$ Mnr) = 0"
 >                 "r2 R$^2$"
 >                 "days Days"
 >                 "clusters Clusters"
@@ -675,5 +675,5 @@ delimiter now cr
       name:  ncdir
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_race_asymmetry_ncentral.txt
   log type:  text
- closed on:  10 Aug 2026, 19:04:00
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  18 Aug 2026, 21:21:08
+------------------------------------------------------------------------------------------------------------------------------------------------------
