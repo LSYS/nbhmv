@@ -19,11 +19,11 @@ forvalues i = 1/5 {
 		di as txt "  Maj->Mnr, non-central net effect:"
 		lincom mismatch_race_c2m + 1.ncentral_d#c.mismatch_race_c2m
 		qui test mismatch_race_c2m + 1.ncentral_d#c.mismatch_race_c2m = 0
-		estadd local pval_c2m = string(round(`r(p)', 0.001))
+		estadd local pval_c2m = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
 		di as txt "  Mnr->Maj, non-central net effect:"
 		lincom mismatch_race_m2c + 1.ncentral_d#c.mismatch_race_m2c
 		qui test mismatch_race_m2c + 1.ncentral_d#c.mismatch_race_m2c = 0
-		estadd local pval_m2c = string(round(`r(p)', 0.001))
+		estadd local pval_m2c = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
 		if `i'==2 {
 			estadd local demo 		"\multicolumn{1}{c}{\checkmark}"
 		}

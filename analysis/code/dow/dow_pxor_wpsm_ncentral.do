@@ -39,7 +39,7 @@ foreach sample in wkday wkend {
 			estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
 			* Test mismatch + mismatch*ncentral = 0 [total effect outside central]
 			qui test 1.`x' + 1.`x'#1.ncentral_d = 0
-			estadd local pval = string(round(`r(p)', 0.001))
+			estadd local pval = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
 			* Add indicators for additional controls
 			if `i'==2 {
 				estadd local demo 		"\multicolumn{1}{c}{\checkmark}"				
