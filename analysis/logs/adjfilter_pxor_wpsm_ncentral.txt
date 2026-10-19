@@ -1,8 +1,8 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  adjacency_filter
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//adjfilter_pxor_wpsm_ncentral.txt
   log type:  text
- opened on:  15 Aug 2025, 08:54:07
+ opened on:  13 Aug 2026, 18:22:42
 
 . 
 . set more off
@@ -58,25 +58,25 @@ note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialle
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,233,201
-Absorbing 3 HDFE groups                           F(   2,   1434) =       8.84
-Statistics robust to heteroskedasticity           Prob > F        =     0.0002
-                                                  R-squared       =     0.6820
-                                                  Adj R-squared   =     0.6801
-                                                  Within R-sq.    =     0.0007
-Number of clusters (odid)    =      1,435         Root MSE        =     0.5198
+Absorbing 3 HDFE groups                           F(   2,   1434) =      29.99
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.6825
+                                                  Adj R-squared   =     0.6805
+                                                  Within R-sq.    =     0.0023
+Number of clusters (odid)    =      1,435         Root MSE        =     0.5194
 
                                            (Std. Err. adjusted for 1435 clusters in odid)
 -----------------------------------------------------------------------------------------
                         |               Robust
                       y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ------------------------+----------------------------------------------------------------
-         1.mismatch_p25 |   .0472412   .0112859     4.19   0.000     .0251027    .0693798
+         1.mismatch_p25 |   .0738931   .0099806     7.40   0.000     .0543149    .0934712
            1.ncentral_d |          0  (omitted)
                         |
 mismatch_p25#ncentral_d |
-                   1 1  |  -.0410816   .0148761    -2.76   0.006    -.0702629   -.0119004
+                   1 1  |  -.0457813   .0141203    -3.24   0.001      -.07348   -.0180825
                         |
-                  _cons |  -1.200657   .0058436  -205.46   0.000     -1.21212   -1.189194
+                  _cons |  -1.212821   .0056513  -214.61   0.000    -1.223906   -1.201735
 -----------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -114,32 +114,32 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,233,201 $}"
 
 added macro:
-               e(pval) : ".549"
+               e(pval) : ".008"
 (dropped 9 singleton observations)
 note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialled-out values are close to zero; tol = 1.0e-09)
 (MWFE estimator converged in 27 iterations)
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,145,011
-Absorbing 4 HDFE groups                           F(   2,   1428) =       7.06
-Statistics robust to heteroskedasticity           Prob > F        =     0.0009
-                                                  R-squared       =     0.6787
-                                                  Adj R-squared   =     0.6764
-                                                  Within R-sq.    =     0.0006
-Number of clusters (odid)    =      1,429         Root MSE        =     0.5053
+Absorbing 4 HDFE groups                           F(   2,   1428) =      22.48
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.6790
+                                                  Adj R-squared   =     0.6767
+                                                  Within R-sq.    =     0.0017
+Number of clusters (odid)    =      1,429         Root MSE        =     0.5050
 
                                            (Std. Err. adjusted for 1429 clusters in odid)
 -----------------------------------------------------------------------------------------
                         |               Robust
                       y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ------------------------+----------------------------------------------------------------
-         1.mismatch_p25 |   .0422216   .0112437     3.76   0.000     .0201655    .0642776
+         1.mismatch_p25 |   .0637636   .0099195     6.43   0.000     .0443052    .0832221
            1.ncentral_d |          0  (omitted)
                         |
 mismatch_p25#ncentral_d |
-                   1 1  |  -.0380565   .0147878    -2.57   0.010    -.0670645   -.0090484
+                   1 1  |  -.0420516   .0138854    -3.03   0.003    -.0692896   -.0148137
                         |
-                  _cons |  -1.203328   .0058385  -206.10   0.000    -1.214781   -1.191875
+                  _cons |  -1.213407   .0055617  -218.17   0.000    -1.224317   -1.202497
 -----------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -186,7 +186,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,145,011 $}"
 
 added macro:
-               e(pval) : ".691"
+               e(pval) : ".032"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -196,25 +196,25 @@ note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialle
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,145,011
-Absorbing 5 HDFE groups                           F(   2,   1428) =       6.49
-Statistics robust to heteroskedasticity           Prob > F        =     0.0016
-                                                  R-squared       =     0.6792
-                                                  Adj R-squared   =     0.6768
-                                                  Within R-sq.    =     0.0006
-Number of clusters (odid)    =      1,429         Root MSE        =     0.5050
+Absorbing 5 HDFE groups                           F(   2,   1428) =      21.95
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.6796
+                                                  Adj R-squared   =     0.6772
+                                                  Within R-sq.    =     0.0017
+Number of clusters (odid)    =      1,429         Root MSE        =     0.5047
 
                                            (Std. Err. adjusted for 1429 clusters in odid)
 -----------------------------------------------------------------------------------------
                         |               Robust
                       y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ------------------------+----------------------------------------------------------------
-         1.mismatch_p25 |   .0408403   .0113393     3.60   0.000     .0185968    .0630839
+         1.mismatch_p25 |   .0634378    .009955     6.37   0.000     .0439098    .0829659
            1.ncentral_d |          0  (omitted)
                         |
 mismatch_p25#ncentral_d |
-                   1 1  |  -.0374388   .0147851    -2.53   0.011    -.0664416    -.008436
+                   1 1  |  -.0423177   .0138653    -3.05   0.002    -.0695162   -.0151191
                         |
-                  _cons |  -1.202963   .0058541  -205.49   0.000    -1.214447    -1.19148
+                  _cons |  -1.213216   .0055742  -217.65   0.000    -1.224151   -1.202282
 -----------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -265,7 +265,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,145,011 $}"
 
 added macro:
-               e(pval) : ".746"
+               e(pval) : ".037"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -278,25 +278,25 @@ note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialle
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,145,011
-Absorbing 6 HDFE groups                           F(   2,   1428) =       6.32
-Statistics robust to heteroskedasticity           Prob > F        =     0.0019
-                                                  R-squared       =     0.6793
-                                                  Adj R-squared   =     0.6769
-                                                  Within R-sq.    =     0.0005
-Number of clusters (odid)    =      1,429         Root MSE        =     0.5049
+Absorbing 6 HDFE groups                           F(   2,   1428) =      21.86
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.6797
+                                                  Adj R-squared   =     0.6773
+                                                  Within R-sq.    =     0.0017
+Number of clusters (odid)    =      1,429         Root MSE        =     0.5046
 
                                            (Std. Err. adjusted for 1429 clusters in odid)
 -----------------------------------------------------------------------------------------
                         |               Robust
                       y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ------------------------+----------------------------------------------------------------
-         1.mismatch_p25 |   .0403899   .0113617     3.55   0.000     .0181024    .0626773
+         1.mismatch_p25 |   .0632798   .0099591     6.35   0.000     .0437439    .0828158
            1.ncentral_d |          0  (omitted)
                         |
 mismatch_p25#ncentral_d |
-                   1 1  |   -.036705   .0148079    -2.48   0.013    -.0657525   -.0076574
+                   1 1  |  -.0421055   .0138698    -3.04   0.002    -.0693128   -.0148982
                         |
-                  _cons |  -1.202957   .0058542  -205.48   0.000    -1.214441   -1.191474
+                  _cons |  -1.213197   .0055737  -217.67   0.000     -1.22413   -1.202263
 -----------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -350,7 +350,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,145,011 $}"
 
 added macro:
-               e(pval) : ".725"
+               e(pval) : ".036"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -366,25 +366,25 @@ note: 1bn.ncentral_d is probably collinear with the fixed effects (all partialle
 note: 1.ncentral_d omitted because of collinearity
 
 HDFE Linear regression                            Number of obs   =  1,145,011
-Absorbing 7 HDFE groups                           F(   2,   1428) =       8.94
-Statistics robust to heteroskedasticity           Prob > F        =     0.0001
-                                                  R-squared       =     0.6815
-                                                  Adj R-squared   =     0.6788
-                                                  Within R-sq.    =     0.0008
-Number of clusters (odid)    =      1,429         Root MSE        =     0.5034
+Absorbing 7 HDFE groups                           F(   2,   1428) =      24.73
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.6819
+                                                  Adj R-squared   =     0.6792
+                                                  Within R-sq.    =     0.0019
+Number of clusters (odid)    =      1,429         Root MSE        =     0.5031
 
                                            (Std. Err. adjusted for 1429 clusters in odid)
 -----------------------------------------------------------------------------------------
                         |               Robust
                       y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 ------------------------+----------------------------------------------------------------
-         1.mismatch_p25 |   .0461695   .0112634     4.10   0.000      .024075    .0682641
+         1.mismatch_p25 |   .0662445   .0099301     6.67   0.000     .0467653    .0857237
            1.ncentral_d |          0  (omitted)
                         |
 mismatch_p25#ncentral_d |
-                   1 1  |  -.0316337   .0149809    -2.11   0.035    -.0610206   -.0022467
+                   1 1  |  -.0409403   .0139001    -2.95   0.003    -.0682071   -.0136736
                         |
-                  _cons |  -1.206113   .0058146  -207.43   0.000    -1.217519   -1.194707
+                  _cons |  -1.214661   .0055424  -219.16   0.000    -1.225533   -1.203789
 -----------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -451,7 +451,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,145,011 $}"
 
 added macro:
-               e(pval) : ".178"
+               e(pval) : ".013"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -555,5 +555,5 @@ delimiter now cr
       name:  adjacency_filter
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//adjfilter_pxor_wpsm_ncentral.txt
   log type:  text
- closed on:  15 Aug 2025, 09:48:28
-------------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  13 Aug 2026, 18:49:42
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -68,7 +68,7 @@ esttab using $tabsavedir/wpsm-frag.tex,
 		"demo Demographics"
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
-		"POI Places of interests"
+		"POI Places of interest"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"

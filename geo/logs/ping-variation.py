@@ -767,7 +767,7 @@ TICKSIZE = 15
 ax.tick_params(axis="both", labelsize=TICKSIZE)
 
 LABSIZE = 18
-plt.xlabel("% Aged 20 and below", fontweight="bold", loc="center", size=LABSIZE)
+plt.xlabel("% Aged below 20", fontweight="bold", loc="center", size=LABSIZE)
 plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
 plt.tight_layout()
 save_mpl_fig(os.path.join(SAVEPATH, "coefplot-dest-pings-age20"))
@@ -797,7 +797,7 @@ TICKSIZE = 15
 ax.tick_params(axis="both", labelsize=TICKSIZE)
 
 LABSIZE = 18
-plt.xlabel("% Aged 20 to 40", fontweight="bold", loc="center", size=LABSIZE)
+plt.xlabel("% Aged 20 to 39", fontweight="bold", loc="center", size=LABSIZE)
 plt.ylabel("Captured GPS pings", fontweight="bold", loc="center", size=LABSIZE)
 plt.tight_layout()
 save_mpl_fig(os.path.join(SAVEPATH, "coefplot-dest-pings-age20to40"))

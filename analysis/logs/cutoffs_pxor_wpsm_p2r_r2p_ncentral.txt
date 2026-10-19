@@ -1,0 +1,89 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  cutoffs
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm_p2r_r2p_ncentral.txt
+  log type:  text
+ opened on:  18 Aug 2026, 10:52:19
+
+. 
+. set more off
+
+. 
+. preserve
+
+. 
+. * RESUME MODE 2026-08-18: run stalled at iteration 72 with 1-71 already saved.
+. * Restore to `LOW_RANGE = 1' and uncomment the erase once 72-99 have completed.
+. local LOW_RANGE = 72
+
+. local UPP_RANGE = 99
+
+. local FILENAME mismatch-wpsm-p2r-r2p-ncentral
+
+. local FILEPATH ./code/cutoffs/out
+
+. 
+. * del exisiting file  -- DISABLED while resuming, it would wipe iterations 1-71
+. * cap erase `FILEPATH'/`FILENAME'.dta
+. 
+. tictoc tic 99
+------------------------------------------------------------------------------------------------------------------------------------------------------
+----------- Time log -----------
+Start time: 18 Aug 2026 10:52:27
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. 
+. price_tier_cache, origin(wpsm_home) dest(wpsm_dest) ///
+>                   percentiles(`LOW_RANGE'/`UPP_RANGE')
+price_tier_cache: cached 28 cutoffs over 216 priced neighborhoods
+
+. 
+. 
+. quietly {
+Working on 72 of range 72/99 
+Working on 73 of range 72/99 
+Working on 74 of range 72/99 
+Working on 75 of range 72/99 
+Working on 76 of range 72/99 
+Working on 77 of range 72/99 
+Working on 78 of range 72/99 
+Working on 79 of range 72/99 
+Working on 80 of range 72/99 
+Working on 81 of range 72/99 
+Working on 82 of range 72/99 
+Working on 83 of range 72/99 
+Working on 84 of range 72/99 
+Working on 85 of range 72/99 
+Working on 86 of range 72/99 
+Working on 87 of range 72/99 
+Working on 88 of range 72/99 
+Working on 89 of range 72/99 
+Working on 90 of range 72/99 
+Working on 91 of range 72/99 
+Working on 92 of range 72/99 
+Working on 93 of range 72/99 
+Working on 94 of range 72/99 
+Working on 95 of range 72/99 
+Working on 96 of range 72/99 
+Working on 97 of range 72/99 
+Working on 98 of range 72/99 
+Working on 99 of range 72/99 
+
+. 
+. tictoc toc 99
+------------------------------------------------------------------------------------------------------------------------------------------------------
+----------- Time log -----------
+Start time: 18 Aug 2026 10:52:27
+End time: 18 Aug 2026 16:22:47
+Elapsed seconds:     19820
+Elapsed minutes:       330
+Elapsed hours:      5.51
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+. restore
+
+. log close cutoffs
+      name:  cutoffs
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm_p2r_r2p_ncentral.txt
+  log type:  text
+ closed on:  18 Aug 2026, 16:25:37
+------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -41,7 +41,8 @@ NOTEBOOKS := \
     ./cbd.ipynb \
     ./conn-map.ipynb \
     ./descriptives.ipynb \
-    ./ping-variation.ipynb
+    ./ping-variation.ipynb \
+    ./make-empcenter-map.ipynb
 
 .PHONY: lint-notebooks
 lint-notebooks: ## Run nbqa pyflakes and black --check on selected notebooks

@@ -23,7 +23,7 @@ legendgram
 osmnx
 scikit-learn
 nbqa
-black
+black==25.1.0
 pyflakes
 mypy
 isort

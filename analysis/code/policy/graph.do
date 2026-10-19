@@ -21,8 +21,8 @@ local TEXT "Increase from EIP = `no_asymm_increase'%"
 #delimit;
 twoway line increase_visits spec_id, 
 	lwidth(`LWIDTH') lcolor(`lcolor')
-	ylab(4 "4%" 8 "8%" 12 "12%" 16 "16%" 20 "20%" 24 "24%", noticks nogrid angle(horizontal) labsize(`YLAB_SIZE'))
-	yscale(r(0 25))
+	ylab(3 "3%" 6 "6%" 9 "9%" 12 "12%" 15 "15%", noticks nogrid angle(horizontal) labsize(`YLAB_SIZE'))
+	yscale(r(0 15.5))
 	xlab(0(20)100, labsize(`XLAB_SIZE'))
 	xtitle("Percentile reduction in (non-directional) ethnic mismatch", size(`XTITLE_SIZE') )
 	ytitle("`TITLE1'", size(`XTITLE_SIZE') )
@@ -41,13 +41,13 @@ use `FILEPATH'/mismatch_c2m_eip.dta, clear
 // local TITLE2 "  reduction in (maj {&rarr} mnr) ethnic mismatch"
 local with_asymm_increase = 7.8
 local TEXT "Increase from EIP = `with_asymm_increase'%"
-local ref_centile 73
+local ref_centile 76
 local ref_centile2 = `ref_centile' - 12 
 #delimit;
 twoway line increase_visits spec_id,
 	lwidth(`LWIDTH') lcolor(`lcolor')
-	ylab(4 "4%" 8 "8%" 12 "12%" 16 "16%" 20 "20%" 24 "24%", noticks nogrid angle(horizontal) labsize(`YLAB_SIZE'))
-	yscale(r(0 25))
+	ylab(3 "3%" 6 "6%" 9 "9%" 12 "12%" 15 "15%", noticks nogrid angle(horizontal) labsize(`YLAB_SIZE'))
+	yscale(r(0 15.5))
 	xlab(0(20)100, labsize(`XLAB_SIZE'))
 	xtitle("Percentile reduction in (maj {&rarr} mnr) ethnic mismatch", size(`XTITLE_SIZE') )
 	ytitle("`TITLE1'", size(`XTITLE_SIZE') )
@@ -57,11 +57,11 @@ twoway line increase_visits spec_id,
 	xline(`ref_centile', lpattern(dash) lcolor(gs12))
 	text(`with_asymm_increase' 50 "`TEXT'", placement(n) size(`TEXTSIZE')) ||
 	// Add annotation
-	pcarrowi 20 `ref_centile2' 20 `ref_centile',
+	pcarrowi 12 `ref_centile2' 12 `ref_centile',
 	 legend(off) msize(vlarge) 
 	 color(gs6) 
 	 lw(medthick) barbsize(2)
-	text(20 `ref_centile2' 
+	text(12 `ref_centile2' 
 		"`ref_centile'th percentile in" "present-day ethnic mismatch", 
 		placement(w) 
 		size(`TEXTSIZE')

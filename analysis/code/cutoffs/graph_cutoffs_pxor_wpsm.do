@@ -8,14 +8,14 @@ include ./code/cutoffs/graph_settings.do
 local mainbeta = beta[25]
 
 forval cutoff = 15/35 {
-	cap gen areapos = .1 if p`cutoff'==1
+	cap gen areapos = .18 if p`cutoff'==1
 	if _rc!=0 {
-		replace areapos = .1 if p`cutoff'==1
+		replace areapos = .18 if p`cutoff'==1
 	}
-	
-	cap gen areaneg = -.05 if p`cutoff'==1
+
+	cap gen areaneg = -.07 if p`cutoff'==1
 	if _rc!=0 {
-		replace areaneg = -.05 if p`cutoff'==1
+		replace areaneg = -.07 if p`cutoff'==1
 	}
 }
 
@@ -29,8 +29,8 @@ twoway
 	(line beta spec_id, 
 		lpattern(solid) lcolor(`COEF_LINE_COLOR') lwidth(medthick)
 		xlab(0(25)100, labsize(`XLAB_SIZE'))
-		ylab(-.05(.05).1, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
-		yscale(r(-.0 .1) )
+		ylab(-.05(.05).2, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
+		yscale(r(-.07 .22) )
 		xtitle("Percentile used for cutoff", size(`XTITLE_SIZE') )
 		ytitle("")
 		legend(order(8 "Main estimate" 3 "Point estimates"  4 "95% CI" 6 "90% CI" ) 
@@ -63,7 +63,7 @@ twoway
 		symbol(Oh) color(maroon) mlwidth(medium) msize(large)
 	)
 	/* 10/N Draw vert ref line for 25th percentile */
-	(scatteri -.05 25 .1 25, recast(line) lpattern(dash) lcolor(gs10))
+	(scatteri -.07 25 .18 25, recast(line) lpattern(dash) lcolor(gs10))
 	/* 11/N Draw horizontal ref line for 25th percentile */	
 	(scatteri `mainbeta' 0 `mainbeta' 100, recast(line) lwidth(thick) lcolor(maroon))
 ;	
@@ -82,7 +82,8 @@ twoway
 	(line beta spec_id_sorted, 
 		lpattern(solid) lcolor(`COEF_LINE_COLOR') lwidth(medthick)
 		xlab(0(25)100, labsize(`XLAB_SIZE'))
-		ylab(-.05(.05).1, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
+		ylab(-.05(.05).2, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
+		yscale(r(-.07 .22) )
 		xtitle("Specification (sorted by estimate size)", size(`XTITLE_SIZE') )
 		ytitle("")
 		legend(order(6 "Main estimate" 1 "Point estimates"  2 "95% CI" 4 "90% CI" ) 

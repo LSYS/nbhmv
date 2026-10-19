@@ -21,9 +21,9 @@ forvalues i = 1/5 {
 		local nobs: display %9.0fc `e(N)'
 		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
 		* one-sided t-test
-		onesidetest 1.cny_sat_sun#c.wpsm_dest right 0.001 star
+		onesidetest 1.cny_sat_sun#c.wpsm_dest left 0.001 star
 		estadd local cny_dest = "`r(pval)'"
-		onesidetest 1.cny_sat_sun#c.wpsm_home left 0.001 star
+		onesidetest 1.cny_sat_sun#c.wpsm_home right 0.001 star
 		estadd local cny_origin = "`r(pval)'"
 		* Add indicators for additional controls
 		if `i'==2 {
@@ -70,14 +70,14 @@ esttab using $tabsavedir/cny-wpsm-frag.tex,
 	scalar(
 		// "prm_o $ H_a: P_o < 0 $, $ p $-val"
 		// "prm_d $ H_a: P_d < 0 $, $ p $-val"
-		"cny_origin $ H_a: (\text{Wealth in origin} \times \mathds{1}^{\text{CNY}}) < 0 $, $ p $-val"
-		"cny_dest $ H_a: (\text{Wealth in dest.}  \times \mathds{1}^{\text{CNY}}) > 0 $, $ p $-val"
+		"cny_origin $ H_a: (\text{Wealth in origin} \times \mathds{1}^{\text{CNY}}) > 0 $, $ p $-val"
+		"cny_dest $ H_a: (\text{Wealth in dest.}  \times \mathds{1}^{\text{CNY}}) < 0 $, $ p $-val"
 		"timeFE Day fixed effects"
 		"censusPA Census area-by-day fixed effects"
 		"demo Demographics"
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
-		"POI Places of interests"
+		"POI Places of interest"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"

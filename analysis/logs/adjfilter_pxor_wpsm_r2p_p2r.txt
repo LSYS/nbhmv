@@ -1,8 +1,8 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  adjacency_filter
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//adjfilter_pxor_wpsm_r2p_p2r.txt
   log type:  text
- opened on:  12 Aug 2025, 19:16:33
+ opened on:  13 Aug 2026, 17:51:44
 
 . 
 . set more off
@@ -57,21 +57,21 @@
 (MWFE estimator converged in 23 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,233,201
-Absorbing 3 HDFE groups                           F(   2,   1434) =      32.00
+Absorbing 3 HDFE groups                           F(   2,   1434) =      48.07
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.6824
-                                                  Adj R-squared   =     0.6805
-                                                  Within R-sq.    =     0.0022
-Number of clusters (odid)    =      1,435         Root MSE        =     0.5194
+                                                  R-squared       =     0.6829
+                                                  Adj R-squared   =     0.6809
+                                                  Within R-sq.    =     0.0035
+Number of clusters (odid)    =      1,435         Root MSE        =     0.5191
 
                                       (Std. Err. adjusted for 1435 clusters in odid)
 ------------------------------------------------------------------------------------
                    |               Robust
                  y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------+----------------------------------------------------------------
-1.mismatch_p25_p2r |   .0743403   .0106468     6.98   0.000     .0534553    .0952252
-1.mismatch_p25_r2p |  -.0231023   .0092025    -2.51   0.012    -.0411542   -.0050505
-             _cons |  -1.202095   .0058302  -206.19   0.000    -1.213532   -1.190659
+1.mismatch_p25_p2r |   .0851179   .0091479     9.30   0.000     .0671731    .1030626
+1.mismatch_p25_r2p |  -.0066771   .0091719    -0.73   0.467    -.0246688    .0113147
+             _cons |  -1.215228   .0056633  -214.58   0.000    -1.226337   -1.204119
 ------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -109,26 +109,26 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,233,201 $}"
 
 added macro:
-               e(pval) : ".001"
+               e(pval) : "0"
 (dropped 9 singleton observations)
 (MWFE estimator converged in 26 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,145,011
-Absorbing 4 HDFE groups                           F(   2,   1428) =      20.27
+Absorbing 4 HDFE groups                           F(   2,   1428) =      36.38
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.6789
-                                                  Adj R-squared   =     0.6766
-                                                  Within R-sq.    =     0.0014
-Number of clusters (odid)    =      1,429         Root MSE        =     0.5051
+                                                  R-squared       =     0.6793
+                                                  Adj R-squared   =     0.6770
+                                                  Within R-sq.    =     0.0025
+Number of clusters (odid)    =      1,429         Root MSE        =     0.5048
 
                                       (Std. Err. adjusted for 1429 clusters in odid)
 ------------------------------------------------------------------------------------
                    |               Robust
                  y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------+----------------------------------------------------------------
-1.mismatch_p25_p2r |   .0598001   .0106523     5.61   0.000     .0389043    .0806959
-1.mismatch_p25_r2p |  -.0162525   .0094719    -1.72   0.086    -.0348329    .0023279
-             _cons |  -1.204426   .0058094  -207.32   0.000    -1.215822   -1.193031
+1.mismatch_p25_p2r |   .0726834     .00894     8.13   0.000     .0551465    .0902204
+1.mismatch_p25_r2p |  -.0071316   .0092673    -0.77   0.442    -.0253107    .0110475
+             _cons |  -1.215763   .0055743  -218.10   0.000    -1.226698   -1.204829
 ------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -175,7 +175,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,145,011 $}"
 
 added macro:
-               e(pval) : ".006"
+               e(pval) : "0"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -183,21 +183,21 @@ added macro:
 (MWFE estimator converged in 26 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,145,011
-Absorbing 5 HDFE groups                           F(   2,   1428) =      22.56
+Absorbing 5 HDFE groups                           F(   2,   1428) =      38.40
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.6795
-                                                  Adj R-squared   =     0.6771
-                                                  Within R-sq.    =     0.0015
-Number of clusters (odid)    =      1,429         Root MSE        =     0.5047
+                                                  R-squared       =     0.6799
+                                                  Adj R-squared   =     0.6775
+                                                  Within R-sq.    =     0.0026
+Number of clusters (odid)    =      1,429         Root MSE        =     0.5044
 
                                       (Std. Err. adjusted for 1429 clusters in odid)
 ------------------------------------------------------------------------------------
                    |               Robust
                  y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------+----------------------------------------------------------------
-1.mismatch_p25_p2r |   .0610559   .0106005     5.76   0.000     .0402617    .0818501
-1.mismatch_p25_r2p |  -.0206736   .0096797    -2.14   0.033    -.0396615   -.0016857
-             _cons |  -1.203884   .0058302  -206.49   0.000     -1.21532   -1.192447
+1.mismatch_p25_p2r |    .073501    .008912     8.25   0.000      .056019    .0909829
+1.mismatch_p25_r2p |  -.0103101   .0093776    -1.10   0.272    -.0287054    .0080852
+             _cons |  -1.215584   .0055909  -217.42   0.000    -1.226551   -1.204617
 ------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -248,7 +248,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,145,011 $}"
 
 added macro:
-               e(pval) : ".011"
+               e(pval) : "0"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -259,21 +259,21 @@ added macro:
 (MWFE estimator converged in 31 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,145,011
-Absorbing 6 HDFE groups                           F(   2,   1428) =      22.27
+Absorbing 6 HDFE groups                           F(   2,   1428) =      38.35
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.6796
-                                                  Adj R-squared   =     0.6772
-                                                  Within R-sq.    =     0.0015
-Number of clusters (odid)    =      1,429         Root MSE        =     0.5047
+                                                  R-squared       =     0.6800
+                                                  Adj R-squared   =     0.6776
+                                                  Within R-sq.    =     0.0026
+Number of clusters (odid)    =      1,429         Root MSE        =     0.5044
 
                                       (Std. Err. adjusted for 1429 clusters in odid)
 ------------------------------------------------------------------------------------
                    |               Robust
                  y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------+----------------------------------------------------------------
-1.mismatch_p25_p2r |    .060689   .0105985     5.73   0.000     .0398987    .0814793
-1.mismatch_p25_r2p |  -.0203544   .0096809    -2.10   0.036    -.0393447   -.0013642
-             _cons |  -1.203872   .0058312  -206.46   0.000    -1.215311   -1.192434
+1.mismatch_p25_p2r |   .0734796   .0089119     8.25   0.000     .0559977    .0909615
+1.mismatch_p25_r2p |  -.0102508   .0093786    -1.09   0.275    -.0286481    .0081465
+             _cons |  -1.215585   .0055906  -217.44   0.000    -1.226552   -1.204619
 ------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -327,7 +327,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,145,011 $}"
 
 added macro:
-               e(pval) : ".011"
+               e(pval) : "0"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -338,24 +338,24 @@ added macro:
 added macro:
                e(rain) : "\multicolumn{1}{c}{\checkmark}"
 (dropped 9 singleton observations)
-(MWFE estimator converged in 34 iterations)
+(MWFE estimator converged in 33 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,145,011
-Absorbing 7 HDFE groups                           F(   2,   1428) =      11.98
+Absorbing 7 HDFE groups                           F(   2,   1428) =      26.49
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.6816
-                                                  Adj R-squared   =     0.6789
-                                                  Within R-sq.    =     0.0009
-Number of clusters (odid)    =      1,429         Root MSE        =     0.5033
+                                                  R-squared       =     0.6819
+                                                  Adj R-squared   =     0.6792
+                                                  Within R-sq.    =     0.0020
+Number of clusters (odid)    =      1,429         Root MSE        =     0.5031
 
                                       (Std. Err. adjusted for 1429 clusters in odid)
 ------------------------------------------------------------------------------------
                    |               Robust
                  y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------------+----------------------------------------------------------------
-1.mismatch_p25_p2r |   .0512113   .0105224     4.87   0.000     .0305704    .0718523
-1.mismatch_p25_r2p |    .004442    .010263     0.43   0.665    -.0156902    .0245743
-             _cons |  -1.206466   .0057916  -208.31   0.000    -1.217827   -1.195105
+1.mismatch_p25_p2r |   .0640686   .0088048     7.28   0.000      .046797    .0813403
+1.mismatch_p25_r2p |   .0122248   .0098982     1.24   0.217    -.0071917    .0316413
+             _cons |  -1.215834   .0055597  -218.69   0.000     -1.22674   -1.204928
 ------------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -422,7 +422,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,145,011 $}"
 
 added macro:
-               e(pval) : ".001"
+               e(pval) : "0"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -497,7 +497,7 @@ Graph saved as ../results/figures//adjfilter-pxor-wpsm-r2p-p2r.eps
 >                 "business Businesses"
 >                 "rain Neighborhood-specific rainfall"
 >                 "POI Places of interest"
->                 "pval $ p $-val: (LP $\rightarrow$ HP) $\neq$ (HP $\rightarrow$ LP)"
+>                 "pval $ p $-val: (LP $\rightarrow$ HP) + (HP $\rightarrow$ LP) = 0"
 >                 "r2 R$^2$" 
 >                 "days Days"
 >                 "clusters Clusters"
@@ -515,5 +515,5 @@ delimiter now cr
       name:  adjacency_filter
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//adjfilter_pxor_wpsm_r2p_p2r.txt
   log type:  text
- closed on:  12 Aug 2025, 20:13:57
-------------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  13 Aug 2026, 18:22:42
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

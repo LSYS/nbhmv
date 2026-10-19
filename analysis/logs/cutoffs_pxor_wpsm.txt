@@ -2,7 +2,7 @@
       name:  cutoffs
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm.txt
   log type:  text
- opened on:  16 Aug 2025, 14:08:47
+ opened on:  12 Aug 2026, 20:24:22
 
 . 
 . set more off
@@ -11,7 +11,7 @@
 . preserve
 
 . 
-. local LOW_RANGE = 1
+. local LOW_RANGE = 71   // RESUME: 1-70 already banked in out/mismatch-wpsm.dta
 
 . local UPP_RANGE = 99
 
@@ -21,126 +21,92 @@
 
 . 
 . * del exisiting file
-. cap erase `FILEPATH'/`FILENAME'.dta
-
+. * RESUME: do NOT erase - storespecs appends to the existing 70 rows
+. // cap erase `FILEPATH'/`FILENAME'.dta
 . 
 . tictoc tic 99
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 16 Aug 2025 14:08:55
+Start time: 12 Aug 2026 20:24:30
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . 
+. * Precompute every cutoff once; the neighborhood price list is
+. * identical on every iteration, so rebuilding it per cutoff is waste.
+. price_tier_cache, origin(wpsm_home) dest(wpsm_dest) ///
+>                   percentiles(`LOW_RANGE'/`UPP_RANGE')
+price_tier_cache: cached 29 cutoffs over 216 priced neighborhoods
+
+. 
+. * Self-check: the cached lookup must equal a from-scratch computation.
+. * If this fails the sweep would produce silently wrong numbers, so stop.
+. make_price_tiers, percentile(`LOW_RANGE') origin(wpsm_home) dest(wpsm_dest) ///
+>                   genorigin(_chk_o) gendest(_chk_d)
+
+. local _cached = r(cutoff)
+
+. macro drop PTC_`LOW_RANGE'
+
+. make_price_tiers, percentile(`LOW_RANGE') origin(wpsm_home) dest(wpsm_dest) ///
+>                   genorigin(_chk2_o) gendest(_chk2_d)
+
+. local _fresh = r(cutoff)
+
+. global PTC_`LOW_RANGE' = `_cached'
+
+. di as txt "cache self-check at p`LOW_RANGE': cached " as result %12.4f `_cached' ///
+>    as txt "  fresh " as result %12.4f `_fresh'
+cache self-check at p71: cached      11.7372  fresh      11.7372
+
+. assert reldif(`_cached', `_fresh') < 1e-12
+
+. qui drop _chk_o _chk_d _chk2_o _chk2_d
+
+. di as txt "cache self-check PASSED"
+cache self-check PASSED
+
+. 
+. 
 . quietly {
-Working on 1 of range 1/99 
-Working on 2 of range 1/99 
-Working on 3 of range 1/99 
-Working on 4 of range 1/99 
-Working on 5 of range 1/99 
-Working on 6 of range 1/99 
-Working on 7 of range 1/99 
-Working on 8 of range 1/99 
-Working on 9 of range 1/99 
-Working on 10 of range 1/99 
-Working on 11 of range 1/99 
-Working on 12 of range 1/99 
-Working on 13 of range 1/99 
-Working on 14 of range 1/99 
-Working on 15 of range 1/99 
-Working on 16 of range 1/99 
-Working on 17 of range 1/99 
-Working on 18 of range 1/99 
-Working on 19 of range 1/99 
-Working on 20 of range 1/99 
-Working on 21 of range 1/99 
-Working on 22 of range 1/99 
-Working on 23 of range 1/99 
-Working on 24 of range 1/99 
-Working on 25 of range 1/99 
-Working on 26 of range 1/99 
-Working on 27 of range 1/99 
-Working on 28 of range 1/99 
-Working on 29 of range 1/99 
-Working on 30 of range 1/99 
-Working on 31 of range 1/99 
-Working on 32 of range 1/99 
-Working on 33 of range 1/99 
-Working on 34 of range 1/99 
-Working on 35 of range 1/99 
-Working on 36 of range 1/99 
-Working on 37 of range 1/99 
-Working on 38 of range 1/99 
-Working on 39 of range 1/99 
-Working on 40 of range 1/99 
-Working on 41 of range 1/99 
-Working on 42 of range 1/99 
-Working on 43 of range 1/99 
-Working on 44 of range 1/99 
-Working on 45 of range 1/99 
-Working on 46 of range 1/99 
-Working on 47 of range 1/99 
-Working on 48 of range 1/99 
-Working on 49 of range 1/99 
-Working on 50 of range 1/99 
-Working on 51 of range 1/99 
-Working on 52 of range 1/99 
-Working on 53 of range 1/99 
-Working on 54 of range 1/99 
-Working on 55 of range 1/99 
-Working on 56 of range 1/99 
-Working on 57 of range 1/99 
-Working on 58 of range 1/99 
-Working on 59 of range 1/99 
-Working on 60 of range 1/99 
-Working on 61 of range 1/99 
-Working on 62 of range 1/99 
-Working on 63 of range 1/99 
-Working on 64 of range 1/99 
-Working on 65 of range 1/99 
-Working on 66 of range 1/99 
-Working on 67 of range 1/99 
-Working on 68 of range 1/99 
-Working on 69 of range 1/99 
-Working on 70 of range 1/99 
-Working on 71 of range 1/99 
-Working on 72 of range 1/99 
-Working on 73 of range 1/99 
-Working on 74 of range 1/99 
-Working on 75 of range 1/99 
-Working on 76 of range 1/99 
-Working on 77 of range 1/99 
-Working on 78 of range 1/99 
-Working on 79 of range 1/99 
-Working on 80 of range 1/99 
-Working on 81 of range 1/99 
-Working on 82 of range 1/99 
-Working on 83 of range 1/99 
-Working on 84 of range 1/99 
-Working on 85 of range 1/99 
-Working on 86 of range 1/99 
-Working on 87 of range 1/99 
-Working on 88 of range 1/99 
-Working on 89 of range 1/99 
-Working on 90 of range 1/99 
-Working on 91 of range 1/99 
-Working on 92 of range 1/99 
-Working on 93 of range 1/99 
-Working on 94 of range 1/99 
-Working on 95 of range 1/99 
-Working on 96 of range 1/99 
-Working on 97 of range 1/99 
-Working on 98 of range 1/99 
-Working on 99 of range 1/99 
+Working on 71 of range 71/99 
+Working on 72 of range 71/99 
+Working on 73 of range 71/99 
+Working on 74 of range 71/99 
+Working on 75 of range 71/99 
+Working on 76 of range 71/99 
+Working on 77 of range 71/99 
+Working on 78 of range 71/99 
+Working on 79 of range 71/99 
+Working on 80 of range 71/99 
+Working on 81 of range 71/99 
+Working on 82 of range 71/99 
+Working on 83 of range 71/99 
+Working on 84 of range 71/99 
+Working on 85 of range 71/99 
+Working on 86 of range 71/99 
+Working on 87 of range 71/99 
+Working on 88 of range 71/99 
+Working on 89 of range 71/99 
+Working on 90 of range 71/99 
+Working on 91 of range 71/99 
+Working on 92 of range 71/99 
+Working on 93 of range 71/99 
+Working on 94 of range 71/99 
+Working on 95 of range 71/99 
+Working on 96 of range 71/99 
+Working on 97 of range 71/99 
+Working on 98 of range 71/99 
+Working on 99 of range 71/99 
 
 . 
 . tictoc toc 99
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 16 Aug 2025 14:08:54
-End time: 17 Aug 2025 18:05:22
-Elapsed seconds:    100588
-Elapsed minutes:      1676
-Elapsed hours:     27.94
+Start time: 12 Aug 2026 20:24:30
+End time: 13 Aug 2026 04:05:08
+Elapsed seconds:     27638
+Elapsed minutes:       461
+Elapsed hours:      7.68
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . restore
@@ -149,5 +115,5 @@ Elapsed hours:     27.94
       name:  cutoffs
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm.txt
   log type:  text
- closed on:  17 Aug 2025, 18:11:52
+ closed on:  13 Aug 2026, 04:09:24
 ------------------------------------------------------------------------------------------------------------------------------------------------------

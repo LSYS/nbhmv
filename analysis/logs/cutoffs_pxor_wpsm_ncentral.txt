@@ -2,7 +2,7 @@
       name:  cutoffs
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm_ncentral.txt
   log type:  text
- opened on:  21 Aug 2025, 21:10:57
+ opened on:  16 Aug 2026, 00:04:50
 
 . 
 . set more off
@@ -27,9 +27,15 @@
 . tictoc tic 99
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 21 Aug 2025 21:11:08
+Start time: 16 Aug 2026 00:04:57
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
+. 
+. price_tier_cache, origin(wpsm_home) dest(wpsm_dest) ///
+>                   percentiles(`LOW_RANGE'/`UPP_RANGE')
+price_tier_cache: cached 99 cutoffs over 216 priced neighborhoods
+
+. 
 . 
 . quietly {
 Working on 1 of range 1/99 
@@ -136,11 +142,11 @@ Working on 99 of range 1/99
 . tictoc toc 99
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 21 Aug 2025 21:11:08
-End time: 23 Aug 2025 12:55:13
-Elapsed seconds:    143045
-Elapsed minutes:      2384
-Elapsed hours:     39.73
+Start time: 16 Aug 2026 00:04:57
+End time: 17 Aug 2026 00:55:00
+Elapsed seconds:     89402
+Elapsed minutes:      1490
+Elapsed hours:     24.83
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . restore
@@ -149,5 +155,5 @@ Elapsed hours:     39.73
       name:  cutoffs
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//cutoffs_pxor_wpsm_ncentral.txt
   log type:  text
- closed on:  23 Aug 2025, 13:03:45
+ closed on:  17 Aug 2026, 00:59:08
 ------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -11,9 +11,9 @@ include ./code/cutoffs/graph_settings.do
 * Plot mismatch (uninteracted)
 *=============================
 forval cutoff = 15/35 {
-	cap gen areapos = .2 if p`cutoff'==1
+	cap gen areapos = .18 if p`cutoff'==1
 	if _rc!=0 {
-		replace areapos = .2 if p`cutoff'==1
+		replace areapos = .18 if p`cutoff'==1
 	}
 	
 	cap gen areaneg = -.1 if p`cutoff'==1
@@ -34,6 +34,7 @@ twoway
 		lpattern(solid) lcolor(`COEF_LINE_COLOR') lwidth(medthick)
 		xlab(0(25)100, labsize(`XLAB_SIZE'))
 		ylab(-.1(.1).2, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
+		yscale(r(-.1 .22) )
 		xtitle("Percentile used for cutoff", size(`XTITLE_SIZE') )
 		ytitle("")
 		legend(order(8 "Main estimate" 3 "Point estimates"  4 "95% CI" 6 "90% CI" ) 
@@ -66,7 +67,7 @@ twoway
 		symbol(Oh) color(maroon) mlwidth(medium) msize(large)
 	)
 	/* 10/N Draw vert ref line for 25th percentile */
-	(scatteri -.1 25 .2 25, recast(line) lpattern(dash) lcolor(gs10))
+	(scatteri -.1 25 .18 25, recast(line) lpattern(dash) lcolor(gs10))
 	/* 11/N Draw horizontal ref line for 25th percentile */	
 	(scatteri `mainbeta' 0 `mainbeta' 100, recast(line) lwidth(thick) lcolor(maroon))
 ;	
@@ -77,9 +78,9 @@ savefig, path($graphsavedir/`y'-baseline-ncentral) format($graphformats)
 * Plot mismatch x ncentral_d
 *===========================
 forval cutoff = 15/35 {
-	cap gen areapos = .6 if p`cutoff'==1
+	cap gen areapos = .52 if p`cutoff'==1
 	if _rc!=0 {
-		replace areapos = .6 if p`cutoff'==1
+		replace areapos = .52 if p`cutoff'==1
 	}
 	
 	cap gen areaneg = -.2 if p`cutoff'==1
@@ -100,6 +101,7 @@ twoway
 		lpattern(solid) lcolor(`COEF_LINE_COLOR') lwidth(medthick)
 		xlab(0(25)100, labsize(`XLAB_SIZE'))
 		ylab(-.2(.2).6, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
+		yscale(r(-.2 .62) )
 		xtitle("Percentile used for cutoff", size(`XTITLE_SIZE') )
 		ytitle("")
 		legend(order(8 "Main estimate" 3 "Point estimates"  4 "95% CI" 6 "90% CI" ) 
@@ -132,7 +134,7 @@ twoway
 		symbol(Oh) color(maroon) mlwidth(medium) msize(large)
 	)
 	/* 10/N Draw vert ref line for 25th percentile */
-	(scatteri -.2 25 .6 25, recast(line) lpattern(dash) lcolor(gs10))
+	(scatteri -.2 25 .52 25, recast(line) lpattern(dash) lcolor(gs10))
 	/* 11/N Draw horizontal ref line for 25th percentile */	
 	(scatteri `mainbeta' 0 `mainbeta' 100, recast(line) lwidth(thick) lcolor(maroon))
 ;	
@@ -154,6 +156,7 @@ twoway
 		lpattern(solid) lcolor(`COEF_LINE_COLOR') lwidth(medthick)
 		xlab(0(20)100, labsize(`XLAB_SIZE'))
 		ylab(-.1(.1).2, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
+		yscale(r(-.1 .22) )
 		xtitle("Specification (sorted by size)", size(`XTITLE_SIZE'))
 		ytitle("")
 		legend(order(6 "Main estimate" 1 "Point estimates"  3 "95% CI" 1 "90% CI" ) 
@@ -202,6 +205,7 @@ twoway
 		lpattern(solid) lcolor(`COEF_LINE_COLOR') lwidth(medthick)
 		xlab(0(20)100, labsize(`XLAB_SIZE'))
 		ylab(-.2(.2).6, noticks nogrid angle(horizontal) labsize(`YLAB_SIZE') )
+		yscale(r(-.2 .62) )
 		xtitle("Specification (sorted by size)", size(`XTITLE_SIZE'))
 		ytitle("")
 		legend(order(6 "Main estimate" 1 "Point estimates"  3 "95% CI" 1 "90% CI" ) 

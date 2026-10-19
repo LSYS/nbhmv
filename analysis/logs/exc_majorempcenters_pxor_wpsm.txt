@@ -1,21 +1,14 @@
-------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  exc_emp
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//exc_majorempcenters_pxor_wpsm.txt
   log type:  text
- opened on:  15 Aug 2025, 05:36:38
-
-. 
-. // drop if inlist(origin, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
-. // drop if inlist(dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
-. // local condition (!inlist(origin, 8, 37, 50, 57, 150, 157, 201, 190) & !inlist(dest, 8, 37, 50, 57, 150, 157, 201, 190) )
-. local condition !inlist(dest, 201, 37, 157, 8, 249, 150, 11, 57, 50, 38, 29, 190)
+ opened on:  13 Aug 2026, 12:14:34
 
 . 
 . set more off
 
 . local x mismatch_p25
 
-. // local x mismatch_p75
 . 
 . *~~~~~~~~~~~~~~~~~~~~~~~~
 . * Estimate specifications
@@ -59,20 +52,20 @@
 (MWFE estimator converged in 21 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,284,841
-Absorbing 3 HDFE groups                           F(   1,   1400) =       5.03
-Statistics robust to heteroskedasticity           Prob > F        =     0.0251
-                                                  R-squared       =     0.7378
-                                                  Adj R-squared   =     0.7363
-                                                  Within R-sq.    =     0.0002
-Number of clusters (odid)    =      1,401         Root MSE        =     0.5385
+Absorbing 3 HDFE groups                           F(   1,   1400) =      22.14
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.7380
+                                                  Adj R-squared   =     0.7365
+                                                  Within R-sq.    =     0.0009
+Number of clusters (odid)    =      1,401         Root MSE        =     0.5383
 
                                 (Std. Err. adjusted for 1401 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0182997    .008163     2.24   0.025     .0022867    .0343128
-       _cons |  -1.069257   .0067901  -157.47   0.000    -1.082577   -1.055937
+mismatch_p25 |   .0368213   .0078263     4.70   0.000     .0214688    .0521738
+       _cons |  -1.077451   .0067395  -159.87   0.000    -1.090671    -1.06423
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -112,20 +105,20 @@ added macro:
 (MWFE estimator converged in 24 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,203,871
-Absorbing 4 HDFE groups                           F(   1,   1395) =       3.29
-Statistics robust to heteroskedasticity           Prob > F        =     0.0700
-                                                  R-squared       =     0.7369
-                                                  Adj R-squared   =     0.7351
-                                                  Within R-sq.    =     0.0002
-Number of clusters (odid)    =      1,396         Root MSE        =     0.5263
+Absorbing 4 HDFE groups                           F(   1,   1395) =      13.31
+Statistics robust to heteroskedasticity           Prob > F        =     0.0003
+                                                  R-squared       =     0.7371
+                                                  Adj R-squared   =     0.7353
+                                                  Within R-sq.    =     0.0006
+Number of clusters (odid)    =      1,396         Root MSE        =     0.5262
 
                                 (Std. Err. adjusted for 1396 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0151246   .0083421     1.81   0.070    -.0012397    .0314889
-       _cons |  -1.064523    .006766  -157.33   0.000    -1.077796   -1.051251
+mismatch_p25 |   .0281708   .0077227     3.65   0.000     .0130214    .0433202
+       _cons |  -1.070472   .0066717  -160.45   0.000    -1.083559   -1.057384
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -177,20 +170,20 @@ added macro:
 (MWFE estimator converged in 24 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,203,871
-Absorbing 5 HDFE groups                           F(   1,   1395) =       2.58
-Statistics robust to heteroskedasticity           Prob > F        =     0.1081
-                                                  R-squared       =     0.7373
-                                                  Adj R-squared   =     0.7355
-                                                  Within R-sq.    =     0.0001
-Number of clusters (odid)    =      1,396         Root MSE        =     0.5260
+Absorbing 5 HDFE groups                           F(   1,   1395) =      12.54
+Statistics robust to heteroskedasticity           Prob > F        =     0.0004
+                                                  R-squared       =     0.7374
+                                                  Adj R-squared   =     0.7356
+                                                  Within R-sq.    =     0.0005
+Number of clusters (odid)    =      1,396         Root MSE        =     0.5259
 
                                 (Std. Err. adjusted for 1396 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0135635   .0084371     1.61   0.108    -.0029873    .0301143
-       _cons |  -1.063967   .0067801  -156.92   0.000    -1.077267   -1.050667
+mismatch_p25 |   .0274832   .0077595     3.54   0.000     .0122617    .0427047
+       _cons |  -1.070195   .0066797  -160.22   0.000    -1.083299   -1.057092
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -249,20 +242,20 @@ added macro:
 (MWFE estimator converged in 30 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,203,871
-Absorbing 6 HDFE groups                           F(   1,   1395) =       2.55
-Statistics robust to heteroskedasticity           Prob > F        =     0.1103
-                                                  R-squared       =     0.7374
-                                                  Adj R-squared   =     0.7355
-                                                  Within R-sq.    =     0.0001
-Number of clusters (odid)    =      1,396         Root MSE        =     0.5260
+Absorbing 6 HDFE groups                           F(   1,   1395) =      12.48
+Statistics robust to heteroskedasticity           Prob > F        =     0.0004
+                                                  R-squared       =     0.7375
+                                                  Adj R-squared   =     0.7356
+                                                  Within R-sq.    =     0.0005
+Number of clusters (odid)    =      1,396         Root MSE        =     0.5259
 
                                 (Std. Err. adjusted for 1396 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0134855   .0084406     1.60   0.110    -.0030721    .0300431
-       _cons |  -1.063939   .0067827  -156.86   0.000    -1.077245   -1.050634
+mismatch_p25 |    .027416   .0077615     3.53   0.000     .0121905    .0426416
+       _cons |  -1.070168   .0066811  -160.18   0.000    -1.083274   -1.057062
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -324,23 +317,23 @@ added macro:
 added macro:
                e(rain) : "\multicolumn{1}{c}{\checkmark}"
 (dropped 2 singleton observations)
-(MWFE estimator converged in 33 iterations)
+(MWFE estimator converged in 32 iterations)
 
 HDFE Linear regression                            Number of obs   =  1,203,871
-Absorbing 7 HDFE groups                           F(   1,   1395) =       6.72
-Statistics robust to heteroskedasticity           Prob > F        =     0.0096
-                                                  R-squared       =     0.7391
-                                                  Adj R-squared   =     0.7370
-                                                  Within R-sq.    =     0.0003
-Number of clusters (odid)    =      1,396         Root MSE        =     0.5245
+Absorbing 7 HDFE groups                           F(   1,   1395) =      15.85
+Statistics robust to heteroskedasticity           Prob > F        =     0.0001
+                                                  R-squared       =     0.7392
+                                                  Adj R-squared   =     0.7371
+                                                  Within R-sq.    =     0.0007
+Number of clusters (odid)    =      1,396         Root MSE        =     0.5244
 
                                 (Std. Err. adjusted for 1396 clusters in odid)
 ------------------------------------------------------------------------------
              |               Robust
            y |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-mismatch_p25 |   .0221566    .008549     2.59   0.010     .0053864    .0389268
-       _cons |  -1.067028   .0067534  -158.00   0.000    -1.080276    -1.05378
+mismatch_p25 |   .0309413   .0077712     3.98   0.000     .0156968    .0461857
+       _cons |  -1.071587   .0066505  -161.13   0.000    -1.084633   -1.058541
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -498,5 +491,5 @@ delimiter now cr
       name:  exc_emp
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//exc_majorempcenters_pxor_wpsm.txt
   log type:  text
- closed on:  15 Aug 2025, 06:21:13
-------------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  13 Aug 2026, 12:31:15
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

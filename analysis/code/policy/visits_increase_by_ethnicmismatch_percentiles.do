@@ -1,7 +1,7 @@
 cap log close counterfactual
 log using $logsavedir/visits_increase_by_ethnicmismatch_percentiles.txt, replace text name(counterfactual)
 
-local ethnic_est = -0.184 // (-0.184) from Table 2. Effect of ethnic mismatch on movement
+local ethnic_est = -0.184 // (-0.184) from Table 3. Effect of ethnic mismatch on movement
 
 local FILENAME mismatch_eip
 local FILEPATH ./code/policy/out
@@ -16,6 +16,8 @@ preserve
 tictoc tic 99
 qui bysort origin dest: gen dup = cond(_N==1,0,_n)
 drop if dup > 1
+* restrict counterfactual to HDB-dominated pairs (>50% HDB)
+keep if private_home < 50 & private_dest < 50
 count
 
 forvalues cutoff = 0/100 {

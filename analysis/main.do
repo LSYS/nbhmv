@@ -9,10 +9,10 @@ display "`myLog'"
 * Init
 * =========================================================
 
-do code/init/set_environment.do
+// do code/init/set_environment.do
 tictoc tic 1
 do code/init/set_globals.do
-do code/init/data_preamble.do
+// do code/init/data_preamble.do
 
 *======================================
 * Linking scripts to exhibits numbering
@@ -31,7 +31,7 @@ end
 
 cap program drop make_fig6a
 program define make_fig6a
-	/* Also makes Tab 2 */
+	/* Also makes Tab 3 */
 	do code/mismatch/pxor_race.do
 end
 
@@ -43,18 +43,26 @@ end
 
 cap program drop make_fig7
 program define make_fig7
-	/* Also makes Tab C2 */
+	/* A: price, B: ethnic. Also makes Tabs C2 & C4 */
 	do code/mismatch/pxor_wpsm_ncentral.do
+	do code/mismatch/pxor_race_ncentral.do
 end
 
 cap program drop make_fig8
 program define make_fig8
+	/* A: price, B: ethnic (directional). Also makes Tabs C5 & C6 */
+	do code/mismatch/pxor_wpsm_r2p_p2r_ncentral.do
+	do code/mismatch/pxor_race_asymmetry_ncentral.do
+end
+
+cap program drop make_fig9a
+program define make_fig9a
 	do code/cutoffs/cutoffs_pxor_wpsm.do
 	do code/cutoffs/graph_cutoffs_pxor_wpsm.do
 end
 
-cap program drop make_fig9
-program define make_fig9
+cap program drop make_fig9bc
+program define make_fig9bc
 	do code/cutoffs/cutoffs_pxor_wpsm_p2r_r2p.do
 	do code/cutoffs/graph_cutoffs_pxor_wpsm_p2r_r2p.do
 end
@@ -96,7 +104,6 @@ cap program drop make_robust
 program define make_robust
 	make_tabE1
 	make_tabE2
-	make_tabE3
 	make_tabE4
 end
 
@@ -104,6 +111,12 @@ cap program drop make_figE1
 program define make_figE1
 	do code/cutoffs/cutoffs_pxor_wpsm_ncentral.do
 	do code/cutoffs/graph_cutoffs_pxor_wpsm_ncentral.do
+end
+
+cap program drop make_figE2
+program define make_figE2
+	do code/cutoffs/cutoffs_pxor_wpsm_p2r_r2p_ncentral.do
+	do code/cutoffs/graph_cutoffs_pxor_wpsm_p2r_r2p_ncentral.do
 end
 
 cap program drop make_tabE1
@@ -116,19 +129,15 @@ program define make_tabE2
 	do code/additional_specifications/pxor_race_loglog.do
 end
 
-cap program drop make_tabE3
-program define make_tabE3
-	/* Also makes Fig E2 */
-	do code/mismatch/pxor_race_ncentral.do
-end
-
 cap program drop make_tabE4
 program define make_tabE4
 	do code/additional_specifications/pxor_wpsm_race.do
 end
 
 cap program drop make_exc_emp
+make_tabE4
 program define make_exc_emp
+make_tabE4
 	make_tabE5
 	make_tabE6
 	make_tabE7
@@ -259,9 +268,20 @@ program define make_tabH2
 	do code/additional_specifications/cny_wpsm.do
 end
 
+cap program drop make_tab1
+program define make_tab1
+	/* Descriptives for Tab 1. Hand-copied into the ms static/description.tex */
+	cap log close desc
+	log using $logsavedir/data_descriptives.txt, replace text name(desc)
+	do code/init/data_descriptives.do
+	log close desc
+end
+
 * =========================================================
 * Nbh flows and mismatch
 * =========================================================
+// make_tab1     /* seconds; su output lands in logs/data_descriptives.txt */
+
 // make_fig4a
 // make_fig4b
 
@@ -269,21 +289,31 @@ end
 // make_fig6b
 
 // make_fig7
+// make_fig8
 // make_fig10
 
 // make_robust
 // make_top25p
 // make_exc_emp
-// make_dow
-// make_adj_filter
+// make_tabE4
+// make_dow   /* all 6; the last 3 are ethnic and cannot change */
+// make_tabE11_E12
+// make_tabE13_E14
+// make_tabE15_E16
+// make_adj_filter   /* all 6; the last 3 are ethnic and cannot change */
+// make_tabE23
+// make_tabE24
+// make_tabE25
 
 // make_tabH1
 // make_tabH2
 
-* Cutoffs
-// make_fig8
-make_tabE1
-// make_figE1
+* Cutoffs   -- VERY LONG. Measured: Fig 9a ~26h, Fig 9b/c 28h. Main text first.
+// make_fig9a     /* done 2026-08-13 */
+// make_fig9bc    /* done 2026-08-15 */
+// make_tabE1
+make_figE1        /* Fig E.1 + Fig F.3a, expect ~28h */
+// make_figE2     /* Fig E.4a-d + Fig F.4a-d, expect ~30h; uncomment to chain */
 
 * =========================================================
 * Nbh flows and mismatch

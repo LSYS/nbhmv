@@ -2,7 +2,7 @@
       name:  counterfactual
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//visits_increase_by_ethnicmismatch_percentiles.txt
   log type:  text
- opened on:  12 Aug 2025, 10:06:04
+ opened on:  24 Jun 2026, 11:15:51
 
 . 
 . local ethnic_est = -0.184 // (-0.184) from Table 2. Effect of ethnic mismatch on movement
@@ -26,7 +26,7 @@
 . tictoc tic 99
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 12 Aug 2025 10:06:14
+Start time: 24 Jun 2026 11:16:00
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . qui bysort origin dest: gen dup = cond(_N==1,0,_n)
@@ -34,8 +34,12 @@ Start time: 12 Aug 2025 10:06:14
 . drop if dup > 1
 (2028577 observations deleted)
 
+. * restrict counterfactual to HDB-dominated pairs (both endpoints >50% HDB)
+. keep if private_home < 50 & private_dest < 50
+(56259 observations deleted)
+
 . count
-75390
+19131
 
 . 
 . forvalues cutoff = 0/100 {
@@ -77,11 +81,11 @@ Start time: 12 Aug 2025 10:06:14
 . tictoc toc 99
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 12 Aug 2025 10:06:13
-End time: 12 Aug 2025 10:11:41
-Elapsed seconds:       328
-Elapsed minutes:         5
-Elapsed hours:       .09
+Start time: 24 Jun 2026 11:16:00
+End time: 24 Jun 2026 11:16:54
+Elapsed seconds:        54
+Elapsed minutes:         1
+Elapsed hours:       .01
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . restore
@@ -90,5 +94,5 @@ Elapsed hours:       .09
       name:  counterfactual
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//visits_increase_by_ethnicmismatch_percentiles.txt
   log type:  text
- closed on:  12 Aug 2025, 10:14:36
+ closed on:  24 Jun 2026, 11:17:20
 ------------------------------------------------------------------------------------------------------------------------------------------------------

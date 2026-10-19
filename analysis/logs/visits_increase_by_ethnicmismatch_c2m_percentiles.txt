@@ -2,7 +2,7 @@
       name:  counterfactual
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//visits_increase_by_ethnicmismatch_c2m_percentiles.txt
   log type:  text
- opened on:  12 Aug 2025, 10:14:39
+ opened on:  24 Jun 2026, 11:17:24
 
 . 
 . local maj2mnr_est = -0.35 // from Table C3. Asymmetry in ethnic mismatch
@@ -25,7 +25,7 @@
 . tictoc tic 99
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 12 Aug 2025 10:14:51
+Start time: 24 Jun 2026 11:17:33
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . qui bysort origin dest: gen dup = cond(_N==1,0,_n)
@@ -33,8 +33,12 @@ Start time: 12 Aug 2025 10:14:51
 . drop if dup > 1
 (2028577 observations deleted)
 
+. * restrict counterfactual to HDB-dominated pairs (both endpoints >50% HDB)
+. keep if private_home < 50 & private_dest < 50
+(56259 observations deleted)
+
 . count
-75390
+19131
 
 . 
 . forvalues cutoff = 0/100 {
@@ -76,11 +80,11 @@ Start time: 12 Aug 2025 10:14:51
 . tictoc toc 99
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 ----------- Time log -----------
-Start time: 12 Aug 2025 10:14:51
-End time: 12 Aug 2025 10:20:02
-Elapsed seconds:       311
-Elapsed minutes:         5
-Elapsed hours:       .09
+Start time: 24 Jun 2026 11:17:33
+End time: 24 Jun 2026 11:18:55
+Elapsed seconds:        82
+Elapsed minutes:         1
+Elapsed hours:       .02
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 . restore
@@ -89,5 +93,5 @@ Elapsed hours:       .09
       name:  counterfactual
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//visits_increase_by_ethnicmismatch_c2m_percentiles.txt
   log type:  text
- closed on:  12 Aug 2025, 10:22:52
+ closed on:  24 Jun 2026, 11:19:23
 ------------------------------------------------------------------------------------------------------------------------------------------------------
