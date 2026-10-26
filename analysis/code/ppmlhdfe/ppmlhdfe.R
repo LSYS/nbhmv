@@ -7,9 +7,12 @@
 
 library(readstata13)
 library(fixest)
+library(marginaleffects)
 
 setFixest_nthreads(10)
 setFixest_notes(FALSE)
+# hypotheses() warns about fixed-effect uncertainty, which does not apply to a test on coefficients
+options(marginaleffects_safe = FALSE)
 
 PANEL <- "ppml-panel.dta"
 OUT <- "../../../results/tables/ppml/ppml_fixest_results.csv"
@@ -104,12 +107,11 @@ for (tab in names(TABLES)) {
                   ssc = ssc(adj = FALSE, cluster.adj = TRUE))
     cat(sprintf("%.0fs\n", difftime(Sys.time(), t1, units = "secs")))
 
-    # t-test of x1 + x2 = 0
+    # t-test of x1 = x2
     joint_p <- NA
     if (length(xs) == 2) {
-      b <- coef(fit)[xs]
-      V <- vcov(fit)[xs, xs]
-      joint_p <- 2 * pnorm(-abs(sum(b) / sqrt(sum(V))))
+      h <- hypotheses(fit, hypothesis = sprintf("%s = %s", xs[1], xs[2]))
+      joint_p <- h$p.value
     }
 
     # save results, one row per estimate

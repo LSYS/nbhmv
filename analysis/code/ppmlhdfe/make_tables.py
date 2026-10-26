@@ -22,10 +22,10 @@ TERM_LABELS = {
 # p-value row label, directional tables only
 JOINT_LABELS = {
     "pxor-wpsm-r2p-p2r": (
-        r"$ p $-val: (LP $\rightarrow$ HP) + (HP $\rightarrow$ LP) = 0"
+        r"$ p $-val: (LP $\rightarrow$ HP) = (HP $\rightarrow$ LP)"
     ),
     "pxor-race-asymmetry": (
-        r"$ p $-val: (Mnr $\rightarrow$ Maj) + (Maj $\rightarrow$ Mnr) = 0"
+        r"$ p $-val: (Mnr $\rightarrow$ Maj) = (Maj $\rightarrow$ Mnr)"
     ),
 }
 
@@ -59,7 +59,7 @@ def stars(p: float) -> str:
 
 
 def stata_pval(p: float) -> str:
-    """Format a p-value as Stata's `string(round(p, 0.001))` does.
+    """Format a p-value as the Stata do-files do.
 
     Parameters
     ----------
@@ -69,12 +69,12 @@ def stata_pval(p: float) -> str:
     Returns
     -------
     str
-        Three decimals with leading and trailing zeros dropped, so 0.0600
-        becomes ".06".
+        "<.001" below .0005, otherwise three decimals with leading and
+        trailing zeros dropped, so 0.0600 becomes ".06".
     """
+    if p < 0.0005:
+        return "<.001"
     v = round(p, 3)
-    if v == 0:
-        return "0"
     if v == 1:
         return "1"
     return f"{v:.3f}".rstrip("0").lstrip("0")
