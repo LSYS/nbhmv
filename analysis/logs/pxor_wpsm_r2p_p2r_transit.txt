@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  mismatch
-       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_r2p_p2r_transit.txt
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv-transit\analysis\logs//pxor_wpsm_r2p_p2r_transit.txt
   log type:  text
- opened on:  15 Aug 2026, 20:59:55
+ opened on:  26 Oct 2026, 09:34:48
 
 . 
 . set more off
@@ -30,9 +30,9 @@
   9.                 estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"
  10.                 local nobs: display %9.0fc `e(N)'
  11.                 estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"
- 12.                 * Test r2p + p2r = 0
-.                 qui test 1.`x1' + 1.`x2' = 0
- 13.                 estadd local pval = string(round(`r(p)', 0.001))
+ 12.                 * Test r2p = p2r
+.                 qui test 1.`x1' = 1.`x2'
+ 13.                 estadd local pval = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
  14.                 * Add indicators for additional controls
 .                 if `i'==2 {
  15.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"
@@ -111,7 +111,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,294,790 $}"
 
 added macro:
-               e(pval) : ".001"
+               e(pval) : "<.001"
 (dropped 4 singleton observations)
 (MWFE estimator converged in 24 iterations)
 
@@ -179,7 +179,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,203,303 $}"
 
 added macro:
-               e(pval) : ".014"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -254,7 +254,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,203,303 $}"
 
 added macro:
-               e(pval) : ".022"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -335,7 +335,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,203,303 $}"
 
 added macro:
-               e(pval) : ".022"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -432,7 +432,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,203,303 $}"
 
 added macro:
-               e(pval) : ".002"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -507,7 +507,7 @@ Graph saved as ../results/figures/transit//pxor-wpsm-r2p-p2r.eps
 >                 "business Businesses"
 >                 "rain Neighborhood-specific rainfall"
 >                 "POI Places of interest"
->                 "pval $ p $-val: (LP $\rightarrow$ HP) $\neq$ (HP $\rightarrow$ LP)"
+>                 "pval $ p $-val: (LP $\rightarrow$ HP) = (HP $\rightarrow$ LP)"
 >                 "r2 R$^2$"
 >                 "days Days"
 >                 "clusters Clusters"
@@ -523,7 +523,7 @@ delimiter now cr
 . 
 . log close mismatch
       name:  mismatch
-       log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//pxor_wpsm_r2p_p2r_transit.txt
+       log:  \\wsl.localhost\Debian\home\lsys\nbhmv-transit\analysis\logs//pxor_wpsm_r2p_p2r_transit.txt
   log type:  text
- closed on:  15 Aug 2026, 21:17:52
+ closed on:  26 Oct 2026, 10:26:18
 ------------------------------------------------------------------------------------------------------------------------------------------------------
