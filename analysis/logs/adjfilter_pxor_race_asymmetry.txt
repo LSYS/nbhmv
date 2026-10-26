@@ -2,7 +2,7 @@
       name:  adjacency_filter
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//adjfilter_pxor_race_asymmetry.txt
   log type:  text
- opened on:   7 Aug 2025, 12:47:01
+ opened on:  25 Oct 2026, 18:27:14
 
 . 
 . set more off
@@ -30,9 +30,9 @@
   9.                 estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"              
  10.                 local nobs: display %9.0fc `e(N)'
  11.                 estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"    
- 12.                 * Test r2p + p2r = 0
-.                 qui test `x1' + `x2' = 0
- 13.                 estadd local pval = string(round(`r(p)', 0.001))
+ 12.                 * Test r2p = p2r
+.                 qui test `x1' = `x2'
+ 13.                 estadd local pval = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
  14.                 * Add indicators for additional controls
 .                 if `i'==2 {
  15.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"                                
@@ -109,7 +109,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,300,524 $}"
 
 added macro:
-               e(pval) : ".023"
+               e(pval) : "<.001"
 (dropped 8 singleton observations)
 (MWFE estimator converged in 80 iterations)
 
@@ -175,7 +175,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,170,264 $}"
 
 added macro:
-               e(pval) : ".001"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -248,7 +248,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,170,264 $}"
 
 added macro:
-               e(pval) : "0"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -327,7 +327,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,170,264 $}"
 
 added macro:
-               e(pval) : "0"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -422,7 +422,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,170,264 $}"
 
 added macro:
-               e(pval) : ".009"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -501,7 +501,7 @@ delimiter now ;
 >                 "business Businesses"
 >                 "rain Neighborhood-specific rainfall"
 >                 "POI Places of interest"
->                 "pval $ p $-val: (Mnr $\rightarrow$ Maj) $\neq$ (Maj $\rightarrow$ Mnr)"
+>                 "pval $ p $-val: (Mnr $\rightarrow$ Maj) = (Maj $\rightarrow$ Mnr)"
 >                 "r2 R$^2$" 
 >                 "days Days"
 >                 "clusters Clusters"
@@ -510,7 +510,6 @@ delimiter now ;
 >         substitute(\_ _)
 >         fragment replace
 >         compress;
-(note: file ../results/tables//adjfilter-pxor-race-asymmetry-frag.tex not found)
 (output written to ../results/tables//adjfilter-pxor-race-asymmetry-frag.tex)
 
 .                 #delimit cr
@@ -520,5 +519,5 @@ delimiter now cr
       name:  adjacency_filter
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//adjfilter_pxor_race_asymmetry.txt
   log type:  text
- closed on:   7 Aug 2025, 14:52:52
+ closed on:  25 Oct 2026, 19:45:46
 ------------------------------------------------------------------------------------------------------------------------------------------------------

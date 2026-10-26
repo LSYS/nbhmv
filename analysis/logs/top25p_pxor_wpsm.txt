@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  top25p
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//top25p_pxor_wpsm.txt
   log type:  text
- opened on:  13 Aug 2026, 10:54:07
+ opened on:  25 Oct 2026, 15:00:13
 
 . 
 . set more off
@@ -32,9 +32,9 @@
   9.                 estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"              
  10.                 local nobs: display %9.0fc `e(N)'
  11.                 estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"    
- 12.                 * Test r2p + p2r = 0
-.                 qui test 1.`x1' + 1.`x2' = 0
- 13.                 estadd local pval = string(round(`r(p)', 0.001))
+ 12.                 * Test r2p = p2r
+.                 qui test 1.`x1' = 1.`x2'
+ 13.                 estadd local pval = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
  14.                 * Add indicators for additional controls
 .                 if `i'==2 {
  15.                         estadd local demo               "\multicolumn{1}{c}{\checkmark}"                                
@@ -111,7 +111,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,321,467 $}"
 
 added macro:
-               e(pval) : "0"
+               e(pval) : ".212"
 (dropped 2 singleton observations)
 (MWFE estimator converged in 25 iterations)
 
@@ -177,7 +177,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
 
 added macro:
-               e(pval) : ".003"
+               e(pval) : ".482"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -250,7 +250,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
 
 added macro:
-               e(pval) : ".003"
+               e(pval) : ".353"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -329,7 +329,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
 
 added macro:
-               e(pval) : ".003"
+               e(pval) : ".374"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -424,7 +424,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,228,385 $}"
 
 added macro:
-               e(pval) : ".001"
+               e(pval) : ".929"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -499,7 +499,7 @@ Graph saved as ../results/figures//top25p-pxor-wpsm-r2p-p2r.eps
 >                 "business Businesses"
 >                 "rain Neighborhood-specific rainfall"
 >                 "POI Places of interest"
->                 "pval $ p $-val: (LP $\rightarrow$ HP) + (HP $\rightarrow$ LP) = 0"
+>                 "pval $ p $-val: (LP $\rightarrow$ HP) = (HP $\rightarrow$ LP)"
 >                 "r2 R$^2$" 
 >                 "days Days"
 >                 "clusters Clusters"
@@ -517,5 +517,5 @@ delimiter now cr
       name:  top25p
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//top25p_pxor_wpsm.txt
   log type:  text
- closed on:  13 Aug 2026, 11:05:55
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  25 Oct 2026, 15:13:56
+------------------------------------------------------------------------------------------------------------------------------------------------------

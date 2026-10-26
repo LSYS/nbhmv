@@ -32,8 +32,8 @@ foreach sample in wkday wkend {
 			estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"		
 			local nobs: display %9.0fc `e(N)'
 			estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
-			* Test r2p + p2r = 0
-			qui test `x1' + `x2' = 0
+			* Test r2p = p2r
+			qui test `x1' = `x2'
 			estadd local pval = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
 			* Add indicators for additional controls
 			if `i'==2 {
@@ -111,7 +111,7 @@ foreach sample in wkday wkend {
 			"business Businesses"
 			"rain Neighborhood-specific rainfall"
 			"POI Places of interest"
-			"pval $ p $-val: (Mnr $\rightarrow$ Maj) + (Maj $\rightarrow$ Mnr) = 0"
+			"pval $ p $-val: (Mnr $\rightarrow$ Maj) = (Maj $\rightarrow$ Mnr)"
 			"r2 R$^2$" 
 			"days Days"
 			"clusters Clusters"

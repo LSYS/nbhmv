@@ -1,8 +1,8 @@
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
       name:  dow
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//dow_pxor_wpsm_r2p_p2r.txt
   log type:  text
- opened on:  13 Aug 2026, 19:47:04
+ opened on:  25 Oct 2026, 16:20:41
 
 . 
 . set more off
@@ -39,9 +39,9 @@
  18.                         estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"              
  19.                         local nobs: display %9.0fc `e(N)'
  20.                         estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"    
- 21.                         * Test r2p + p2r = 0
-.                         qui test 1.`x1' + 1.`x2' = 0
- 22.                         estadd local pval = string(round(`r(p)', 0.001))
+ 21.                         * Test r2p = p2r
+.                         qui test 1.`x1' = 1.`x2'
+ 22.                         estadd local pval = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
  23.                         * Add indicators for additional controls
 .                         if `i'==2 {
  24.                                 estadd local demo               "\multicolumn{1}{c}{\checkmark}"                                
@@ -117,7 +117,7 @@ delimiter now ;
 >                         "business Businesses"
 >                         "rain Neighborhood-specific rainfall"
 >                         "POI Places of interest"
->                         "pval $ p $-val: (LP $\rightarrow$ HP) + (HP $\rightarrow$ LP) = 0"
+>                         "pval $ p $-val: (LP $\rightarrow$ HP) = (HP $\rightarrow$ LP)"
 >                         "r2 R$^2$" 
 >                         "days Days"
 >                         "clusters Clusters"
@@ -186,7 +186,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   957,773 $}"
 
 added macro:
-               e(pval) : "0"
+               e(pval) : "<.001"
 (dropped 2 singleton observations)
 (MWFE estimator converged in 24 iterations)
 
@@ -252,7 +252,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   890,484 $}"
 
 added macro:
-               e(pval) : ".004"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -325,7 +325,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   890,484 $}"
 
 added macro:
-               e(pval) : ".007"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -404,7 +404,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   890,484 $}"
 
 added macro:
-               e(pval) : ".007"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -499,7 +499,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   890,484 $}"
 
 added macro:
-               e(pval) : ".001"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -573,7 +573,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   363,694 $}"
 
 added macro:
-               e(pval) : ".012"
+               e(pval) : "<.001"
 (MWFE estimator converged in 23 iterations)
 
 HDFE Linear regression                            Number of obs   =    337,901
@@ -638,7 +638,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   337,901 $}"
 
 added macro:
-               e(pval) : ".07"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -710,7 +710,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   337,901 $}"
 
 added macro:
-               e(pval) : ".08"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -788,7 +788,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   337,901 $}"
 
 added macro:
-               e(pval) : ".081"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -882,7 +882,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   337,901 $}"
 
 added macro:
-               e(pval) : ".012"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -906,5 +906,5 @@ Graph saved as ../results/figures//pxor-wpsm-r2p-p2r-wkend.eps
       name:  dow
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//dow_pxor_wpsm_r2p_p2r.txt
   log type:  text
- closed on:  13 Aug 2026, 20:19:16
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ closed on:  25 Oct 2026, 16:47:15
+------------------------------------------------------------------------------------------------------------------------------------------------------

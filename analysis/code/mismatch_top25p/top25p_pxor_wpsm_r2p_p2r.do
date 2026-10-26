@@ -24,8 +24,8 @@ forvalues i = 1/5 {
 		estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"		
 		local nobs: display %9.0fc `e(N)'
 		estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"	
-		* Test r2p + p2r = 0
-		qui test 1.`x1' + 1.`x2' = 0
+		* Test r2p = p2r
+		qui test 1.`x1' = 1.`x2'
 		estadd local pval = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
 		* Add indicators for additional controls
 		if `i'==2 {
@@ -102,7 +102,7 @@ esttab using $tabsavedir/top25p-pxor-wpsm-r2p-p2r-frag.tex,
 		"business Businesses"
 		"rain Neighborhood-specific rainfall"
 		"POI Places of interest"
-		"pval $ p $-val: (LP $\rightarrow$ HP) + (HP $\rightarrow$ LP) = 0"
+		"pval $ p $-val: (LP $\rightarrow$ HP) = (HP $\rightarrow$ LP)"
 		"r2 R$^2$" 
 		"days Days"
 		"clusters Clusters"

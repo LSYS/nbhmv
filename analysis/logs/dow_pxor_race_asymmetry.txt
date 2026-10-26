@@ -2,7 +2,7 @@
       name:  dow
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//dow_pxor_race_asymmetry.txt
   log type:  text
- opened on:   6 Aug 2025, 21:13:44
+ opened on:  25 Oct 2026, 16:47:15
 
 . 
 . set more off
@@ -39,9 +39,9 @@
  18.                         estadd local clusters "\multicolumn{1}{c}{$ `clusters' $}"              
  19.                         local nobs: display %9.0fc `e(N)'
  20.                         estadd local nobs = "\multicolumn{1}{c}{$ `nobs' $}"    
- 21.                         * Test r2p + p2r = 0
-.                         qui test `x1' + `x2' = 0
- 22.                         estadd local pval = string(round(`r(p)', 0.001))
+ 21.                         * Test r2p = p2r
+.                         qui test `x1' = `x2'
+ 22.                         estadd local pval = cond(`r(p)' < 0.0005, "<.001", string(round(`r(p)', 0.001)))
  23.                         * Add indicators for additional controls
 .                         if `i'==2 {
  24.                                 estadd local demo               "\multicolumn{1}{c}{\checkmark}"                                
@@ -121,7 +121,7 @@ delimiter now ;
 >                         "business Businesses"
 >                         "rain Neighborhood-specific rainfall"
 >                         "POI Places of interest"
->                         "pval $ p $-val: (Mnr $\rightarrow$ Maj) $\neq$ (Maj $\rightarrow$ Mnr)"
+>                         "pval $ p $-val: (Mnr $\rightarrow$ Maj) = (Maj $\rightarrow$ Mnr)"
 >                         "r2 R$^2$" 
 >                         "days Days"
 >                         "clusters Clusters"
@@ -190,7 +190,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$ 1,011,702 $}"
 
 added macro:
-               e(pval) : ".169"
+               e(pval) : "<.001"
 (dropped 2 singleton observations)
 (MWFE estimator converged in 71 iterations)
 
@@ -256,7 +256,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   910,522 $}"
 
 added macro:
-               e(pval) : ".015"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -329,7 +329,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   910,522 $}"
 
 added macro:
-               e(pval) : ".008"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -408,7 +408,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   910,522 $}"
 
 added macro:
-               e(pval) : ".008"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -503,7 +503,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   910,522 $}"
 
 added macro:
-               e(pval) : ".095"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -577,7 +577,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   382,425 $}"
 
 added macro:
-               e(pval) : ".012"
+               e(pval) : "<.001"
 (MWFE estimator converged in 69 iterations)
 
 HDFE Linear regression                            Number of obs   =    345,061
@@ -642,7 +642,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   345,061 $}"
 
 added macro:
-               e(pval) : ".009"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -714,7 +714,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   345,061 $}"
 
 added macro:
-               e(pval) : ".004"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -792,7 +792,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   345,061 $}"
 
 added macro:
-               e(pval) : ".004"
+               e(pval) : "<.001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -886,7 +886,7 @@ added macro:
                e(nobs) : "\multicolumn{1}{c}{$   345,061 $}"
 
 added macro:
-               e(pval) : ".042"
+               e(pval) : ".001"
 
 added macro:
                e(demo) : "\multicolumn{1}{c}{\checkmark}"
@@ -910,5 +910,5 @@ Graph saved as ../results/figures//pxor-race-asymmetry-wkend.eps
       name:  dow
        log:  \\wsl.localhost\Debian\home\lsys\nbhmv\analysis\logs//dow_pxor_race_asymmetry.txt
   log type:  text
- closed on:   6 Aug 2025, 22:45:58
+ closed on:  25 Oct 2026, 17:54:47
 ------------------------------------------------------------------------------------------------------------------------------------------------------
