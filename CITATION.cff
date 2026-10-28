@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "Cite this as:"
+authors:
+  - family-names: Lim
+    given-names: Jing Zhi
+  - family-names: Shen
+    given-names: Lucas
+title: "Neighborhood Mismatch and Visits"
+url: "https://github.com/LSYS/nbhmv"
+preferred-citation:
+  type: article
+  status: in-press
+  authors:
+    - family-names: Lim
+      given-names: Jing Zhi
+    - family-names: Shen
+      given-names: Lucas
+  title: "Neighborhood Mismatch and Visits"
+  journal: "Regional Science and Urban Economics"
+  year: 2026
+  url: "https://www.lucasshen.com/research/nbh-mismatch-visits.pdf"
+  issn: "0166-0462"
