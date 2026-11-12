@@ -7,7 +7,9 @@ Affluence-based segregation is driven by a lack of visits from higher- to lower-
 These asymmetries concentrate in central and peripheral destinations, respectively.
 Taking the ethnic estimates to a two-town counterfactual analysis of the Ethnic Integration Policy shows that ignoring directional asymmetries—revealed by the large-scale behavioral traces—understates the policy’s effect on cross-neighborhood flows by a factor of three.
 
-> Lim, Jing Zhi, and Lucas Shen. Forthcoming. "Neighborhood Mismatch and Visits." *Regional Science and Urban Economics*.
+> Lim, Jing Zhi, and Lucas Shen. 2027. "Neighborhood Mismatch and Visits." *Regional Science and Urban Economics* 122: 104295. https://doi.org/10.1016/j.regsciurbeco.2026.104295.
+
+Free access to published article: https://authors.elsevier.com/a/1o5PxbmIcKIoV
 
 [![PyLint](https://github.com/LSYS/nbhmv/actions/workflows/pylint.yml/badge.svg)](https://github.com/LSYS/nbhmv/actions/workflows/pylint.yml)
 [![Build notebooks lint](https://github.com/LSYS/nbhmv/actions/workflows/nblint.yml/badge.svg)](https://github.com/LSYS/nbhmv/actions/workflows/nblint.yml)
@@ -109,7 +111,7 @@ We use [RetractionWatch](https://gitlab.com/crossref/retraction-watch-data) (via
 [![Retracted Citations Check](https://github.com/LSYS/nbhmv/actions/workflows/retraction_checker.yml/badge.svg)](https://github.com/LSYS/nbhmv/actions/workflows/retraction_checker.yml)
 
 If this work is useful to you, please consider citing:
-> Lim, Jing Zhi, and Lucas Shen. Forthcoming. "Neighborhood Mismatch and Visits." *Regional Science and Urban Economics*.
+> Lim, Jing Zhi, and Lucas Shen. 2027. "Neighborhood Mismatch and Visits." *Regional Science and Urban Economics* 122: 104295. https://doi.org/10.1016/j.regsciurbeco.2026.104295.
 
 **BibTeX:**
 ```bibtex
@@ -117,8 +119,11 @@ If this work is useful to you, please consider citing:
   author  = {Lim, Jing Zhi and Shen, Lucas},
   title   = {Neighborhood Mismatch and Visits},
   journal = {Regional Science and Urban Economics},
-  note    = {Forthcoming},
-  year    = {2026},
-  url     = {https://www.lucasshen.com/research/nbh-mismatch-visits.pdf}
+  volume  = {122},
+  pages   = {104295},
+  year    = {2027},
+  issn    = {0166-0462},
+  doi     = {10.1016/j.regsciurbeco.2026.104295},
+  url     = {https://doi.org/10.1016/j.regsciurbeco.2026.104295}
 }
 ```
